@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<data>
+  <xpath expr="/form/group[@id='checkboxes']" position="inside">   
+    <label name="is_person"/>
+    <field name="is_person" xexpand="0" width="25"/>
+    <label name="is_institution"/>
+    <field name="is_institution" xexpand="0" width="25"/>
+  </xpath>
+  <xpath expr="/form/field[@name='replaced_by']" position="before">     
+    <group id="grpday" colspan="4" col="6">
+      <newline/>
+      <label name="father"/>
+      <field name="father"/>     
+      <label name="mother"/>
+      <field name="mother"/> 
+      <label name="bi_number"/>
+      <field name="bi_number"/>      
+      <label name="gender"/>
+      <field name="gender"/> 
+      <label name="marital_status"/>
+      <field name="marital_status"/>
+      <label name="date_birth"/>
+      <field name="date_birth"/>
+    </group> 
+  </xpath>
+</data>
+

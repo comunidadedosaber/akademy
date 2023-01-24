@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tree>       
+    <field name="classes"/>
+    <field name="classe_teacher"/>  
+    <field name="classe_teacher_discipline"/>
+    <field name="lesson_number"/>
+    <field name="classe_timerule"/>
+    <field name="lesson_date"/>  
+</tree>

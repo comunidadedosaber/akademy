@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tree> 
+    <field name="code"/>
+    <field name="name"/>
+    <field name="academic_level"/>
+    <field name="area"/>
+    <field name="course"/>
+    <field name="classe"/>
+    <field name="hours">
+        <suffix name="hours" string="Horas"/>
+    </field> 
+</tree>

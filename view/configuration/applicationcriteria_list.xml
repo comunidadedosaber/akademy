@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<tree>    
+    <field name="code"/>
+    <field name="name"/>
+    <field name="lective_year"/>
+    <field name="academic_level"/>
+    <field name="area"/>
+    <field name="course"/>
+    <field name="course_classe"/>
+    <field name="phase"/>
+    <field name="age">
+        <suffix name="age" string="Ano(s)"/>
+    </field>
+    <field name="average">
+        <suffix name="average" string="Valores"/>
+    </field>
+    <field name="student_limit">
+        <suffix name="student_limit" string="Vagas"/>
+    </field>
+</tree>

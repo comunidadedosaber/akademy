@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<form> 
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">    
+        <label name="name"/>
+        <field name="name"/>  
+        <label name="code"/>
+        <field name="code"/>     
+        <label name="start"/>
+        <field name="start"/>
+        <label name="end"/>
+        <field name="end"/>
+    </group>   
+    <notebook colspan="4">
+        <page string="Descrição" id="description">
+            <field name="description" colspan="4"/>
+        </page>
+        <page string="Cargos lectivos" id="school_chart">
+            <field name="school_chart" mode="tree,from" colspan="4"
+                view_ids="akademy.school_chart_view_list,akademy.school_chart_view_form"/>
+        </page>
+        <page string="Trimestre" id="quarter">
+            <field name="quarter" mode="tree,from" colspan="4"
+                view_ids="akademy.quarter_view_list,akademy.quarter_view_form"/>
+        </page>
+        <page string="Critério de Admissão" id="application_criteria">
+            <field name="application_criteria" mode="tree" colspan="4"
+                view_ids="akademy.applicationcriteria_view_list"/>
+        </page>
+        <page string="Candidaturas" id="candidate_applications">
+            <field name="applications" mode="tree" colspan="4"
+                view_ids="akademy.candidate_applications_view_tree"/>
+        </page>
+        <page string="Transferências" id="student_transfer">
+            <field name="student_transfer" mode="tree" colspan="4"
+                view_ids="akademy.student_transfer_view_list"/>
+        </page>
+        <page string="Turmas" id="classes">
+            <field name="classes" mode="tree" colspan="4"
+                view_ids="akademy.classes_view_list"/>
+        </page>
+        <page string="Percurso académico" id="student_gardes">
+            <field name="historic_grades" mode="tree" colspan="4" 
+                view_ids="akademy.historic_grades_view_list"/>
+        </page>
+    </notebook>
+</form>

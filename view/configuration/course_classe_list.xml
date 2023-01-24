@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="course"/>
+    <field name="classe"/>
+    <field name="course_year">
+        <suffix name="course_year" string="Ano(s)"/>
+    </field>
+</tree>

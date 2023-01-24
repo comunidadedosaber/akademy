@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!-- GRUPO DE PERMIÇÕES PARA USUÁRIOS ADMINISTRADORES -->
+<tryton>
+    <data>
+        <!-- Criar o grupo de usuários discente -->
+        <record model="res.group" id="group_akademy_admin">
+            <field name="name">Akademy Admin</field>
+        </record>
+
+        <!-- Atribui o usuário Administrador do Tryton
+         ao grupo de usuários Administrador Akademy -->
+        <record model="res.user-res.group" 
+            id="user_admin-group_akademy_admin">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <!-- Acesso ao MENU PRINCIPAL -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_akademy-group_akademy_admin">
+            <field name="menu" ref="menu_akademy"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <!-- Acesso ao menu PARTY -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_party-group_akademy_admin">
+            <field name="menu" ref="party.menu_party"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <record model="ir.ui.menu-res.group" 
+            id="menu_akademy_party-group_akademy_admin">
+            <field name="menu" ref="akademy_party"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <!-- Acesso ao menu GA -->        
+        <record model="ir.ui.menu-res.group" 
+            id="menu_akademy_ga-group_akademy_admin">
+            <field name="menu" ref="akademy_ga"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record> 
+        
+        <!-- Acesso ao menu MATRÍCULAS -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_registrations-group_akademy_admin">
+            <field name="menu" ref="akademy_registrations"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <!-- Acesso ao menu TURMAS -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_classes-group_akademy_admin">
+            <field name="menu" ref="akademy_classes"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+
+        <!-- start AVLIAÇÕES -->
+            <!-- Acesso ao menu AVLIAÇÃO -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin">
+                    <field name="menu" ref="akademy_avaliations"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao PUBLICAR NOTAS -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_pub_avaliations">
+                    <field name="menu" ref="akademy_publicgrades_wiz"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao NOTAS DISCENTES -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_students_grades">
+                    <field name="menu" ref="akademy_classe_student_grades"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao PUBLICAR PAUTA -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_classes_schedule">
+                    <field name="menu" ref="akademy_schedule_wiz"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao PAUTA DISCENTES -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_classes_grades">
+                    <field name="menu" ref="akademy_classes_grades"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao PUBLICAR PERCUSO -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_public_historic">
+                    <field name="menu" ref="akademy_publichistoric_wiz"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+            <!-- Atribuir acesso ao PERCUSO ACADÉMICO -->
+                <record model="ir.ui.menu-res.group" 
+                    id="menu_avaliations-group_akademy_admin-access_historic_grades">
+                    <field name="menu" ref="akademy_historic_grades"/>
+                    <field name="group" ref="group_akademy_admin"/>
+                </record>
+        <!-- end AVLIAÇÕES --> 
+        
+        <!-- Acesso ao menu COFIGURAÇÃO -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_configuration-group_akademy_admin">
+            <field name="menu" ref="akademy_config"/>
+            <field name="group" ref="group_akademy_admin"/>
+        </record>
+        
+    </data>
+</tryton>

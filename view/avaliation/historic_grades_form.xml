@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<form> 
+    <label name="lective_year"/>
+    <field name="lective_year"/> 
+    <label name="classes"/>
+    <field name="classes"/> 
+    <label name="student"/>
+    <field name="student"/> 
+    <label name="studyplan_discipline"/>
+    <field name="studyplan_discipline"/> 
+    <label name="average"/>
+    <field name="average"/> 
+</form>

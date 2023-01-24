@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="lective_year"/>
+    <field name="classes"/> 
+    <field name="student"/> 
+    <field name="studyplan_discipline"/>  
+    <field name="average">
+        <suffix name="average" string="Valores"/>
+    </field>
+</tree>

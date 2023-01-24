@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="code"/>
+    <field name="name"/>
+    <field name="lective_year"/>
+    <field name="start"/>
+    <field name="end"/>
+</tree>

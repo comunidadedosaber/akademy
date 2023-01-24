@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tree> 
+    <field name="studyplan_discipline"/>
+    <field name="metric_avaliation"/>
+    <field name="percent">
+        <suffix name="percent" string="%"/>
+    </field>
+    <field name="perct_arithmetic"/>
+    <field name="perct_weighted"/> 
+    <field name="quarter"/>    
+    <field name="state"/> 
+</tree>

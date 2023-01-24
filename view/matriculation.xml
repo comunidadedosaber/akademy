@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <!-- start CANDIDATOS -->
+            <record model="ir.ui.view" id="candidates_view_form">
+                <field name="model">akademy.candidates</field>
+                <field name="type">form</field>
+                <field name="name">matriculation/candidates_form</field>
+            </record>
+            <record model="ir.ui.view" id="candidates_view_list">
+                <field name="model">akademy.candidates</field>
+                <field name="type">tree</field>
+                <field name="name">matriculation/candidates_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_candidates">
+                <field name="name">Candidatos</field>
+                <field name="res_model">akademy.candidates</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_candidates_view_form">
+                <field name="sequence" eval="12"/>
+                <field name="view" ref="candidates_view_form"/>
+                <field name="act_window" ref="act_candidates"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_candidates_view_list">
+                <field name="sequence" eval="11"/>
+                <field name="view" ref="candidates_view_list"/>
+                <field name="act_window" ref="act_candidates"/>
+            </record>
+            <menuitem name="Candidatos" parent="akademy.akademy_registrations" id="akademy_candidates" 
+                    sequence="10" action="act_candidates" icon="tryton-party"/>
+        <!-- end CANDIDATOS -->
+        
+        <!-- start CANDIDATURAS -->
+            <record model="ir.ui.view" id="candidate_applications_view_form">
+                <field name="model">akademy.applications</field>
+                <field name="type">form</field>
+                <field name="name">matriculation/applications_form</field>
+            </record>
+            <record model="ir.ui.view" id="candidate_applications_view_tree">
+                <field name="model">akademy.applications</field>
+                <field name="type">tree</field>
+                <field name="name">matriculation/applications_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_candidate_applications">
+                <field name="name">Candidaturas</field>
+                <field name="res_model">akademy.applications</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_candidate_applications_view_tree">
+                <field name="sequence" eval="15"/>
+                <field name="view" ref="candidate_applications_view_tree"/>
+                <field name="act_window" ref="act_candidate_applications"/>
+            </record>
+            <menuitem name="Candidaturas" parent="akademy.akademy_registrations" id="akademy_candidate_applications" 
+                    sequence="14" action="act_candidate_applications"/>
+        
+            <record model="ir.model.button" id="application_avaliation_button">
+                <field name="name">application_avaliation</field>
+                <field name="string">Avaliar</field>
+                <field name="help">Avaliar a candidaturas</field>
+                <field name="model" search="[('model', '=', 'akademy.applications')]"/>
+            </record>        
+        <!-- end CANDIDATURAS -->
+        
+        <!-- start CANDIDATURAS RESULTADOS -->
+            <record model="ir.ui.view" id="applications_result_view_form">
+                <field name="model">akademy.applications-result</field>
+                <field name="type">form</field>
+                <field name="name">matriculation/candidate_applications_result_form</field>
+            </record>
+            <record model="ir.ui.view" id="applications_result_view_tree">
+                <field name="model">akademy.applications-result</field>
+                <field name="type">tree</field>
+                <field name="name">matriculation/candidate_applications_result_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_applications_result">
+                <field name="name">Resultados</field>
+                <field name="res_model">akademy.applications-result</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_applications_result_view_tree">
+                <field name="sequence" eval="19"/>
+                <field name="view" ref="applications_result_view_tree"/>
+                <field name="act_window" ref="act_applications_result"/>
+            </record>
+            <menuitem name="Resultados" parent="akademy.akademy_registrations" id="akademy_applications_result"
+                    sequence="18" action="act_applications_result"/>            
+        
+            <record model="ir.model.button" id="application_matriculation_button">
+                <field name="name">application_matriculation</field>
+                <field name="string">Matrícular</field>
+                <field name="help">Matrícular candidato</field>
+                <field name="model" search="[('model' , '=', 'akademy.applications-result')]"/>
+            </record>
+        <!-- end CANDIDATURAS RESULTADOS -->
+
+        <!-- start TRANSFÊRENCIA -->  
+            <menuitem name="Transferência" id="akademy_registrations_transfer" sequence="22"
+                parent="akademy.akademy_registrations"/>
+
+        <!-- TRANSFÊRENCIA DISCENTE -->
+            <record model="ir.ui.view" id="student_transfer_view_form">
+                <field name="model">akademy.student-transfer</field>
+                <field name="type">form</field>
+                <field name="name">matriculation/student_transfer_form</field>
+            </record>
+            <record model="ir.ui.view" id="student_transfer_view_list">
+                <field name="model">akademy.student-transfer</field>
+                <field name="type">tree</field>
+                <field name="name">matriculation/student_transfer_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_student_transfer">
+                <field name="name">Transferências</field>
+                <field name="res_model">akademy.student-transfer</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_student_transfer_view_form">
+                <field name="sequence" eval="7"/>
+                <field name="view" ref="student_transfer_view_form"/>
+                <field name="act_window" ref="act_student_transfer"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_student_transfer_view_list">
+                <field name="sequence" eval="6"/>
+                <field name="view" ref="student_transfer_view_list"/>
+                <field name="act_window" ref="act_student_transfer"/>
+            </record>
+            <menuitem name="Transferências" parent="akademy.akademy_registrations_transfer" id="akademy_student_transfer" 
+                sequence="5" action="act_student_transfer"/>
+        
+        <!-- TRANSFÊRENCIA DISCENTE DISCIPLINA -->
+            <record model="ir.ui.view" id="student_transfer_discipline_view_form">
+                <field name="model">akademy.student_transfer-discipline</field>
+                <field name="type">form</field>
+                <field name="name">matriculation/student_transfer_discipline_form</field>
+            </record>
+            <record model="ir.ui.view" id="student_transfer_discipline_view_list">
+                <field name="model">akademy.student_transfer-discipline</field>
+                <field name="type">tree</field>
+                <field name="name">matriculation/student_transfer_discipline_tree</field>
+            </record>  
+            <record model="ir.action.act_window" id="act_student_transfer_discipline">
+                <field name="name">Disciplinas</field>
+                <field name="res_model">akademy.student_transfer-discipline</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_student_transfer_discipline_view_form">
+                <field name="sequence" eval="12"/>
+                <field name="view" ref="student_transfer_discipline_view_form"/>
+                <field name="act_window" ref="act_student_transfer_discipline"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_student_transfer_discipline_view_list">
+                <field name="sequence" eval="11"/>
+                <field name="view" ref="student_transfer_discipline_view_list"/>
+                <field name="act_window" ref="act_student_transfer_discipline"/>
+            </record>
+            <menuitem name="Disciplinas" parent="akademy.akademy_registrations_transfer" id="akademy_student_transfer_discipline" 
+                sequence="10" action="act_student_transfer_discipline"/>      
+        <!-- end TRANSFÊRENCIA -->
+
+        <!-- start MATRÍCULAR -->
+            <record model="ir.action.wizard" id="act_matriculation_wizard">
+                    <field name="name">Matrícular</field>
+                    <field name="wiz_name">akademy.wizmatriculation_create</field>
+            </record>
+            <record model="ir.ui.view" id="act_matriculation_wizard_from">
+                    <field name="model">akademy.wizmatriculation_create.start</field>
+                    <field name="type">form</field>
+                    <field name="name">matriculation/matriculation_wizcreate_form</field>            
+            </record>
+            <menuitem action="act_matriculation_wizard" parent="akademy.akademy_registrations" id="akademy_matriculation_student" 
+                    sequence="28"/>
+        <!-- end MATRÍCULAR -->
+    </data>
+</tryton>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="code"/>
+    <field name="party"/>
+    <field name="institution"/>
+    <field name="academiclevel"/>
+    <field name="area"/>
+    <field name="course"/>
+    <field name="average">
+        <suffix name="average" string="Valores"/>
+    </field>
+    <field name="date_start"/>
+    <field name="date_end"/>
+</tree>

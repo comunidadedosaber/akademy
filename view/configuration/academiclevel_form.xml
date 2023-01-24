@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<form>  
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">    
+        <label name="name"/>
+        <field name="name"/>  
+        <label name="code"/>
+        <field name="code"/> 
+    </group>  
+    <notebook colspan="4">
+        <page string="Descrição" id="description">
+            <field name="description" colspan="4"/>
+        </page>
+        <page string="Área" id="academiclevel_area">
+            <field name="area" mode="tree,form" colspan="4"
+                view_ids="akademy.area_view_list,akademy.area_view_form"/>
+        </page>
+    </notebook>  
+</form>

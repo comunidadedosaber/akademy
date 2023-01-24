@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<form>
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday" colspan="4" col="4">    
+        <label name="employee"/>
+        <field name="employee"/>
+        <label name="state"/>
+        <field name="state"/>       
+        <label name="classes"/>
+        <field name="classes"/> 
+    </group>   
+    <notebook colspan="4">
+        <page string="Descrição" id="description">
+            <field name="description" colspan="4"/>
+        </page>
+        <page string="Disciplinas" id="teacher_discipline">
+            <field name="classe_teacher_discipline" mode="tree,form" colspan="4" 
+                view_ids="akademy.classe_teacher_discipline_view_tree,akademy.classe_teacher_discipline_view_form"/>
+        </page>
+    </notebook>  
+</form>

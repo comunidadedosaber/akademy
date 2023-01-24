@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<trytond>
+	<data>
+        <!-- start TURMAS -->
+                <record model="ir.ui.view" id="classes_view_form">
+                        <field name="model">akademy.classes</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classes_form</field>
+                </record>
+                <record model="ir.ui.view" id="classes_view_list">
+                        <field name="model">akademy.classes</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classes_list</field>
+                </record>
+                <record model="ir.action.act_window" id="act_classes">
+                        <field name="name">Turmas</field>
+                        <field name="res_model">akademy.classes</field>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classes_view_form">
+                        <field name="sequence" eval="14"/>
+                        <field name="view" ref="classes_view_form"/>
+                        <field name="act_window" ref="act_classes"/>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classes_view_list">
+                        <field name="sequence" eval="13"/>
+                        <field name="view" ref="classes_view_list"/>
+                        <field name="act_window" ref="act_classes"/>
+                </record>
+                <menuitem name="Turmas" parent="akademy.akademy_classes" id="akademy_classes_classes" 
+                        sequence="12" action="act_classes"/> 
+
+                <record model="ir.model.button" id="matriculation_state_button">
+                        <field name="name">matriculation_state</field>
+                        <field name="string">Avaliar matrícula</field>
+                        <field name="help">Avaliar matrícula para fecho do ano lectivo</field>
+                        <field name="model" search="[('model', '=', 'akademy.classes')]"/>
+                </record>
+        <!-- end TURMAS -->
+
+        <!-- start DISCENTES -->
+                <record model="ir.ui.view" id="classe_student_view_form">
+                        <field name="model">akademy.classe-student</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_student_form</field>
+                </record>
+                <record model="ir.ui.view" id="classe_student_view_list">
+                        <field name="model">akademy.classe-student</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_student_list</field>
+                </record>
+                        <record model="ir.action.act_window" id="act_classe_student">
+                        <field name="name">Discentes</field>
+                        <field name="res_model">akademy.classe-student</field>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_student_view_form">
+                        <field name="sequence" eval="18"/>
+                        <field name="view" ref="classe_student_view_form"/>
+                        <field name="act_window" ref="act_classe_student"/>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_student_view_list">
+                        <field name="sequence" eval="17"/>
+                        <field name="view" ref="classe_student_view_list"/>
+                        <field name="act_window" ref="act_classe_student"/>
+                </record>
+                <menuitem name="Discentes" parent="akademy.akademy_classes" id="akademy_classe_student" 
+                        sequence="16" action="act_classe_student"/>        
+        <!-- end DISCENTES -->
+
+        <!-- start DISCENTES DISCIPLINA -->
+                <record model="ir.ui.view" id="classe_student_discipline_view_form">
+                        <field name="model">akademy.classe_student-discipline</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_student_discipline_form</field>
+                </record>
+                <record model="ir.ui.view" id="classe_student_discipline_view_tree">
+                        <field name="model">akademy.classe_student-discipline</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_student_discipline_list</field>
+                </record>
+        <!-- end DISCENTES DISCIPLINA -->
+
+        <!-- start DOCENTES -->
+                <record model="ir.ui.view" id="classe_teacher_view_form">
+                        <field name="model">akademy.classe-teacher</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_teacher_form</field>
+                </record>
+                <record model="ir.ui.view" id="classe_teacher_view_list">
+                        <field name="model">akademy.classe-teacher</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_teacher_list</field>
+                </record>
+                <record model="ir.action.act_window" id="act_classe_teacher">
+                        <field name="name">Docentes</field>
+                        <field name="res_model">akademy.classe-teacher</field>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_teacher_view_form">
+                        <field name="sequence" eval="22"/>
+                        <field name="view" ref="classe_teacher_view_form"/>
+                        <field name="act_window" ref="act_classe_teacher"/>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_teacher_view_list">
+                        <field name="sequence" eval="21"/>
+                        <field name="view" ref="classe_teacher_view_list"/>
+                        <field name="act_window" ref="act_classe_teacher"/>
+                </record>
+                <menuitem name="Docentes" parent="akademy.akademy_classes" id="akademy_classe_teacher" 
+                        sequence="20" action="act_classe_teacher"/>
+        <!-- end DOCENTES -->
+        
+        <!-- start DOCENTES DISCIPLINA -->
+                <record model="ir.ui.view" id="classe_teacher_discipline_view_form">
+                        <field name="model">akademy.classe_teacher-discipline</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_teacher_discipline_form</field>
+                </record>
+                <record model="ir.ui.view" id="classe_teacher_discipline_view_tree">
+                        <field name="model">akademy.classe_teacher-discipline</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_teacher_discipline_list</field>
+                </record>
+        <!-- end DOCENTES DISCIPLINA -->
+
+        <!-- start PLANO DE AULA -->
+                <record model="ir.ui.view" id="classes_teacher_lesson_view_form">
+                        <field name="model">akademy.classe_teacher-lesson</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_teacher_lesson_form</field>
+                </record>
+                <record model="ir.ui.view" id="classes_teacher_lesson_view_list">
+                        <field name="model">akademy.classe_teacher-lesson</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_teacher_lesson_list</field>
+                </record>                
+                <record model="ir.action.act_window" id="act_classes_teacher_lesson">
+                        <field name="name">Plano de Aula</field>
+                        <field name="res_model">akademy.classe_teacher-lesson</field>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classes_teacher_lesson_view_form">
+                        <field name="sequence" eval="26"/>
+                        <field name="view" ref="classes_teacher_lesson_view_form"/>
+                        <field name="act_window" ref="act_classes_teacher_lesson"/>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classes_teacher_lesson_view_list">
+                        <field name="sequence" eval="25"/>
+                        <field name="view" ref="classes_teacher_lesson_view_list"/>
+                        <field name="act_window" ref="act_classes_teacher_lesson"/>
+                </record>      
+                <menuitem name="Plano de Aula" parent="akademy.akademy_classes" id="akademy_classes_lesson" 
+                        icon="akademy-teacher_lesson" sequence="24" action="act_classes_teacher_lesson"/>                   
+        <!-- end PLANO DE AULA -->  
+        
+        <!-- start ASSOCIATION DISCIPLINE -->
+                <record model="ir.action.wizard" id="act_associationdiscipline_wizard">
+                        <field name="name">Associar disciplina</field>
+                        <field name="wiz_name">akademy.wizassociatiodiscipline_create</field>
+                </record>
+                <record model="ir.ui.view" id="act_associationdiscipline_wizard_from">
+                        <field name="model">akademy.wizassociatiodiscipline_create.start</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/association_discipline_wizcreate_form</field>            
+                </record>
+                <menuitem action="act_associationdiscipline_wizard" parent="akademy.akademy_classes" id="menu_associationdiscipline_wiz" 
+                        sequence="28"/>
+        <!-- end ASSOCIATION DISCIPLINE -->
+
+        <!-- start HORÁRIOS -->
+                <record model="ir.ui.view" id="classe_timerule_view_form">
+                        <field name="model">akademy.classe-timerule</field>
+                        <field name="type">form</field>
+                        <field name="name">classes/classe_timerule_form</field>
+                </record>
+                <record model="ir.ui.view" id="classe_timerule_view_list">
+                        <field name="model">akademy.classe-timerule</field>
+                        <field name="type">tree</field>
+                        <field name="name">classes/classe_timerule_list</field>
+                </record>
+                <record model="ir.action.act_window" id="act_classe_timerule">
+                        <field name="name">Criar Horário</field>
+                        <field name="res_model">akademy.classe-timerule</field>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_timerule_view_form">
+                        <field name="sequence" eval="32"/>
+                        <field name="view" ref="classe_timerule_view_form"/>
+                        <field name="act_window" ref="act_classe_timerule"/>
+                </record>
+                <record model="ir.action.act_window.view" id="act_classe_timerule_view_list">
+                        <field name="sequence" eval="31"/>
+                        <field name="view" ref="classe_timerule_view_list"/>
+                        <field name="act_window" ref="act_classe_timerule"/>
+                </record>
+                <!--
+                <menuitem name="Criar Horário" parent="akademy.akademy_classes" id="akademy_classe_timerule" 
+                        sequence="30" action="act_classe_timerule"/>
+                -->               
+        <!-- end HORÁRIOS -->
+	</data>
+</trytond>

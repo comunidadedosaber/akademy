@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<form>      
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">  
+        <label name="party"/>
+        <field name="party"/>      
+        <label name="code"/>
+        <field name="code"/> 
+        <label name="company"/>
+        <field name="company"/>
+        <label name="academiclevel"/>
+        <field name="academiclevel"/>
+        <label name="area"/>
+        <field name="area"/>
+        <label name="course"/>
+        <field name="course"/>
+    </group>      
+    <label id="labr2" colspan="4" xalign="0.0" string="FORMAÇÃO"/>
+    <group id="grpday2" colspan="4" col="4">
+        <label name="state"/>
+        <field name="state"/>
+        <label name="classe"/>
+        <field name="classe"/>  
+        <label name="start_date"/>
+        <field name="start_date"/>
+        <label name="end_date"/>
+        <field name="end_date"/> 
+    </group>
+    <notebook colspan="4">
+        <page string="Transfêrencias" id="student_transfer">
+            <field name="student_transfer" mode="tree,form" colspan="4"
+                view_ids="akademy.student_transfer_view_list,akademy.student_transfer_view_form"/>
+        </page>
+        <page string="Matrículas" id="student">
+            <field name="student" mode="tree,form" colspan="4"
+                view_ids="akademy.classe_student_view_list,akademy.classe_student_view_form"/>
+        </page>
+    </notebook> 
+</form>

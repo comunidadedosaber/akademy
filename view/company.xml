@@ -1,0 +1,45 @@
+<tryton>
+    <data>  
+        <!-- start DISCENTES -->
+            <record model="ir.ui.view" id="company_student_view_form">
+                <field name="model">company.student</field>
+                <field name="type">form</field>
+                <field name="name">company/company_student_form</field>
+            </record>
+            <record model="ir.ui.view" id="company_student_view_list">
+                <field name="model">company.student</field>
+                <field name="type">tree</field>
+                <field name="name">company/company_student_list</field>
+            </record>
+                <record model="ir.action.act_window" id="act_company_student">
+                <field name="name">Discentes</field>
+                <field name="res_model">company.student</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_company_student_view_form">
+                <field name="sequence" eval="28"/>
+                <field name="view" ref="company_student_view_form"/>
+                <field name="act_window" ref="act_company_student"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_company_student_view_list">
+                <field name="sequence" eval="27"/>
+                <field name="view" ref="company_student_view_list"/>
+                <field name="act_window" ref="act_company_student"/>
+            </record>
+            <menuitem name="Discentes" parent="akademy_party" id="akademy_company_student" 
+                action="act_company_student" icon="akademy-student"/> 
+        <!-- end DISCENTES --> 
+
+        <!-- start EMPLOYEE -->
+            <record model="ir.ui.view" id="employee_view_form">
+                <field name="model">company.employee</field>
+                <field name="inherit" ref="company.employee_view_form"/>
+                <field name="name">company/employee_form</field>
+            </record>
+            <record model="ir.ui.view" id="employee_view_tree">
+                <field name="model">company.employee</field>
+                <field name="inherit" ref="company.employee_view_tree"/>
+                <field name="name">company/employee_list</field>
+            </record>
+        <!-- start EMPLOYEE -->   
+    </data>
+</tryton>

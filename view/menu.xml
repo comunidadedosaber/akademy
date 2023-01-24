@@ -1,0 +1,32 @@
+<?xnl version="1.0"?>
+<tryton>
+    <data>
+        <!-- Menu - CS Schools -->
+        <menuitem name="AKADEMY" id="menu_akademy" icon="akademy-home"/>
+        
+        <!-- GSTÃO ENTIDADES -->  
+        <menuitem name="Gestão Entidades" id="akademy_party" sequence="1"
+            icon="tryton-party" parent="menu_akademy"/>
+        
+        <!-- GSTÃO ACADÉMICA - GA -->  
+        <menuitem name="Gestão Académica" id="akademy_ga" sequence="5"
+            parent="menu_akademy"/>
+
+	    <!-- MATRÍCULA -->  
+        <menuitem name="Matrículas" id="akademy_registrations" sequence="20"
+            parent="akademy_ga"/>
+
+        <!-- TURMAS -->            
+        <menuitem name="Turmas" id="akademy_classes" sequence="22"
+            icon="akademy-classes" parent="akademy_ga"/> 
+
+        <!-- AVALIAÇÕES -->
+        <menuitem name="Avaliações" id="akademy_avaliations" sequence="24"
+            parent="akademy_ga"/>          
+        
+        <!-- CONFIGURAÇÕES -->
+        <menuitem name="Configurações" id="akademy_config" sequence="70"
+            icon="akademy-config" parent="akademy_ga"/>
+
+    </data>
+</tryton>
