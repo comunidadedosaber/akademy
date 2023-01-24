@@ -1,5 +1,8 @@
 <h1 align="center">CS - Akademy</h1>
 
+![Comunidade do Saber EM PNG](https://user-images.githubusercontent.com/76854274/214225891-ec03871b-28af-4ddd-92d7-d18c7af82c3f.jpeg)
+
+
 Procurando por uma freamwork que atendesse as nossas necesidades, nós encontramos o Tryton uma freamwork open source, modular, escavél e segura. 
 Depois de um ano de apredizado a equipa Comunidade Do Saber têm orgulho em apresentar o CS-Akademy 1.0-b, um módulo de gestão educacional baseado na plataforma Tryton ERP versão 5.8, se dejesa participar do nosso projecto ou fornecer alguma ajuda não esite em nós contactar pelos endereços abaixo: 
 
