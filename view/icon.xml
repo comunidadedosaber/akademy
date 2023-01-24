@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <!-- HOME -->
+        <record model="ir.ui.icon" id="akademy_icon_home">
+            <field name="name">akademy-home</field>
+            <field name="path">icon/home.svg</field>
+        </record>
+
+        <!-- CLASSES -->
+        <record model="ir.ui.icon" id="akademy_icon_classes">
+            <field name="name">akademy-classes</field>
+            <field name="path">icon/classes.svg</field>
+        </record>
+
+        <!-- REPORT -->
+        <record model="ir.ui.icon" id="akademy_icon_report">
+            <field name="name">akademy-report</field>
+            <field name="path">icon/report.svg</field>
+        </record>
+
+        <!-- TEACHER -->
+        <record model="ir.ui.icon" id="akademy_icon_teacher_lesson">
+            <field name="name">akademy-teacher_lesson</field>
+            <field name="path">icon/teacher_lesson.svg</field>
+        </record>
+
+        <!-- DISCENTE -->
+        <record model="ir.ui.icon" id="akademy_icon_student">
+            <field name="name">akademy-student</field>
+            <field name="path">icon/student.svg</field>
+        </record>
+
+        <!-- CONFIG -->
+        <record model="ir.ui.icon" id="akademy_icon_config">
+            <field name="name">akademy-config</field>
+            <field name="path">icon/settings.svg</field>
+        </record>
+    </data>
+</tryton>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<tryton>
+  <data>
+    <!-- start ENTIDADE -->
+      <menuitem name="Entidades" parent="akademy_party" id="akademy_entities" 
+          icon="tryton-party" sequence="2" action="party.act_party_form"/>  
+
+      <record model="ir.ui.view" id="party_view_form">
+          <field name="model">party.party</field>
+          <field name="inherit" ref="party.party_view_form"/>
+          <field name="name">party/party_form</field>
+      </record>    
+      <record model="ir.ui.view" id="party_view_list">
+          <field name="model">party.party</field>
+          <field name="inherit" ref="party.party_view_tree"/>
+          <field name="name">party/party_list</field>
+      </record>  
+    <!-- end ENTIDADE -->  
+
+    <!-- start EMPRESA -->
+      <menuitem name="Empresa" parent="akademy_party" id="akademy_company" 
+          icon="tryton-company" sequence="3" action="company.act_company_tree"/> 
+
+      <menuitem name="Funcionários" parent="akademy_party" id="akademy_employee" 
+          sequence="4" action="company.act_employee_form"/> 
+    <!-- end EMPRESA --> 
+
+  </data>
+</tryton>
+

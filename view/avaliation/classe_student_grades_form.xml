@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<form>       
+    <label name="lective_year"/>
+    <field name="lective_year"/>   
+    <label name="quarter"/>
+    <field name="quarter"/>  
+    <label name="classes"/>
+    <field name="classes"/>    
+    <label name="student"/>
+    <field name="student"/>  
+    <label name="student_discipline"/>
+    <field name="student_discipline"/>
+    <label name="studyplan_avaliation"/>
+    <field name="studyplan_avaliation"/>         
+    <label name="presence"/>
+    <field name="presence"/> 
+    <label name="value"/>
+    <field name="value"/> 
+    <!--- <label name="studyplan" invisible="1"/> -->
+    <field name="studyplan" invisible="1"/> 
+    <!--- <label name="employee" invisible="1"/> -->
+    <field name="employee" invisible="1"/> 
+</form>

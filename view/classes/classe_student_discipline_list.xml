@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="classe_student"/>
+    <field name="studyplan_discipline"/> 
+    <field name="state"/> 
+    <field name="modality"/>    
+</tree>

@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<trytond>
+	<data>
+        <!-- start RELATÓRIO DE PLANO DE ESTUDO -->
+                <record model="ir.action.report" id="studyplan_report">
+                        <field name="name">Plano de Estudo</field>
+                        <field name="report_name">akademy.studyplan-report</field>
+                        <field name="model">akademy.studyplan</field>
+                        <field name="report">akademy/reports/studyplan.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="studyplan_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.studyplan,-1</field>
+                        <field name="action" ref="studyplan_report"/>
+                </record>
+        <!-- end RELATÓRIO DE PLANO DE ESTUDO -->
+
+        <!-- start RELATÓRIO DE CRITÉRIO DE ADM\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\        \\        ISSÃO -->
+                <record model="ir.action.report" id="application_criteria_report">
+                        <field name="name">Critério de Admissão</field>
+                        <field name="report_name">akademy.application_criteria-report</field>
+                        <field name="model">akademy.application-criteria</field>
+                        <field name="report">akademy/reports/application_criteria.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="application_criteria_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.application-criteria,-1</field>
+                        <field name="action" ref="application_criteria_report"/>
+                </record>
+        <!-- end RELATÓRIO DE CRITÉRIO DE ADMISSÃO -->
+
+        <!-- start RELATÓRIO DE NÍVEL ACADÉMICO -->
+                <record model="ir.action.report" id="academic_level_report">
+                        <field name="name">Níveis Académico</field>
+                        <field name="report_name">akademy.academic_level-report</field>
+                        <field name="model">akademy.academic-level</field>
+                        <field name="report">akademy/reports/academic_level.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="academic_level_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.academic-level,-1</field>
+                        <field name="action" ref="academic_level_report"/>
+                </record>
+        <!-- start RELATÓRIO DE NÍVEL ACADÉMICO -->
+
+        <!-- start RELATÓRIO DE CANDIDATURA -->
+                <record model="ir.action.report" id="candidate_report">
+                        <field name="name">Ficha do Candidato</field>
+                        <field name="report_name">akademy.candidates-report</field>
+                        <field name="model">akademy.candidates</field>
+                        <field name="report">akademy/reports/candidate.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="candidate_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.candidates,-1</field>
+                        <field name="action" ref="candidate_report"/>
+                </record>
+        <!-- end RELATÓRIO DE CANDIDATURA -->
+
+        <!-- start RELATÓRIO DE EXAME DE ACESSO -->
+                <record model="ir.action.report" id="applications_result_report">
+                        <field name="name">Pauta Exame de Acesso</field>
+                        <field name="report_name">akademy.application_criteria-report</field>
+                        <field name="model">akademy.application-criteria</field>
+                        <field name="report">akademy/reports/applications_result.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="applications_result_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.application-criteria,-1</field>
+                        <field name="action" ref="applications_result_report"/>
+                </record>
+        <!-- end RELATÓRIO DE EXAME DE ACESSO -->
+
+        <!-- start RELATÓRIO DE MATRÍCULA DISCENTE -->
+                <record model="ir.action.report" id="matriculation_report">
+                        <field name="name">Boletim Matrícula</field>
+                        <field name="report_name">akademy.matriculation-report</field>
+                        <field name="model">akademy.classe-student</field>
+                        <field name="report">akademy/reports/matriculation.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="matriculation_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-student,-1</field>
+                        <field name="action" ref="matriculation_report"/>
+                </record>
+        <!-- end RELATÓRIO DE MATRÍCULA DISCENTE-->
+
+        <!-- start RELATÓRIO DE MATRÍCULA DOCENTE -->
+                <record model="ir.action.report" id="matriculation_teacher_report">
+                        <field name="name">Recibo de Matrícula</field>
+                        <field name="report_name">akademy.matriculation_teacher-report</field>
+                        <field name="model">akademy.classe-teacher</field>
+                        <field name="report">akademy/reports/matriculation_teacher.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="matriculation_teacher_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-teacher,-1</field>
+                        <field name="action" ref="matriculation_teacher_report"/>
+                </record>
+        <!-- end RELATÓRIO DE MATRÍCULA DOCENTE-->
+
+        <!-- start RELATÓRIO DISCENTE TRANSFERIDO -->
+                <record model="ir.action.report" id="student_transfer_report">
+                        <field name="name">Boletim de Transferência</field>
+                        <field name="report_name">akademy.student_transfer-report</field>
+                        <field name="model">akademy.student-transfer</field>
+                        <field name="report">akademy/reports/student_transfer.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="student_transfer_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.student-transfer,-1</field>
+                        <field name="action" ref="student_transfer_report"/>
+                </record>
+        <!-- end RELATÓRIO DISCENTE TRANSFERIDO -->
+
+        <!-- start RELATÓRIO DISCENTE TRANSFERIDO EQUIVALENCIA-->
+                <record model="ir.action.report" id="equivalence_discipline_report">
+                        <field name="name">Gerar equivalencia</field>
+                        <field name="report_name">akademy.equivalence_discipline-report</field>
+                        <field name="model">akademy.student-transfer</field>
+                        <field name="report">akademy/reports/equivalence_discipline.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="equivalence_discipline_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.student-transfer,-1</field>
+                        <field name="action" ref="equivalence_discipline_report"/>
+                </record>
+        <!-- end RELATÓRIO DISCENTE TRANSFERIDO EQUIVALENCIA-->
+
+        <!-- start RELATÓRIO DE TURMAS -->
+                <!-- DADOS DA TURMA -->
+                <record model="ir.action.report" id="classes_report">
+                        <field name="name">Ficha da Turma</field>
+                        <field name="report_name">akademy.classes-report</field>
+                        <field name="model">akademy.classes</field>
+                        <field name="report">akademy/reports/classes.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="classes_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classes,-1</field>
+                        <field name="action" ref="classes_report"/>
+                </record>
+                <!-- HORÁRIO DA TURMA -->
+                <record model="ir.action.report" id="classes_timerule_report">
+                        <field name="name">Horário</field>
+                        <field name="report_name">akademy.classes-report</field>
+                        <field name="model">akademy.classes</field>
+                        <field name="report">akademy/reports/classes_timerule.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="classes_timerule_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classes,-1</field>
+                        <field name="action" ref="classes_timerule_report"/>
+                </record>
+                <!-- LISTA DE DISCENTES DA TURMA -->
+                <record model="ir.action.report" id="classes_students_report">
+                        <field name="name">Lista de Discentes</field>
+                        <field name="report_name">akademy.classes-report</field>
+                        <field name="model">akademy.classes</field>
+                        <field name="report">akademy/reports/classes_students.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="classes_students_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classes,-1</field>
+                        <field name="action" ref="classes_students_report"/>
+                </record>
+                <!-- LISTA DE DOCENTES DA TURMA -->
+                <record model="ir.action.report" id="classes_teachers_report">
+                        <field name="name">Lista de Docentes</field>
+                        <field name="report_name">akademy.classes-report</field>
+                        <field name="model">akademy.classes</field>
+                        <field name="report">akademy/reports/classes_teachers.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="classes_teachers_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classes,-1</field>
+                        <field name="action" ref="classes_teachers_report"/>
+                </record>
+        <!-- end RELATÓRIO DE TURMAS -->
+
+        <!-- start RELATÓRIO DE NOTAS DO DISCENTE -->
+                <record model="ir.action.report" id="student_grades_report">
+                        <field name="name">Boletim de notas</field>
+                        <field name="report_name">akademy.student_grades-report</field>
+                        <field name="model">akademy.classe-student</field>
+                        <field name="report">akademy/reports/student_grades.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="student_grades_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-student,-1</field>
+                        <field name="action" ref="student_grades_report"/>
+                </record>
+        <!-- end RELATÓRIO DE NOTAS DO DISCENTE -->
+
+        <!-- start RELATÓRIO DE PAUTA DA DISCIPLINA -->
+                <record model="ir.action.report" id="schedule_discipline_report">
+                        <field name="name">Gerar pauta</field>
+                        <field name="report_name">akademy.schedule_discipline-report</field>
+                        <field name="model">akademy.classe_teacher-discipline</field>
+                        <field name="report">akademy/reports/schedule_discipline.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="schedule_discipline_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe_teacher-discipline,-1</field>
+                        <field name="action" ref="schedule_discipline_report"/>
+                </record>
+        <!-- end RELATÓRIO DE PAUTA DA DISCIPLINA -->
+
+        <!-- start PLANO DE AULAS -->
+                <record model="ir.action.report" id="discipline_lessons_report">
+                        <field name="name">Plano de aula</field>
+                        <field name="report_name">akademy.classes_discipline-lessons_report</field>
+                        <field name="model">akademy.classe_teacher-lesson</field>
+                        <field name="report">akademy/reports/discipline_lessons.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="discipline_lessons_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe_teacher-lesson,-1</field>
+                        <field name="action" ref="discipline_lessons_report"/>
+                </record>
+        <!-- end PLANO DE AULAS -->
+
+        <!-- start RELATÓRIO DE DECLARAÇÃO SEM NOTAS / DECLARAÇÃO DE MATRÍCULA -->
+                <record model="ir.action.report" id="student_declaration_report">                                              
+                        <field name="name">Declaracão sem notas</field>
+                        <field name="report_name">akademy.student_declaration-report</field>
+                        <field name="model">akademy.classe-student</field>
+                        <field name="report">akademy/reports/student_declaration.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="student_declaration_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-student,-1</field>
+                        <field name="action" ref="student_declaration_report"/>
+                </record>
+        <!-- end RELATÓRIO DE DECLARAÇÃO SEM NOTAS / DECLARAÇÃO DE MATRÍCULA -->
+
+        <!-- start RELATÓRIO DE DECLARAÇÃO COM NOTAS -->
+                <record model="ir.action.report" id="student_declaration_grades_report">                                              
+                        <field name="name">Declaracão com notas</field>
+                        <field name="report_name">akademy.student_declaration_grades-report</field>
+                        <field name="model">akademy.classe-student</field>
+                <field name="report">akademy/reports/student_declaration_grades.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="student_declaration_grades_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-student,-1</field>
+                        <field name="action" ref="student_declaration_grades_report"/>
+                </record>
+        <!-- end RELATÓRIO DE DECLARAÇÃO COM NOTAS -->
+
+        <!-- start RELATÓRIO DE CERTIFICADO -->
+                <record model="ir.action.report" id="student_certificate_report">                                              
+                        <field name="name">Certificado</field>
+                        <field name="report_name">akademy.student_certificate-report</field>
+                        <field name="model">akademy.classe-student</field>
+                <field name="report">akademy/reports/student_certificate.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="student_certificate_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe-student,-1</field>
+                        <field name="action" ref="student_certificate_report"/>
+                </record>
+        <!-- end RELATÓRIO DE CERTIFICADO -->
+	</data>
+</trytond>

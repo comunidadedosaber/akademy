@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<tree>         
+    <field name="lesson_time"/>       
+    <field name="start_lesson">
+        <suffix name="start_lesson" string="Horas"/>
+    </field> 
+    <field name="end_lesson">
+        <suffix name="end_lesson" string="Horas"/>
+    </field>
+    <field name="mon"/>
+    <field name="mon_room"/>
+    <field name="tue"/>
+    <field name="tue_room"/>
+    <field name="wed"/>
+    <field name="wed_room"/>
+    <field name="thu"/>
+    <field name="thu_room"/>
+    <field name="fri"/>
+    <field name="fri_room"/>
+    <field name="sat"/>
+    <field name="sat_room"/>  
+</tree>

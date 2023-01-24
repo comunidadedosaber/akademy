@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<form>
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">    
+        <label name="name"/>
+        <field name="name"/>  
+        <label name="code"/>
+        <field name="code"/>
+        <label name="academic_level"/>
+        <field name="academic_level"/>
+        <label name="area"/>
+        <field name="area"/> 
+        <label name="course"/>
+        <field name="course"/>
+        <label name="classe"/>
+        <field name="classe"/>
+        <label name="hours"/>
+        <field name="hours"/>
+    </group> 
+    <notebook colspan="4">
+        <page string="Disciplina" id="student_discipline">
+            <field name="studyplan_discipline" mode="tree,form" colspan="4"
+                view_ids="akademy.studyplan_discipline_view_list,akademy.studyplan_discipline_view_form"/>
+        </page>
+    </notebook>
+</form>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<tree>    
+    <field name="code"/>        
+    <field name="name"/> 
+    <field name="lective_year"/>
+    <field name="classe"/>
+    <field name="time_course"/>   
+    <field name="modality"/>    
+    <field name="max_student"/>    
+    <field name="max_teacher"/>
+    <field name="studyplan"/>     
+    <field name="coordinator"/>
+    <field name="company"/>
+    <button name="matriculation_state" string="Avaliar matrícula"/>
+</tree>

@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<trytond>
+	<data>
+        <!-- start DISCENTES PUBLICAR NOTAS -->
+            <record model="ir.action.wizard" id="act_publicgrades_wizard">
+                <field name="name">Publicar Notas</field>
+                <field name="wiz_name">akademy.wizpublicgrades_create</field>
+            </record>
+            <record model="ir.ui.view" id="act_publicgrades_wizard_from">
+                <field name="model">akademy.wizpublicgrades_create.start</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/publicgrades_wizcreate_form</field>            
+            </record>
+            <menuitem action="act_publicgrades_wizard" parent="akademy.akademy_avaliations" id="akademy_publicgrades_wiz" 
+                sequence="12"/>        
+        <!-- end DISCENTES PUBLICAR NOTAS -->
+	
+        <!-- start DISCENTES AVALIAÇÕES -->
+            <record model="ir.ui.view" id="classe_student_grades_view_form">
+                <field name="model">akademy.classe_student-grades</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/classe_student_grades_form</field>
+            </record>
+            <record model="ir.ui.view" id="classe_student_grades_view_list">
+                <field name="model">akademy.classe_student-grades</field>
+                <field name="type">tree</field>
+                <field name="name">avaliation/classe_student_grades_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_classe_student_grades">
+                <field name="name">Avaliações</field>
+                <field name="res_model">akademy.classe_student-grades</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_classe_student_grades_view_form">
+                <field name="sequence" eval="16"/>
+                <field name="view" ref="classe_student_grades_view_form"/>
+                <field name="act_window" ref="act_classe_student_grades"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_classe_student_grades_view_list">
+                <field name="sequence" eval="15"/>
+                <field name="view" ref="classe_student_grades_view_list"/>
+                <field name="act_window" ref="act_classe_student_grades"/>
+            </record>
+            <menuitem name="Avaliações" parent="akademy.akademy_avaliations" id="akademy_classe_student_grades" 
+                sequence="14" action="act_classe_student_grades"/>
+        <!-- end DISCENTES AVALIAÇÕES -->
+
+        <!-- start DISCENTES PUBLICAR NOTAS -->
+            <record model="ir.action.wizard" id="act_schedule_wizard">
+                <field name="name">Gerar Pauta</field>
+                <field name="wiz_name">akademy.wizschedule_create</field>
+            </record>
+            <record model="ir.ui.view" id="act_schedule_wizard_from">
+                <field name="model">akademy.wizschedule_create.start</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/schedule_wizcreate_form</field>            
+            </record>
+            <menuitem action="act_schedule_wizard" parent="akademy.akademy_avaliations" id="akademy_schedule_wiz" 
+                sequence="17"/>        
+        <!-- end DISCENTES PUBLICAR NOTAS -->
+
+        <!-- start DISCENTES AVALIAÇÕES -->
+            <record model="ir.ui.view" id="classes_grades_view_form">
+                <field name="model">akademy.classes-grades</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/classes_grades_form</field>
+            </record>
+            <record model="ir.ui.view" id="classes_grades_view_list">
+                <field name="model">akademy.classes-grades</field>
+                <field name="type">tree</field>
+                <field name="name">avaliation/classes_grades_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_classes_grades">
+                <field name="name">Pautas</field>
+                <field name="res_model">akademy.classes-grades</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_classes_grades_view_form">
+                <field name="sequence" eval="20"/>
+                <field name="view" ref="classes_grades_view_form"/>
+                <field name="act_window" ref="act_classes_grades"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_classes_grades_view_list">
+                <field name="sequence" eval="19"/>
+                <field name="view" ref="classes_grades_view_list"/>
+                <field name="act_window" ref="act_classes_grades"/>
+            </record>
+            <menuitem name="Pautas" parent="akademy.akademy_avaliations" id="akademy_classes_grades" 
+                sequence="18" action="act_classes_grades"/>
+        <!-- end DISCENTES AVALIAÇÕES -->
+	
+        <!-- start DISCENTES PUBLICAR PERCURSO -->
+            <record model="ir.action.wizard" id="act_publichistoric_wizard">
+                <field name="name">Gerar Percurso</field>
+                <field name="wiz_name">akademy.wizpublichistoric_create</field>
+            </record>
+            <record model="ir.ui.view" id="act_publichistoric_wizard_from">
+                <field name="model">akademy.wizpublichistoric_create.start</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/publichistoric_wizcreate_form</field>            
+            </record>
+            <menuitem action="act_publichistoric_wizard" parent="akademy.akademy_avaliations" id="akademy_publichistoric_wiz" 
+                sequence="21"/>        
+        <!-- end DISCENTES PUBLICAR PERCURSO -->
+        
+        <!-- start DISCENTES HISTÓRICO AVALIAÇÕES -->
+            <record model="ir.ui.view" id="historic_grades_view_form">
+                <field name="model">akademy.historic-grades</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/historic_grades_form</field>
+            </record>
+            <record model="ir.ui.view" id="historic_grades_view_list">
+                <field name="model">akademy.historic-grades</field>
+                <field name="type">tree</field>
+                <field name="name">avaliation/historic_grades_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_historic_grades">
+                <field name="name">Percurso Académico</field>
+                <field name="res_model">akademy.historic-grades</field>
+            </record>            
+            <record model="ir.action.act_window.view" id="act_historic_grades_view_form">
+                <field name="sequence" eval="24"/>
+                <field name="view" ref="historic_grades_view_form"/>
+                <field name="act_window" ref="act_historic_grades"/>
+            </record>            
+            <record model="ir.action.act_window.view" id="act_historic_grades_view_list">
+                <field name="sequence" eval="23"/>
+                <field name="view" ref="historic_grades_view_list"/>
+                <field name="act_window" ref="act_historic_grades"/>
+            </record>
+            <menuitem name="Percurso Académico" parent="akademy.akademy_avaliations" id="akademy_historic_grades" 
+                sequence="22" action="act_historic_grades"/>    
+        <!-- end DISCENTES HISTÓRICO AVALIAÇÕES -->     
+	</data>
+</trytond>

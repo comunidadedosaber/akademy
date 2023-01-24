@@ -1,0 +1,11 @@
+<data>
+    <xpath expr="/form/label[@name='party']" position="before">
+        <label id="labr2" colspan="4" xalign="0.0" string="ENTIDADE"/>
+        <group id="grpday2" colspan="4" col="4">
+            <label name="employee"/>
+            <field name="employee"/>
+            <label name="teacher"/>
+            <field name="teacher"/>
+        </group>
+    </xpath>
+</data>

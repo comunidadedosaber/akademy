@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<form> 
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">    
+        <label name="employee"/>
+        <field name="employee"/>   
+        <label name="school_position"/>
+        <field name="school_position"/> 
+        <label name="academiclevel"/>
+        <field name="academiclevel"/>
+        <label name="area"/>
+        <field name="area"/> 
+        <label name="course"/>
+        <field name="course"/> 
+        <label name="course_classe"/>
+        <field name="course_classe"/>     
+        <label name="lective_year"/>
+        <field name="lective_year"/>
+    </group> 
+</form>

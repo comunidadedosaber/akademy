@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<form>
+    <!--
+    <label name="public_grades"/>
+    <field name="public_grades" colspan="4"/>
+    <label name="public_grades_historic"/>
+    <field name="public_grades_historic" colspan="4"/>
+    -->
+	<label id="labr1" colspan="4" xalign="0.0" string="ASSISTENTE"/>
+    <group id="grpday1" colspan="4" col="4"> 
+        <label name="quarter"/>
+        <field name="quarter"/>
+        <label name="classes"/>
+        <field name="classes"/>
+        <label name="studyplan_discipline"/>
+        <field name="studyplan_discipline"/>
+        <label name="metric_avaliation"/>
+        <field name="metric_avaliation"/>
+        <!--- <label name="studyplan" invisible="1"/> -->
+        <field name="studyplan" invisible="1"/>
+    </group> 
+</form>

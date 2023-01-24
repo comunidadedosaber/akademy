@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<data>
+  <xpath expr="/tree/field[@name='name']" position="after">
+    <field name="marital_status"/>
+    <field name="gender"/>
+    <field name="date_birth"/>
+  </xpath>
+  <xpath expr="/tree/field[@name='tax_identifier']" position="replace_attributes">
+    <field name="tax_identifier" tree_invisible="1"/>
+  </xpath>
+  <xpath expr="/tree/field[@name='lang']" position="replace_attributes">
+    <field name="lang" tree_invisible="1"/>
+  </xpath>
+</data>
