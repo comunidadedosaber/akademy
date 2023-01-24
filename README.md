@@ -17,7 +17,9 @@ O modulo de gestão académica têm como função principal fazer a gestão acad
 <h2 align="center">Documentação</h2>
 
 [Wiki Akademy](https://github.com/comunidadedosaber/akademy/wiki)
+
 [Tryton](https://docs.tryton.org/en/latest/)
+
 [PostgreSQL](https://www.postgresql.org/docs/current/)
 
 <hr>
