@@ -1,7 +1,7 @@
 from trytond.model import fields
 from trytond.pyson import Eval, Not, Bool
 from trytond.pool import PoolMeta
-from .varibles import sel_sex, sel_marital_status
+from .variables import sel_sex, sel_marital_status
 
 # extende o modulo party.party adicionando alguns campos.
 

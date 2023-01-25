@@ -1,7 +1,6 @@
 from trytond.pool import Pool
 from trytond.report import Report
 from datetime import datetime, date
-#from .varibales import sel_schedule
 
 __all_ = ['StudyplanReport', 'AppCriteriaReport', 'AcademicLevelReport'
 		'ApplicationResultReport','CandidatesReport', 'StudentTransferReport', 'MatriculationReport', 

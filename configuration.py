@@ -1,7 +1,7 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
 from trytond.pyson import Eval, Not, Bool
 from datetime import date
-from .varibles import sel_state, sel_modality, sel_course_yaer, sel_position
+from .variables import sel_state, sel_modality, sel_course_yaer, sel_position
 
 __all__ = [
         'LectiveYear', 'SchoolChart', 'Quarter', 'Area', 'Course', 'Classe', 'CourseClasse', 'AcademicLevel',

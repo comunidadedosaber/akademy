@@ -4,7 +4,7 @@ from trytond.model import Check, ModelSQL, ModelView, Unique, fields
 from trytond.pool import Pool
 from trytond.pyson import Bool, Eval, Not
 from trytond.wizard import Button, StateTransition, StateView, Wizard
-from .varibles import sel_reference, sel_result
+from .variables import sel_reference, sel_result
 
 __all__ = ['Candidates', 'Applications', 'ApplicationsResult',
         'StudentTransfer', 'StudentTransferDiscipline',

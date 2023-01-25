@@ -3,7 +3,7 @@ from trytond.pool import Pool
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pyson import Eval
 from datetime import date
-from .varibles import sel_presence, sel_schedule
+from .variables import sel_presence, sel_schedule
 
 __all__ = ['PublicGradesCreateWizard', 'PublicGradesCreateWizardStart', 
         'ScheduleCreateWizard', 'ScheduleCreateWizardStart',
