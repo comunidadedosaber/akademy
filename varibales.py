@@ -111,7 +111,7 @@ sel_report_type = (
 )
 
 sel_schedule = (
-    ('mini', 'Mini Pauta'), ('Pauta disciplina', 'Pauta disciplina')
+    ('Pauta da disciplina', 'Pauta da disciplina')
 )
 
 sel_lesson_type = (
