@@ -4,7 +4,7 @@ from trytond.wizard import Button, Wizard, StateView, StateTransition
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from datetime import date
-from .varibales import sel_modality, sel_state_teacher, sel_state_student, sel_registration_type, sel_classes_time, sel_lesson_type
+from .varibles import sel_modality, sel_state_teacher, sel_state_student, sel_registration_type, sel_classes_time, sel_lesson_type
 
 __all_ = ['Classes', 'ClasseStudent', 'ClasseStudentDiscipline', 'ClasseTeacher', 'ClasseTeacherDiscipline', 
 		'ClasseTimeRlue', 'ClasseTeacherLesson',
