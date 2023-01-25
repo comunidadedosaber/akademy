@@ -3,7 +3,7 @@ from trytond.pyson import Eval, If, Not, Bool
 from trytond.pool import Pool, PoolMeta
 from datetime import date, datetime
 from trytond.transaction import Transaction
-from .varibales import sel_state_student
+from .variables import sel_state_student
 
 # extende o modulo company.employee adicionando alguns campos.
 
