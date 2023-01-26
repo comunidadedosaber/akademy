@@ -70,11 +70,13 @@ class PublicGradesCreateWizard(Wizard):
         Quarter= Pool().get('akademy.quarter') 
 
         #Verifica se o trimestre foi selecionado
-        if self.start.quarter.studyplan_avaliations:        
-            quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
-            quarter_metric = quarter_metric[0].studyplan_avaliations
-        else:
-            quarter_metric = self.start.quarter.studyplan_avaliations
+        if self.start.quarter: 
+            quarter = self.start.quarter 
+            quarter_metric = self.start.quarter.studyplan_avaliations 
+        else:    
+            quarter = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
+            quarter  = quarter[0]
+            quarter_metric = quarter.studyplan_avaliations
 
         #ESTADO DA MATRÍCULA
         state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
@@ -92,7 +94,7 @@ class PublicGradesCreateWizard(Wizard):
                                     if studyplan_avaliations.metric_avaliation == self.start.metric_avaliation:  
                                         #Lança a nota nas avaliações
                                         ClasseStudentGrades = StudentGrades(
-                                            quarter = self.start.quarter,
+                                            quarter = quarter,
                                             lective_year = self.start.classes.lective_year,
                                             studyplan = self.start.studyplan_discipline.studyplan.id,
                                             classes = self.start.classes,
@@ -151,10 +153,9 @@ class ScheduleCreateWizard(Wizard):
 
     def transition_discipline_schedule(self): 
         Quarter = Pool().get('akademy.quarter') 
-        m = "mini"
 
-        if self.start.schedule == m:
-            # Verifica se o trimestre foi em selecionado
+        # Verifica se o tipo de pauta e o trimestre foram selecionado
+        if self.start.schedule:
             if self.start.quarter:        
                 quarter_metric = self.start.quarter
             else:
