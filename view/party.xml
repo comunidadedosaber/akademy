@@ -18,7 +18,7 @@
     <!-- end ENTIDADE -->  
 
     <!-- start EMPRESA -->
-      <menuitem name="Empresa" parent="akademy_party" id="akademy_company" 
+      <menuitem name="Instituição" parent="akademy_party" id="akademy_company" 
           icon="tryton-company" sequence="3" action="company.act_company_tree"/> 
 
       <menuitem name="Funcionários" parent="akademy_party" id="akademy_employee" 

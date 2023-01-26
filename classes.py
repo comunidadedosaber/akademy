@@ -232,6 +232,10 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 	def default_modality(cls):
 		return "Presencial"
 
+	@classmethod
+	def default_state(cls):
+		return "Matrículado(a)"
+
 	def get_rec_name(self, name):
 		t1 = '%s' % \
 			(self.studyplan_discipline.rec_name)
