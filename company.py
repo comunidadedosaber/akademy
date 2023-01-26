@@ -88,8 +88,8 @@ class CompanyStudent(ModelSQL, ModelView):
         help="Nome do discente.")
     company = fields.Many2One(
         'company.company', 'Instituição',
-        states={'readonly':True}, required=True, select=True,
-        help="Nome da instituição em que o discente precedente.")
+        required=True,
+        help="Nome da instituição.")
     academiclevel = fields.Many2One(
         model_name='akademy.academic-level', string=u'Nível académico', 
         required=True)
@@ -115,14 +115,6 @@ class CompanyStudent(ModelSQL, ModelView):
     @classmethod
     def default_start_date(cls):
         return date.today()
-
-    @staticmethod
-    def default_main_company():
-        return Transaction().context.get('company')
-
-    @classmethod
-    def default_company(cls):
-        return cls.default_main_company()
 
     def get_rec_name(self, name):
         return self.party.rec_name
