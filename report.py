@@ -276,34 +276,50 @@ class ScheduleDisciplineReport(Report):
 
 	@classmethod
 	def get_context(cls, records, data):
-		StudentGrades = Pool().get('akademy.classe_teacher-discipline')
+		TeacherDiscipline = Pool().get('akademy.classe_teacher-discipline')
 		Quarter = Pool().get('akademy.quarter')
 
 		context = super().get_context(records, data)
-		student = StudentGrades.browse(data['ids'])
+		teacher_discipline = TeacherDiscipline.browse(data['ids'])		
 
-		grades = []
-		student_number = 0
-		date = datetime.now().date()	
+		schedule = []
+		student_number = 0		
 		#Verifica o trimestre com base na data actual	
-		quarter = Quarter.search([('start', '<=', date), ('end', '>=', date)])
+		quarter = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
 
-		for student_list in student:
-			for student_grades_list in student_list.classe_teacher.classes.classes_grades:				
-				if student_grades_list.student_discipline.studyplan_discipline.discipline == student_list.studyplan_discipline.discipline:					
-					for grade_quarter in quarter:
-						if grade_quarter == student_grades_list.quarter:			
-							student_number = student_number +1
-							grades.append(
-								(
-									student_number,
-									student_grades_list.student.student.party.name,
-									student_grades_list.value
-								)
-							)		
+		classes_schedule = Pool().get('akademy.classes-grades')
 
-		context['student_list'] = student
-		context['student_grades'] = grades
+		for discipline in teacher_discipline:
+			for classe_student_discipline in discipline.studyplan_discipline.classe_student_discipline:	
+				if classe_student_discipline.studyplan_discipline.discipline == discipline.studyplan_discipline.discipline:
+				
+					#Pesquisa pela pauta do discente na disciplina
+					discipline_schedule = classes_schedule.search([
+						('lective_year', '=', discipline.classe_teacher.classes.lective_year),
+						('classes', '=', discipline.classe_teacher.classes),
+						('quarter', '=', quarter[0]),
+						('student_discipline', '=', classe_student_discipline),
+						#('employee', '=', discipline.classe_teacher.employee.id)
+					])
+					
+					#Incrementa o número de ordem
+					student_number = student_number +1
+					#Lista de discentes
+					schedule.append(
+						(
+							student_number,
+							discipline_schedule[0].student_discipline.classe_student.student.party.name,
+							discipline_schedule[0].mac,
+							discipline_schedule[0].pp,
+							discipline_schedule[0].pt,
+							discipline_schedule[0].value
+						)
+					
+					)			
+
+		context['discipline'] = teacher_discipline
+		context['schedule'] = schedule
+		context['quarter'] = quarter[0]
 		context['create_date'] = date.today()
 
 		return context
