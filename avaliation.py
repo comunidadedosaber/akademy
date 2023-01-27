@@ -163,21 +163,31 @@ class ScheduleCreateWizard(Wizard):
                 quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
                 quarter_metric = quarter_metric[0]
             
-            ScheduleCreateWizard.mini_schedule(self.start.classes, self.start.studyplan, self.start.studyplan_discipline, self.start.schedule, quarter_metric)               
+            ScheduleCreateWizard.schedule_discipline_(self.start.classes, self.start.studyplan, self.start.studyplan_discipline, self.start.schedule, quarter_metric)               
 
         return 'end'
 
     @classmethod
-    def mini_schedule(cls, classes, studyplan, studyplan_discipline, schedule, quarter):        
-        arithmetic_sum  = 0
-        weighted_sum = 0
-        count_arithmetic = 0
+    def schedule_discipline_(cls, classes, studyplan, studyplan_discipline, schedule, quarter):        
         schedule_list = []        
         state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
 
         for student in classes.classe_student:
             #VERIFICA O ESTADO DA MATRÍCULA
-            if student.state not in state_student:            
+            if student.state not in state_student:
+                arithmetic_sum  = 0
+                weighted_sum = 0
+                count_arithmetic = 0 
+                #Avaliação de MAC
+                mac = 0
+                mac_count = 0
+                #Prova do professor
+                pp = 0
+                pp_count = 0
+                #prova Trimestral
+                pt = 0
+                pt_count = 0   
+
                 for student_discipline in student.classe_student_discipline:
                     #Verifica se o plano de estudo disciplina é o mesmo
                     if student_discipline.studyplan_discipline == studyplan_discipline:                    
@@ -186,21 +196,54 @@ class ScheduleCreateWizard(Wizard):
                             if grades.quarter == quarter:  
                                 #Verifica se a avaliação tem como operação aritimétrica                                      
                                 if grades.studyplan_avaliation.perct_arithmetic == True:
-                                    arithmetic_sum += grades.value
-                                    count_arithmetic += 1
+                                    #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
+                                        mac += round(grades.value)
+                                        mac_count += 1
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
+                                        pp += round(grades.value)
+                                        pp_count += 1
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
+                                        pt += round(grades.value)
+                                        pt_count += 1
+
+                                    #Cálculo das avaliações
+                                    #count_arithmetic = mac_count + pp_count + pt_count
+                                    #arithmetic_sum = mac + pp + pt
+
                                 #Verifica se a avaliação tem como operação percentual
                                 if grades.studyplan_avaliation.perct_weighted == True:
-                                    weighted_sum += (grades.value * (grades.studyplan_avaliation.percent / 100))                                                        
-                                
-                        if count_arithmetic != 0:
+                                    #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
+                                        mac += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))                                          
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
+                                        pp += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))                                          
+                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
+                                        pt += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))  
+
+                                    #Cálculo das avaliações
+                                    weighted_sum = mac + pp + pt  
+
+                        #Cálculo das avaliações para serem mostradas na pauta
+                        mac = mac / mac_count
+                        pp = pp / pp_count
+                        pt = pt / pt_count
+
+                        #Operação realizada com base em 3 avaliações
+                        arithmetic_sum = mac + pp + pt
+                        count_arithmetic = 3
+                        
+                        #Cálculo da média final
+                        if count_arithmetic > 0:
                             #Caso tenha uma avaliação percentuas
-                            if weighted_sum != 0:
+                            if weighted_sum > 0:
                                 #Cálculo final é a operação aritimétrica e percentual
                                 sum = (weighted_sum + (arithmetic_sum / count_arithmetic)) / 2
                             else: 
                                 sum = (arithmetic_sum / count_arithmetic)
                         else:
-                            sum = weighted_sum
+                            sum = weighted_sum                      
+                        
 
                         schedule_list.append(
                             (
@@ -212,19 +255,19 @@ class ScheduleCreateWizard(Wizard):
                                 student_discipline,
                                 sum,
                                 studyplan,
-                                studyplan_discipline             
+                                studyplan_discipline,
+                                mac,
+                                pp,
+                                pt,             
                             )
-                        )
-                        
-                        arithmetic_sum  = 0
-                        weighted_sum = 0
-                        count_arithmetic = 0
+                        )                                                
 
         #Criação de pautas
         if len (schedule_list) > 0:
-            ClassesGrades.schedule_grade(schedule_list)
+            ClassesGrades.create_schedule(schedule_list)
         else:
             cls.raise_user_error("Infelizmente não foi possivél criar a pauta, porque os estudantes ainda não possuem avaliações lançadas.")
+
 
 
 class PublicHistoricCreateWizardStart(ModelView):
@@ -425,6 +468,9 @@ class ClassesGrades(ModelSQL, ModelView):
     __name__ = 'akademy.classes-grades'
 
     code = fields.Char(string=u'Código', size=20)
+    mac = fields.Numeric(string=u'MAC', digits=(2,1))
+    pp = fields.Numeric(string=u'PP', digits=(2,1))
+    pt = fields.Numeric(string=u'PT', digits=(2,1))
     value = fields.Numeric(string=u'Nota', digits=(2,1))
     studyplan = fields.Function(
 		fields.Integer(
@@ -479,7 +525,7 @@ class ClassesGrades(ModelSQL, ModelView):
         return 0 
 
     @classmethod
-    def schedule_grade(cls, student_list):
+    def create_schedule(cls, student_list):
         StudentSchedule = Pool().get('akademy.classes-grades') 
         schedule = []     
 
@@ -496,6 +542,9 @@ class ClassesGrades(ModelSQL, ModelView):
             
             if len(student_update_grade) > 0:
                 student_update_grade[0].value = round(list[6])
+                student_update_grade[0].mac = round(list[9])
+                student_update_grade[0].pp = round(list[10])
+                student_update_grade[0].pt = round(list[11])
                 student_update_grade[0].save()
             else:                
                 schedule = StudentSchedule(
@@ -508,7 +557,10 @@ class ClassesGrades(ModelSQL, ModelView):
                     student_discipline = list[5],
                     value = round(list[6]),
                     studyplan = list[7],
-                    studyplan_discipline = list[8]
+                    studyplan_discipline = list[8],
+                    mac = round(list[9]),
+                    pp = round(list[10]),
+                    pt = round(list[11])
                 )  
                 schedule.save() 
 
@@ -522,8 +574,20 @@ class ClassesGrades(ModelSQL, ModelView):
 			u'Não foi possivél lançar a nota do discente, por favor verifica se o discente já têm uma média na disciplina.'),
             ('max_value', Check(table, table.value <= 20),
             u'Não foi possivél lançar a nota do discente, por favor verifica se a média é superior a 20 valores.'),
-            ('min_value', Check(table, table.value >= 0),
-            u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.')
+            ('max_mac', Check(table, table.mac <= 20),
+            u'Não foi possivél lançar a nota do discente, por favor verifica se o MAC é superior a 20 valores.'),
+            ('max_pp', Check(table, table.pp <= 20),
+            u'Não foi possivél lançar a nota do discente, por favor verifica se o PP é superior a 20 valores.'),
+            ('max_pt', Check(table, table.pt <= 20),
+            u'Não foi possivél lançar a nota do discente, por favor verifica se O PT é superior a 20 valores.'),
+            ('min_value', Check(table,table.value >= 0),
+            u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.'),
+            ('min_mac', Check(table, table.mac >= 0),
+            u'Não foi possivél lançar a nota do discente, por favor se o MAC é inferior a 0 valores.'),
+            ('min_pp', Check(table, table.pp >= 0),
+            u'Não foi possivél lançar a nota do discente, por favor se o PP é inferior a 0 valores.'),
+            ('min_pt', Check(table, table.pt >= 0),
+            u'Não foi possivél lançar a nota do discente, por favor se o PT é inferior a 0 valores.')
         ]
 
 

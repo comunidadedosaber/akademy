@@ -6,7 +6,16 @@
     <field name="quarter"/> 
     <field name="schedule"/> 
     <field name="student_discipline"/> 
-    <field name="student"/>           
+    <field name="student"/>  
+    <field name="mac">
+        <suffix name="mac" string="Valores"/>
+    </field> 
+    <field name="pp">
+        <suffix name="pp" string="Valores"/>
+    </field> 
+    <field name="pt">
+        <suffix name="pt" string="Valores"/>
+    </field>                  
     <field name="value">
         <suffix name="value" string="Valores"/>
     </field>      
