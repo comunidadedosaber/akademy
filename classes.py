@@ -186,12 +186,7 @@ class ClasseStudent(ModelSQL, ModelView):
 			('key', Unique(table, table.student, table.classes), 
 			u'Não foi possivél cadastrar o novo discente, por favor verifica se o discente já está matriculado nesta turma.')
 		]
-		#cls._buttons.update({
-        #    'discipline_association_button':{
-        #        'invisible': Eval('state')
-        #    }
-        #}) 
-		cls._order = [('student', 'ASC')]
+		cls._order = [('student.paty', 'ASC')]
 		
 	
 class ClasseStudentDiscipline(ModelSQL, ModelView):
@@ -249,6 +244,7 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 			('uniq_classes', Unique(table, table.classe_student, table.studyplan_discipline),
 			u'Não foi possivél associar o discente a discipline, por favor verica se o discente já está a frequentar está disciplina nesta turma.')
 		]
+		cls._order = [('studyplan_discipline.discipline', 'ASC')]        
 
 
 class ClasseTeacher(ModelSQL, ModelView):
@@ -290,7 +286,7 @@ class ClasseTeacher(ModelSQL, ModelView):
 			('key', Unique(table, table.employee, table.classes), 
 			u'Não foi possivél matricular o docente, por favor verifica se o docente já existe na turma.')
 		]
-		cls._order = [('employee', 'ASC')]	
+		cls._order = [('employee.party', 'ASC')]	
 	
 
 class ClasseTeacherDiscipline(ModelSQL, ModelView):
@@ -346,6 +342,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 			('key', Unique(table, table.classe_teacher, table.studyplan_discipline),
 			u'Não foi possivél associar o docente a disciplina, por favor verifica se o mesmo já está a lecionar esta disciplina na turma.')
 		]
+		cls._order = [('studyplan_discipline.discipline', 'ASC')]        
 
 
 class ClasseTimeRule(ModelSQL, ModelView):

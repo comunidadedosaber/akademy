@@ -121,16 +121,6 @@ class Applications(ModelSQL, ModelView):
             delta = relativedelta(now, self.candidate.party.date_birth)
             years_months_days = delta.years
             return years_months_days
-
-    #Verifica a fase de acordo com a data da candidatura
-    #def default_phase(cls):
-    #    Phase = Pool().get('akademy.phase')
-    #    phase_admission = Phase.search([('start', '<=', date.today()), ('end', '>=', date.today())])
-        
-    #    if len(phase_admission) > 0:
-    #        return phase_admission[0]
-    #    else:
-    #        return None
     
     @classmethod
     def default_reference(cls):
@@ -245,7 +235,7 @@ class Applications(ModelSQL, ModelView):
                 'invisible': Eval('state')
             }
         })        
-        cls._order = [('candidate', 'ASC')]               
+        cls._order = [('candidate.party', 'ASC')]               
                           	
     
 class ApplicationsResult(ModelSQL, ModelView):
@@ -295,8 +285,8 @@ class ApplicationsResult(ModelSQL, ModelView):
         cls._sql_constraints = [
             ('key', Unique(table, table.application, table.application_criteria),
             u'A candidatura já foi avalida.')
-        ]     
-        cls._order = [('application', 'ASC')] 
+        ]
+        cls._order = [('application.candidate.party', 'ASC')]
         cls._buttons.update({
             'application_matriculation': {
                 'invisible': Eval('result') == 'Não Admitido',

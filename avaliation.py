@@ -459,7 +459,8 @@ class ClasseStudentGrades(ModelSQL, ModelView):
             u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
             ('grade_min', Check(table, table.value >= 0),
             u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
-        ]            
+        ]   
+        cls._order = [('classes', 'ASC')]          
 
 
 #ClassesSchedule  
@@ -589,6 +590,7 @@ class ClassesGrades(ModelSQL, ModelView):
             ('min_pt', Check(table, table.pt >= 0),
             u'Não foi possivél lançar a nota do discente, por favor se o PT é inferior a 0 valores.')
         ]
+        cls._order = [('classes', 'ASC')] 
 
 
 class HistoricGrades(ModelSQL, ModelView):
@@ -689,3 +691,4 @@ class HistoricGrades(ModelSQL, ModelView):
             ('min_average', Check(table, table.average >= 0),
             u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.')
         ]
+        cls._order = [('classes', 'ASC')] 
