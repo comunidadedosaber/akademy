@@ -37,7 +37,7 @@ class Employee(ModelSQL, ModelView):
         'akademy.classe-teacher', 'employee',
         string=u'Associar Turma')
     classes = fields.One2Many(
-        'akademy.classes', 'coordenator_studyplan',
+        'akademy.classes', 'coordinator',
         string=u'Turma')
 
     @classmethod
