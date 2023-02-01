@@ -15,7 +15,7 @@
                 </record>
         <!-- end RELATÓRIO DE PLANO DE ESTUDO -->
 
-        <!-- start RELATÓRIO DE CRITÉRIO DE ADM\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\        \\        ISSÃO -->
+        <!-- start RELATÓRIO DE CRITÉRIO DE ADMISSÃO -->
                 <record model="ir.action.report" id="application_criteria_report">
                         <field name="name">Critério de Admissão</field>
                         <field name="report_name">akademy.application_criteria-report</field>
@@ -194,7 +194,7 @@
 
         <!-- start RELATÓRIO DE PAUTA DA DISCIPLINA -->
                 <record model="ir.action.report" id="schedule_discipline_report">
-                        <field name="name">Gerar pauta</field>
+                        <field name="name">Gerar pauta trimestral</field>
                         <field name="report_name">akademy.schedule_discipline-report</field>
                         <field name="model">akademy.classe_teacher-discipline</field>
                         <field name="report">akademy/reports/schedule_discipline.odt</field>
@@ -205,6 +205,20 @@
                         <field name="action" ref="schedule_discipline_report"/>
                 </record>
         <!-- end RELATÓRIO DE PAUTA DA DISCIPLINA -->
+
+        <!-- start RELATÓRIO DE PAUTA FINAL DA DISCIPLINA -->
+                <record model="ir.action.report" id="schedule_discipline_final_report">
+                        <field name="name">Gerar pauta final</field>
+                        <field name="report_name">akademy.schedule_discipline_final-report</field>
+                        <field name="model">akademy.classe_teacher-discipline</field>
+                        <field name="report">akademy/reports/schedule_discipline_final.odt</field>
+                </record>
+                <record model="ir.action.keyword" id="schedule_discipline_final_report_keyword">
+                        <field name="keyword">form_print</field>
+                        <field name="model">akademy.classe_teacher-discipline,-1</field>
+                        <field name="action" ref="schedule_discipline_final_report"/>
+                </record>
+        <!-- end RELATÓRIO DE PAUTA FINAL DA DISCIPLINA -->
 
         <!-- start PLANO DE AULAS -->
                 <record model="ir.action.report" id="discipline_lessons_report">

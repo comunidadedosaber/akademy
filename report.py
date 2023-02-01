@@ -4,7 +4,7 @@ from datetime import datetime, date
 
 __all_ = ['StudyplanReport', 'AppCriteriaReport', 'AcademicLevelReport'
 		'ApplicationResultReport','CandidatesReport', 'StudentTransferReport', 'MatriculationReport', 
-		'MatriculationTeacherReport', 'ClassesReport', 'ScheduleDisciplineReport', 'ClassesDisciplineLessonsReport',
+		'MatriculationTeacherReport', 'ClassesReport', 'ScheduleDisciplineFinalReport', 'ScheduleDisciplineReport', 'ClassesDisciplineLessonsReport',
 		'StudentDeclarationReport', 'StudentGradesReport', 'StudentDeclarationGradesReport', 'StudentCertificateReport',
 		'EquivalenceDisciplineReport']
 
@@ -323,6 +323,63 @@ class ScheduleDisciplineReport(Report):
 		context['create_date'] = date.today()
 
 		return context
+
+
+
+#REPORT PAUTA FINAL DISCIPINA
+class ScheduleDisciplineFinalReport(Report):
+	__name__ = 'akademy.schedule_discipline_final-report'
+
+	@classmethod
+	def get_context(cls, records, data):
+		TeacherDiscipline = Pool().get('akademy.classe_teacher-discipline')
+
+		context = super().get_context(records, data)
+		teacher_discipline = TeacherDiscipline.browse(data['ids'])	
+
+		schedule = []
+		student_number = 0
+		classes_schedule = Pool().get('akademy.discipline-schedule')
+
+		for discipline in teacher_discipline:			
+			#Pesquisa pela pauta do discente na disciplina
+			discipline_schedule = classes_schedule.search([
+				('lective_year', '=', discipline.classe_teacher.classes.lective_year),
+				('classes', '=', discipline.classe_teacher.classes),
+				#('quarter', '=', quarter[0]),
+				('studyplan_discipline', '=', discipline.studyplan_discipline),
+				('employee', '=', discipline.classe_teacher.employee)
+			])
+			
+			for student in discipline_schedule:
+				#Incrementa o número de ordem					
+				student_number = student_number +1
+
+				#Verifica se o discente aprova ou reprova
+				if student.value >= discipline.studyplan_discipline.average:
+					obs = "Aprovado(a)"
+				else:
+					obs = "Reprovado(a)"
+
+				#Lista de discentes
+				schedule.append(
+					(
+						student_number,
+						student.student.student.party.name,
+						student.first_quarter,
+						student.second_quarter,
+						student.third_quarter,
+						student.value,
+						obs
+					)				
+				)			
+
+		context['discipline'] = teacher_discipline
+		context['schedule'] = schedule
+		context['create_date'] = date.today()
+
+		return context
+
 
 
 #REPORT PLANO DE AULA
