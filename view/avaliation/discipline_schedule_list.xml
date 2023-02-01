@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="code"/>
+    <field name="lective_year"/>
+    <field name="classes"/>  
+    <field name="studyplan_discipline"/> 
+    <field name="schedule"/> 
+    <field name="employee"/> 
+    <field name="student"/> 
+    <field name="first_quarter">
+        <suffix name="first_quarter" string="Valores"/>
+    </field> 
+    <field name="second_quarter">
+        <suffix name="second_quarter" string="Valores"/>
+    </field> 
+    <field name="third_quarter">
+        <suffix name="third_quarter" string="Valores"/>
+    </field>        
+    <field name="final_grade">
+        <suffix name="final_grade" string="Valores"/>
+    </field>         
+    <field name="value">
+        <suffix name="value" string="Valores"/>
+    </field>
+    <field name="create_date" widget="date" string="Data de Lançamento"/> 
+    <field name="write_date" widget="date" string="Data da Actualização"/>
+</tree>
