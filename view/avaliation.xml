@@ -58,7 +58,7 @@
                 sequence="17"/>        
         <!-- end DISCENTES PUBLICAR NOTAS -->
 
-        <!-- start DISCENTES AVALIAÇÕES -->
+        <!-- start TURMA DISCENTES NOTAS -->
             <record model="ir.ui.view" id="classes_grades_view_form">
                 <field name="model">akademy.classes-grades</field>
                 <field name="type">form</field>
@@ -85,7 +85,36 @@
             </record>
             <menuitem name="Pautas" parent="akademy.akademy_avaliations" id="akademy_classes_grades" 
                 sequence="18" action="act_classes_grades"/>
-        <!-- end DISCENTES AVALIAÇÕES -->
+        <!-- end TURMA DISCENTES NOTAS -->
+
+        <!-- start TURMA DISCENTES NOTAS -->
+            <record model="ir.ui.view" id="discipline_schedule_view_form">
+                <field name="model">akademy.discipline-schedule</field>
+                <field name="type">form</field>
+                <field name="name">avaliation/discipline_schedule_form</field>
+            </record>
+            <record model="ir.ui.view" id="discipline_schedule_view_list">
+                <field name="model">akademy.discipline-schedule</field>
+                <field name="type">tree</field>
+                <field name="name">avaliation/discipline_schedule_list</field>
+            </record>
+            <record model="ir.action.act_window" id="act_discipline_schedule">
+                <field name="name">Pauta final</field>
+                <field name="res_model">akademy.discipline-schedule</field>
+            </record>
+            <record model="ir.action.act_window.view" id="act_discipline_schedule_view_form">
+                <field name="sequence" eval="24"/>
+                <field name="view" ref="discipline_schedule_view_form"/>
+                <field name="act_window" ref="act_discipline_schedule"/>
+            </record>
+            <record model="ir.action.act_window.view" id="act_discipline_schedule_view_list">
+                <field name="sequence" eval="23"/>
+                <field name="view" ref="discipline_schedule_view_list"/>
+                <field name="act_window" ref="act_discipline_schedule"/>
+            </record>
+            <menuitem name="Pauta final" parent="akademy.akademy_avaliations" id="akademy_discipline_schedule" 
+                sequence="22" action="act_discipline_schedule"/>
+        <!-- end TURMA DISCENTES NOTAS -->
 	
         <!-- start DISCENTES PUBLICAR PERCURSO -->
             <record model="ir.action.wizard" id="act_publichistoric_wizard">
@@ -98,7 +127,7 @@
                 <field name="name">avaliation/publichistoric_wizcreate_form</field>            
             </record>
             <menuitem action="act_publichistoric_wizard" parent="akademy.akademy_avaliations" id="akademy_publichistoric_wiz" 
-                sequence="21"/>        
+                sequence="26"/>        
         <!-- end DISCENTES PUBLICAR PERCURSO -->
         
         <!-- start DISCENTES HISTÓRICO AVALIAÇÕES -->
@@ -117,17 +146,17 @@
                 <field name="res_model">akademy.historic-grades</field>
             </record>            
             <record model="ir.action.act_window.view" id="act_historic_grades_view_form">
-                <field name="sequence" eval="24"/>
+                <field name="sequence" eval="30"/>
                 <field name="view" ref="historic_grades_view_form"/>
                 <field name="act_window" ref="act_historic_grades"/>
             </record>            
             <record model="ir.action.act_window.view" id="act_historic_grades_view_list">
-                <field name="sequence" eval="23"/>
+                <field name="sequence" eval="29"/>
                 <field name="view" ref="historic_grades_view_list"/>
                 <field name="act_window" ref="act_historic_grades"/>
             </record>
             <menuitem name="Percurso Académico" parent="akademy.akademy_avaliations" id="akademy_historic_grades" 
-                sequence="22" action="act_historic_grades"/>    
+                sequence="28" action="act_historic_grades"/>    
         <!-- end DISCENTES HISTÓRICO AVALIAÇÕES -->     
 	</data>
 </trytond>

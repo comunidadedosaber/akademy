@@ -8,7 +8,7 @@ from .variables import sel_presence, sel_schedule
 __all__ = ['PublicGradesCreateWizard', 'PublicGradesCreateWizardStart', 
         'ScheduleCreateWizard', 'ScheduleCreateWizardStart',
         'PublicHistoricCreateWizard', 'PublicHistoricCreateWizardStart',
-        'ClasseStudentGrades', 'ClassesGrades', 'HistoricGrades']
+        'ClasseStudentGrades', 'ClassesGrades', 'DisciplineSchedule', 'HistoricGrades']
 
 
 #Assistente Grades
@@ -153,17 +153,74 @@ class ScheduleCreateWizard(Wizard):
 
     def transition_discipline_schedule(self): 
         Quarter = Pool().get('akademy.quarter') 
+        schedule_t = "Pauta trimestral"
+        schedule_f = "Pauta final"
 
         # Verifica se o tipo de pauta e o trimestre foram selecionado
-        if self.start.schedule:
-            if self.start.quarter:        
-                quarter_metric = self.start.quarter
-            else:
-                #Verifica qual é a metrica com base na data actual
-                quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
-                quarter_metric = quarter_metric[0]
+        if self.start.schedule:            
+            if self.start.schedule == schedule_t:
+                if self.start.quarter:        
+                    quarter_metric = self.start.quarter
+                else:
+                    #Verifica qual é a metrica com base na data actual
+                    quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
+                    quarter_metric = quarter_metric[0]
+                
+                ScheduleCreateWizard.schedule_discipline_(self.start.classes, self.start.studyplan, self.start.studyplan_discipline, self.start.schedule, quarter_metric)
             
-            ScheduleCreateWizard.schedule_discipline_(self.start.classes, self.start.studyplan, self.start.studyplan_discipline, self.start.schedule, quarter_metric)               
+            if self.start.schedule == schedule_f:
+                discipline_schedule = Pool().get('akademy.discipline-schedule')                
+                student_final_grade = 0
+                student_quarter_grades = 0
+                first_quarter = 0
+                second_quarter = 0
+                third_quarter = 0
+                final_grade = 0
+                teacher = ""
+
+                #Pesquisa pelo docente
+                for classe_teacher in self.start.classes.classe_teacher: 
+                    for teacher_discipline in classe_teacher.classe_teacher_discipline:
+                        if teacher_discipline.studyplan_discipline == self.start.studyplan_discipline:      
+                            teacher = classe_teacher.employee  
+                            break
+
+                #Pesquisa pelo discente
+                for student in self.start.classes.classe_student:
+                    for classes_grades in student.classes_grades:
+                        if classes_grades.classes == self.start.classes and classes_grades.lective_year == self.start.classes.lective_year:
+                            if classes_grades.student_discipline.studyplan_discipline == self.start.studyplan_discipline:
+                                if classes_grades.quarter.name == "1º Trimestre":
+                                    first_quarter = classes_grades.value
+                                if classes_grades.quarter.name == "2º Trimestre":
+                                    second_quarter = classes_grades.value
+                                if classes_grades.quarter.name == "3º Trimestre":
+                                    third_quarter = classes_grades.value                
+
+                    student_quarter_grades = (first_quarter + second_quarter + third_quarter) / 3
+
+                    #Pesquisa pela prova final do discente
+                    for student_discipline in student.classe_student_discipline:
+                        if student_discipline.studyplan_discipline == self.start.studyplan_discipline:
+                            for grades in student_discipline.student_grades:
+                                if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova final":                                    
+                                    final_grade = round(grades.value)
+                                                      
+                    student_final_grade = (student_quarter_grades + final_grade) / 2
+                    schedule_final = discipline_schedule(
+                        first_quarter = first_quarter,
+                        second_quarter = second_quarter,
+                        third_quarter = third_quarter,
+                        final_grade = final_grade,
+                        value = student_final_grade,
+                        lective_year = self.start.classes.lective_year,
+                        classes = self.start.classes,
+                        schedule = self.start.schedule,
+                        student = student,
+                        studyplan_discipline = self.start.studyplan_discipline,
+                        employee = teacher
+                    )
+                    schedule_final.save()   
 
         return 'end'
 
@@ -591,6 +648,38 @@ class ClassesGrades(ModelSQL, ModelView):
             u'Não foi possivél lançar a nota do discente, por favor se o PT é inferior a 0 valores.')
         ]
         cls._order = [('classes', 'ASC')] 
+
+
+class DisciplineSchedule(ModelSQL, ModelView):
+    'Discipline Schedule'
+    __name__ = 'akademy.discipline-schedule'
+
+    code = fields.Char(string=u'Código', size=20)
+    first_quarter = fields.Numeric(string=u'T1', digits=(2,1))
+    second_quarter = fields.Numeric(string=u'T2', digits=(2,1))
+    third_quarter = fields.Numeric(string=u'T3', digits=(2,1))
+    final_grade = fields.Numeric(string=u'T1', digits=(2,1))
+    value = fields.Numeric(string=u'Média', digits=(2,1))
+    lective_year = fields.Many2One(
+        model_name='akademy.lective-year', string=u'Ano lectivo', 
+        ondelete='CASCADE')
+    classes = fields.Many2One(
+        model_name='akademy.classes', string=u'Turma',
+        ondelete='CASCADE',
+        domain=[('lective_year', '=', Eval('lective_year', -1))],
+        depends=['lective_year'])
+    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
+    student = fields.Many2One(
+		model_name='akademy.classe-student', string=u'Discente',
+        domain=[('classes', '=', Eval('classes', -1))],
+        depends=['classes'])
+    studyplan_discipline = fields.Many2One(
+        model_name='akademy.studyplan-discipline', string=u'Disciplina')
+    employee = fields.Many2One(
+        model_name='company.employee', string=u'Docente',
+        domain=[('classes', '=', Eval('classes', -1))],
+        depends=['classes']
+        )
 
 
 class HistoricGrades(ModelSQL, ModelView):

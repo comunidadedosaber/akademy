@@ -111,7 +111,8 @@ sel_report_type = (
 )
 
 sel_schedule = (
-    (None, 'Seleciona uma opção'), ('Pauta da disciplina', 'Pauta da disciplina')
+    (None, 'Seleciona uma opção'), ('Pauta trimestral', 'Pauta trimestral'),
+    ('Pauta final', 'Pauta final')
 )
 
 sel_lesson_type = (

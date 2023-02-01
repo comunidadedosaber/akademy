@@ -6,10 +6,10 @@
         <field name="classes"/>
         <label name="studyplan_discipline"/>
         <field name="studyplan_discipline"/>
-        <label name="quarter"/>
-        <field name="quarter"/>
         <label name="schedule"/>
         <field name="schedule"/>
+        <label name="quarter"/>
+        <field name="quarter"/>
         <!--- <label name="studyplan" invisible="1"/> -->
         <field name="studyplan" invisible="1"/>
     </group> 

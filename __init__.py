@@ -48,6 +48,7 @@ def register():
         matriculation.MatriculationCreateWzardStart,        
         avaliation.ClasseStudentGrades,
         avaliation.ClassesGrades,
+        avaliation.DisciplineSchedule,
         avaliation.HistoricGrades,
         avaliation.PublicGradesCreateWizardStart,
         avaliation.PublicHistoricCreateWizardStart,

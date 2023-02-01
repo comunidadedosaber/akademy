@@ -755,6 +755,9 @@ class StudyPlanDiscipline(ModelSQL, ModelView):
 		string=u'Discente nota')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades',  'studyplan_discipline', 
+		string=u'Discente nota')    
+    classes_grades = fields.One2Many(
+		'akademy.classes-grades',  'studyplan_discipline', 
 		string=u'Discente nota')
     
     @classmethod
@@ -799,10 +802,6 @@ class DisciplinePrecedents(ModelSQL, ModelView):
     @classmethod
     def default_grade(cls):
         return 0 
-    
-    #@classmethod
-    #def default_state(cls):
-    #    return "Obrigatório" 
 
     @classmethod
     def __setup__(cls):
