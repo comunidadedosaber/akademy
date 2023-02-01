@@ -37,7 +37,7 @@ class Employee(ModelSQL, ModelView):
         'akademy.classe-teacher', 'employee',
         string=u'Associar Turma')
     classes = fields.One2Many(
-        'akademy.classes', 'coordenator_studyplan',
+        'akademy.classes', 'coordinator',
         string=u'Turma')
 
     @classmethod
@@ -88,7 +88,7 @@ class CompanyStudent(ModelSQL, ModelView):
         help="Nome do discente.")
     company = fields.Many2One(
         'company.company', 'Instituição',
-        required=True,
+        required=True, readonly=True,
         help="Nome da instituição.")
     academiclevel = fields.Many2One(
         model_name='akademy.academic-level', string=u'Nível académico', 
@@ -118,6 +118,10 @@ class CompanyStudent(ModelSQL, ModelView):
 
     def get_rec_name(self, name):
         return self.party.rec_name
+
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
 
     @classmethod
     def search_rec_name(cls, name, clause):
