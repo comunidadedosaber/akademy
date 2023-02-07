@@ -1,7 +1,7 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
 from trytond.pyson import Eval, Not, Bool
 from datetime import date
-from .variables import sel_state, sel_modality, sel_course_yaer, sel_position
+from .varibales import sel_state, sel_modality, sel_course_yaer, sel_position
 
 __all__ = [
         'LectiveYear', 'SchoolChart', 'Quarter', 'Area', 'Course', 'Classe', 'CourseClasse', 'AcademicLevel',
@@ -34,10 +34,13 @@ class LectiveYear(ModelSQL, ModelView):
         string=u'Turma')
     student_grades = fields.One2Many(
         'akademy.classe_student-grades', 'lective_year',
-        string=u'Discente nota')
-    classes_grades = fields.One2Many(
-		'akademy.classes-grades', 'lective_year', 
-		string=u'Avaliações') 
+        string=u'Discente nota')    
+    classes_student_schedule_quarter = fields.One2Many(
+        'akademy.classes_student-schedule_quarter', 'lective_year', 
+        string=u'Pauta trimestral')
+    classes_schedule = fields.One2Many(
+        'akademy.classes-schedule', 'lective_year', 
+        string="Pauta final")
     applications = fields.One2Many(
 		'akademy.applications', 'lective_year', 
 		string=u'Candidaturas')
@@ -80,7 +83,7 @@ class SchoolChart(ModelSQL, ModelView):
     __name__ = 'akademy.school-chart'
 
     school_position = fields.Selection(selection=sel_position, 
-        string=u'Presença') 
+        string=u'Cargo') 
     employee = fields.Many2One(
         model_name='company.employee', string=u'Nome', 
         required=True, ondelete='CASCADE', 
@@ -146,9 +149,12 @@ class Quarter(ModelSQL, ModelView):
     classe_student_grades = fields.One2Many(
 		'akademy.classe_student-grades', 'quarter', 
 		string=u'Avaliação')
-    classe_grades = fields.One2Many(
-		'akademy.classes-grades', 'quarter', 
-		string=u'Pauta')
+    classes_student_schedule_quarter = fields.One2Many(
+        'akademy.classes_student-schedule_quarter', 'quarter', 
+        string=u'Pauta trimestral')
+    classes_schedule = fields.One2Many(
+        'akademy.classes-schedule', 'quarter', 
+        string="Pauta final")
 
     @classmethod
     def default_start(cls):
@@ -415,7 +421,7 @@ class TimeCourse(ModelSQL, ModelView):
 
 class MetricAvaliation(ModelSQL, ModelView):
     'Metric Avaliation'
-    __name__ = 'akademy.metric-avaliation'
+    __name__ = 'akademy.metric-avaliation'    
  
     name = fields.Char(string=u'Nome', required=True,
         help="Nome da métrica que corresponde a avaliação.")    
@@ -717,7 +723,7 @@ class StudyPlan(ModelSQL, ModelView):
 class StudyPlanDiscipline(ModelSQL, ModelView):
     'StudyPlan Discipline'
     __name__ = 'akademy.studyplan-discipline'
-    #_rec_name = 'discipline'
+    _rec_name = 'discipline'
       
     description = fields.Text(string=u'Descrição')    
     state = fields.Selection(selection=sel_state, string=u'Estado', 
@@ -755,10 +761,13 @@ class StudyPlanDiscipline(ModelSQL, ModelView):
 		string=u'Discente nota')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades',  'studyplan_discipline', 
-		string=u'Discente nota')    
-    classes_grades = fields.One2Many(
-		'akademy.classes-grades',  'studyplan_discipline', 
 		string=u'Discente nota')
+    classes_student_schedule_quarter = fields.One2Many(
+        'akademy.classes_student-schedule_quarter', 'studyplan_discipline', 
+        string=u'Pauta trimestral')
+    classes_schedule = fields.One2Many(
+        'akademy.classes-schedule', 'studyplan_discipline', 
+        string="Pauta final")
     
     @classmethod
     def default_state(cls):
@@ -801,7 +810,7 @@ class DisciplinePrecedents(ModelSQL, ModelView):
 
     @classmethod
     def default_grade(cls):
-        return 0 
+        return 0  
 
     @classmethod
     def __setup__(cls):

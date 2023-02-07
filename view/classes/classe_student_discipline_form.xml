@@ -10,11 +10,5 @@
         <field name="modality"/> 
         <!--- <label name="studyplan" invisible="1"/> -->
         <field name="studyplan" invisible="1"/>  
-    </group>        
-    <notebook colspan="4">
-        <page string="AVALIAÇÕES" id="student_grade">
-            <field name="student_grades" mode="tree,form" colspan="4" 
-                view_ids="akademy.classe_student_grades_view_list,akademy.classe_student_grades_view_form"/>
-        </page>
-    </notebook>
+    </group> 
 </form>

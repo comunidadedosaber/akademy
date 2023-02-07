@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<tree>    
+    <field name="classes_student"/>
+    <field name="classes_schedule"/> 
+    <field name="first_quarter"/>
+    <field name="second_quarter"/>
+    <field name="third_quarter"/>
+    <field name="final_grade"/>  
+    <field name="average"/>
+    <field name="obs"/> 
+    <field name="create_date" widget="date" string="Data de Lançamento"/> 
+    <field name="write_date" widget="date" string="Data da Actualização"/>
+</tree>

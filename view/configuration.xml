@@ -53,25 +53,7 @@
                         <field name="model">akademy.quarter</field>
                         <field name="type">tree</field>
                         <field name="name">configuration/quarter_list</field>
-                </record>
-                <!--
-                <record model="ir.action.act_window" id="act_quarter">
-                        <field name="name">Critérios de Admissão</field>
-                        <field name="res_model">akademy.quarter</field>
-                </record>
-                <record model="ir.action.act_window.view" id="act_quarter_view_form">
-                        <field name="sequence" eval="13"/>
-                        <field name="view" ref="quarter_view_form"/>
-                        <field name="act_window" ref="act_quarter"/>
-                </record>
-                <record model="ir.action.act_window.view" id="act_quarter_view_list">
-                        <field name="sequence" eval="13"/>
-                        <field name="view" ref="quarter_view_list"/>
-                        <field name="act_window" ref="act_quarter"/>
-                </record>
-                <menuitem name="Trimestre" parent="akademy_config" id="akademy_config_quarter" 
-                        sequence="13" action="act_quarter"/> 
-                -->    
+                </record> 
         <!-- end TRIMESTRE -->
 
         <!-- start CLASSE -->

@@ -7,11 +7,6 @@
         <label name="code"/>
         <field name="code"/>  
     </group>  
-    <!-- <label name="company" invisible="1"/> -->
-    <field name="company" invisible="1"/>
-    <!--
-        <label id="labr2" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    -->
     <group id="grpday2" colspan="4" col="4">            
         <label name="lective_year"/>
         <field name="lective_year"/>
@@ -50,13 +45,17 @@
             <field name="classe_teacher_lesson" mode="tree,form" colspan="4" 
                 view_ids="akademy.classes_teacher_lesson_view_list,akademy.classes_teacher_lesson_view_form"/>
         </page>
-        <page string="AVALIAÇÕES" id="student_grades">
-            <field name="stundent_grades" mode="tree,form" colspan="4" 
-                view_ids="akademy.classe_student_grades_view_list,akademy.classe_student_grades_view_form"/>
+        <page string="AVALIAÇÕES" id="classes_avaliation">
+            <field name="classes_avaliation" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_avaliation_view_list,akademy.classes_avaliation_view_form"/>
         </page>
-        <page string="PAUTAS" id="classes_grades">
-            <field name="classes_grades" mode="tree,form" colspan="4" 
-                view_ids="akademy.classes_grades_view_list,akademy.classes_grades_view_form"/>
+        <page string="PAUTAS TRIMESTRAIS" id="classes_schedule_quarter">
+            <field name="classes_schedule_quarter" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_schedule_quarter_view_list,akademy.classes_schedule_quarter_view_form"/>
+        </page>
+        <page string="PAUTA FINAL" id="classes_schedule">
+            <field name="classes_schedule" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_schedule_view_list,akademy.classes_schedule_view_form"/>
         </page>
     </notebook>
 </form>

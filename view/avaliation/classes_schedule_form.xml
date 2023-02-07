@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<form>  
+    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
+    <group id="grpday1" colspan="4" col="4">        
+        <label name="lective_year"/>
+        <field name="lective_year"/>
+        <label name="code"/>
+        <field name="code"/>
+        <label name="classes"/>
+        <field name="classes"/>  
+        <label name="quarter"/>
+        <field name="quarter"/> 
+        <label name="schedule"/>
+        <field name="schedule"/>  
+        <label name="classe_teacher_discipline"/>
+        <field name="classe_teacher_discipline"/>
+        <label name="studyplan_discipline"/>
+        <field name="studyplan_discipline"/>  
+        <label name="state"/>
+        <field name="state"/>   
+    </group>      
+    <notebook colspan="4">
+        <page string="LISTA DE DISCENTES" id="classes_student_schedule">
+            <field name="classes_student_schedule" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_student_schedule_view_tree,akademy.classes_student_schedule_view_form"/>
+        </page>
+    </notebook> 
+</form>

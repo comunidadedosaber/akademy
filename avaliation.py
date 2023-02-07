@@ -5,10 +5,8 @@ from trytond.pyson import Eval
 from datetime import date
 from .variables import sel_presence, sel_schedule
 
-__all__ = ['PublicGradesCreateWizard', 'PublicGradesCreateWizardStart', 
-        'ScheduleCreateWizard', 'ScheduleCreateWizardStart',
-        'PublicHistoricCreateWizard', 'PublicHistoricCreateWizardStart',
-        'ClasseStudentGrades', 'ClassesGrades', 'DisciplineSchedule', 'HistoricGrades']
+__all__ = ['PublicGradesCreateWizard', 'PublicGradesCreateWizardStart', 'ScheduleCreateWizard', 'ScheduleCreateWizardStart', 'PublicHistoricCreateWizard', 'PublicHistoricCreateWizardStart',
+        'ClassesAvaliation', 'ClassesStudentAvaliation', 'ClassesSchedule', 'ClassesScheduleQuarter', 'ClassesStudentScheduleQuarter', 'ClassesStudentSchedule', 'HistoricGrades']
 
 
 #Assistente Grades
@@ -65,47 +63,43 @@ class PublicGradesCreateWizard(Wizard):
 
     def transition_studentgrades(self): 
         ClassesStudent = Pool().get('akademy.classe-student')
-        StudentClasses = ClassesStudent.search([('classes', '=', self.start.classes)])
-        StudentGrades= Pool().get('akademy.classe_student-grades') 
+        StudentClasses = ClassesStudent.search([('classes', '=', self.start.classes)])        
         Quarter= Pool().get('akademy.quarter') 
+        classes_avaliation = 0
 
         #Verifica se o trimestre foi selecionado
         if self.start.quarter: 
             quarter = self.start.quarter 
-            quarter_metric = self.start.quarter.studyplan_avaliations 
+            quarter_studyplan_avaliations = self.start.quarter.studyplan_avaliations 
         else:    
             quarter = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
             quarter  = quarter[0]
-            quarter_metric = quarter.studyplan_avaliations
+            quarter_studyplan_avaliations = quarter.studyplan_avaliations
+
+        for studyplan_avaliations in quarter_studyplan_avaliations:
+            #Verifica se a avaliação a ser lançada a nota e a mesma que foi selecionada  
+            for studyplan_avaliation in self.start.studyplan_discipline.studyplan_avaliations:                     
+                if studyplan_avaliations == studyplan_avaliation:  
+                    if studyplan_avaliations.metric_avaliation == self.start.metric_avaliation: 
+
+                        classes_avaliation = ClassesAvaliation.save_classes_avaliation(self.start, quarter, studyplan_avaliation)                        
+                        break            
 
         #ESTADO DA MATRÍCULA
-        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']        
         
-        for Student in StudentClasses:
-            #VERIFICA O ESTADO DA MATRÍCULA
-            if Student.state not in state_student: 
-                for StudentDiscipline in Student.classe_student_discipline:
-                    #Verifica se a disciplina a ser lançada a nota e a mesma que foi selecionada
-                    if StudentDiscipline.studyplan_discipline == self.start.studyplan_discipline:
-                        for studyplan_avaliations in quarter_metric:
-                            #Verifica se a avaliação a ser lançada a nota e a mesma que foi selecionada  
-                            for avaliation in StudentDiscipline.studyplan_discipline.studyplan_avaliations:                     
-                                if studyplan_avaliations == avaliation:  
-                                    if studyplan_avaliations.metric_avaliation == self.start.metric_avaliation:  
-                                        #Lança a nota nas avaliações
-                                        ClasseStudentGrades = StudentGrades(
-                                            quarter = quarter,
-                                            lective_year = self.start.classes.lective_year,
-                                            studyplan = self.start.studyplan_discipline.studyplan.id,
-                                            classes = self.start.classes,
-                                            studyplan_discipline = self.start.studyplan_discipline,
-                                            student = StudentDiscipline.classe_student,
-                                            student_discipline = StudentDiscipline,
-                                            studyplan_avaliation = avaliation,
-                                            #employee = 
-                                            #value = teacher_defined_grade
-                                        )
-                                        ClasseStudentGrades.save() 
+        #Verifica se a discplina têm a avaliação
+        if classes_avaliation != 0:
+            for classe_student in StudentClasses:
+                #VERIFICA O ESTADO DA MATRÍCULA
+                if classe_student.state not in state_student: 
+                    for classes_student_discipline in classe_student.classe_student_discipline:
+                        #Verifica se a disciplina a ser lançada a nota e a mesma que foi selecionada
+                        if classes_student_discipline.studyplan_discipline == self.start.studyplan_discipline:
+                            
+                            ClassesStudentAvaliation.save_classes_student_avaliation(classe_student, classes_avaliation)
+        else:
+            self.raise_user_error("A disciplina "+self.start.studyplan_discipline.discipline.name+" não tẽm a avalicação "+self.start.metric_avaliation.name+".")                        
 
         return 'end'
           
@@ -152,179 +146,192 @@ class ScheduleCreateWizard(Wizard):
     discipline_schedule = StateTransition()
 
     def transition_discipline_schedule(self): 
-        Quarter = Pool().get('akademy.quarter') 
+        #Quarter = Pool().get('akademy.quarter') 
         schedule_t = "Pauta trimestral"
         schedule_f = "Pauta final"
-
-        # Verifica se o tipo de pauta e o trimestre foram selecionado
+        
+        # Verifica se o tipo de pauta e o trimestre foram selecionados
         if self.start.schedule:            
             if self.start.schedule == schedule_t:
                 if self.start.quarter:        
                     quarter_metric = self.start.quarter
                 else:
                     #Verifica qual é a metrica com base na data actual
-                    quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
-                    quarter_metric = quarter_metric[0]
-                
-                ScheduleCreateWizard.schedule_discipline_(self.start.classes, self.start.studyplan, self.start.studyplan_discipline, self.start.schedule, quarter_metric)
-            
+                    #quarter_metric = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
+                    #quarter_metric = quarter_metric[0]
+                    self.raise_user_error("Por favor informe o trimestre em que na qual deseja criar a pauta.")
+                                                
+                if len(self.start.classes.classes_avaliation) > 0:
+                    #Pesquisa pelo docente
+                    classes_schedule_quarter = ClassesScheduleQuarter.save_classes_schedule_quarter(self.start, quarter_metric)
+                    
+                    #Pesquisa pelo discente       
+                    student_state = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+
+                    for classes_student in self.start.classes.classe_student:
+                        #VERIFICA O ESTADO DA MATRÍCULA
+                        if classes_student.state not in student_state:                                                   
+                            quarter_gardes = ScheduleCreateWizard.get_student_grades_quarter(classes_student, self.start.studyplan_discipline, quarter_metric)
+                            
+                            if quarter_gardes is not None:        
+                                ClassesStudentScheduleQuarter.save_classes_student_schedule_quarter(
+                                    quarter_gardes[0], 
+                                    quarter_gardes[1],
+                                    quarter_gardes[2],
+                                    quarter_gardes[3],
+                                    classes_schedule_quarter,
+                                    classes_student,
+                                )
+                            
+                else:
+                    self.raise_user_error("Infelizmente não foi possivél criar a pauta, porque ainda não existem avaliações na turma "+self.start.classes.name+".")
+
             if self.start.schedule == schedule_f:
-                discipline_schedule = Pool().get('akademy.discipline-schedule')                
-                student_final_grade = 0
-                student_quarter_grades = 0
-                first_quarter = 0
-                second_quarter = 0
-                third_quarter = 0
-                final_grade = 0
-                teacher = ""
-
-                #Pesquisa pelo docente
-                for classe_teacher in self.start.classes.classe_teacher: 
-                    for teacher_discipline in classe_teacher.classe_teacher_discipline:
-                        if teacher_discipline.studyplan_discipline == self.start.studyplan_discipline:      
-                            teacher = classe_teacher.employee  
-                            break
-
+                student_state = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+                
+                if len(self.start.classes.classes_schedule_quarter) > 0:
+                    classes_schedule_final = ClassesSchedule.save_classes_schedule(self.start)
+                    
+                else:
+                    self.raise_user_error("Infelizmente não foi possivél criar a pauta final, porque ainda não existem pautas trimestrais na turma "+self.start.classes.name+".")
+                
                 #Pesquisa pelo discente
-                for student in self.start.classes.classe_student:
-                    for classes_grades in student.classes_grades:
-                        if classes_grades.classes == self.start.classes and classes_grades.lective_year == self.start.classes.lective_year:
-                            if classes_grades.student_discipline.studyplan_discipline == self.start.studyplan_discipline:
-                                if classes_grades.quarter.name == "1º Trimestre":
-                                    first_quarter = classes_grades.value
-                                if classes_grades.quarter.name == "2º Trimestre":
-                                    second_quarter = classes_grades.value
-                                if classes_grades.quarter.name == "3º Trimestre":
-                                    third_quarter = classes_grades.value                
-
-                    student_quarter_grades = (first_quarter + second_quarter + third_quarter) / 3
-
+                for classes_student in self.start.classes.classe_student:
+                    #VERIFICA O ESTADO DA MATRÍCULA
+                    if classes_student.state not in student_state:
+                        quarter_average = ScheduleCreateWizard.get_student_grades(classes_student, self.start.classes, self.start.studyplan_discipline)
+                    
                     #Pesquisa pela prova final do discente
-                    for student_discipline in student.classe_student_discipline:
-                        if student_discipline.studyplan_discipline == self.start.studyplan_discipline:
-                            for grades in student_discipline.student_grades:
-                                if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova final":                                    
-                                    final_grade = round(grades.value)
-                                                      
-                    student_final_grade = (student_quarter_grades + final_grade) / 2
-                    schedule_final = discipline_schedule(
-                        first_quarter = first_quarter,
-                        second_quarter = second_quarter,
-                        third_quarter = third_quarter,
-                        final_grade = final_grade,
-                        value = student_final_grade,
-                        lective_year = self.start.classes.lective_year,
-                        classes = self.start.classes,
-                        schedule = self.start.schedule,
-                        student = student,
-                        studyplan_discipline = self.start.studyplan_discipline,
-                        employee = teacher
-                    )
-                    schedule_final.save()   
+                    discipline_final_grade = ScheduleCreateWizard.get_student_final_grade(classes_student, self.start.studyplan_discipline)                                                                        
+                    
+                    # Caso o discente não esteja associado a disciplina enquestão
+                    if discipline_final_grade is not None: 
+                        student_discipline_final_grade = (quarter_average[0] + discipline_final_grade) / 2
+                        
+                        ClassesStudentSchedule.save_classes_student_schedule(
+                            quarter_average[1], 
+                            quarter_average[2],
+                            quarter_average[3],
+                            discipline_final_grade,
+                            round(student_discipline_final_grade),
+                            classes_schedule_final,
+                            classes_student,
+                            self.start.studyplan_discipline.average
+                        )        
 
         return 'end'
 
     @classmethod
-    def schedule_discipline_(cls, classes, studyplan, studyplan_discipline, schedule, quarter):        
-        schedule_list = []        
-        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+    def get_student_grades(cls, classes_student, classes, studyplan_discipline):
+        first_quarter = 0
+        second_quarter = 0
+        third_quarter = 0
 
-        for student in classes.classe_student:
-            #VERIFICA O ESTADO DA MATRÍCULA
-            if student.state not in state_student:
-                arithmetic_sum  = 0
-                weighted_sum = 0
-                count_arithmetic = 0 
-                #Avaliação de MAC
-                mac = 0
-                mac_count = 0
-                #Prova do professor
-                pp = 0
-                pp_count = 0
-                #prova Trimestral
-                pt = 0
-                pt_count = 0   
+        #Pesquisa pela notas trimestrais do discente
+        for student_schedule_quarter in classes_student.classes_student_schedule_quarter:
+            if student_schedule_quarter.classes_schedule_quarter.classes == classes and student_schedule_quarter.classes_schedule_quarter.lective_year == classes.lective_year:
+                if student_schedule_quarter.classes_schedule_quarter.studyplan_discipline == studyplan_discipline:
+                    
+                    if student_schedule_quarter.classes_schedule_quarter.quarter.name == "1º Trimestre":
+                        first_quarter = student_schedule_quarter.average
+                    if student_schedule_quarter.classes_schedule_quarter.quarter.name == "2º Trimestre":
+                        second_quarter = student_schedule_quarter.average
+                    if student_schedule_quarter.classes_schedule_quarter.quarter.name == "3º Trimestre":
+                        third_quarter = student_schedule_quarter.average               
 
-                for student_discipline in student.classe_student_discipline:
-                    #Verifica se o plano de estudo disciplina é o mesmo
-                    if student_discipline.studyplan_discipline == studyplan_discipline:                    
-                        for grades in student_discipline.student_grades:
-                            #Verifica se o trimstre é o mesmo     
-                            if grades.quarter == quarter:  
-                                #Verifica se a avaliação tem como operação aritimétrica                                      
-                                if grades.studyplan_avaliation.perct_arithmetic == True:
-                                    #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
-                                        mac += round(grades.value)
-                                        mac_count += 1
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
-                                        pp += round(grades.value)
-                                        pp_count += 1
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
-                                        pt += round(grades.value)
-                                        pt_count += 1
+        quarter_average = (first_quarter + second_quarter + third_quarter) / 3
 
-                                    #Cálculo das avaliações
-                                    #count_arithmetic = mac_count + pp_count + pt_count
-                                    #arithmetic_sum = mac + pp + pt
+        return [quarter_average, first_quarter, second_quarter, third_quarter]
 
-                                #Verifica se a avaliação tem como operação percentual
-                                if grades.studyplan_avaliation.perct_weighted == True:
-                                    #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
-                                        mac += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))                                          
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
-                                        pp += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))                                          
-                                    if grades.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
-                                        pt += (round(grades.value) * (grades.studyplan_avaliation.percent / 100))  
+    @classmethod
+    def get_student_final_grade(cls, classes_student, studyplan_discipline):
+        # Caso o discente não esteja a frequentar a disciplina enquestão
+        final_grade = None
+        #Pesquisa pela prova final do discente
+        for student_discipline in classes_student.classe_student_discipline:
+            if student_discipline.studyplan_discipline == studyplan_discipline:
+                
+                for classes_student_avaliation in classes_student.classes_student_avaliation:
+                    if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova final":                                    
+                        final_grade = round(classes_student_avaliation.grade)
 
-                                    #Cálculo das avaliações
-                                    weighted_sum = mac + pp + pt  
+        return final_grade
 
-                        #Cálculo das avaliações para serem mostradas na pauta
-                        mac = mac / mac_count
-                        pp = pp / pp_count
-                        pt = pt / pt_count
+    @classmethod
+    def get_student_grades_quarter(cls, classes_student, studyplan_discipline, quarter):
+        
+        arithmetic_sum  = 0
+        weighted_sum = 0
+        count_arithmetic = 0 
+        #Avaliação de MAC
+        mac = 0
+        mac_count = 0
+        #Prova do professor
+        pp = 0
+        pp_count = 0
+        #prova Trimestral
+        pt = 0
+        pt_count = 0 
 
-                        #Operação realizada com base em 3 avaliações
-                        arithmetic_sum = mac + pp + pt
-                        count_arithmetic = 3
+        for classes_student_avaliation in classes_student.classes_student_avaliation:
+            if classes_student_avaliation.classes_avaliation.studyplan_discipline == studyplan_discipline:
+                if classes_student_avaliation.classes_avaliation.quarter == quarter: 
+
+                    #Verifica se a avaliação tem como operação aritimétrica                                      
+                    if classes_student_avaliation.classes_avaliation.studyplan_avaliation.perct_arithmetic == True:
                         
-                        #Cálculo da média final
-                        if count_arithmetic > 0:
-                            #Caso tenha uma avaliação percentuas
-                            if weighted_sum > 0:
-                                #Cálculo final é a operação aritimétrica e percentual
-                                sum = (weighted_sum + (arithmetic_sum / count_arithmetic)) / 2
-                            else: 
-                                sum = (arithmetic_sum / count_arithmetic)
-                        else:
-                            sum = weighted_sum                      
-                        
+                        #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
+                            mac += round(classes_student_avaliation.grade)
+                            mac_count += 1
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
+                            pp += round(classes_student_avaliation.grade)
+                            pp_count += 1
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
+                            pt += round(classes_student_avaliation.grade)
+                            pt_count += 1                        
 
-                        schedule_list.append(
-                            (
-                                classes.lective_year,
-                                classes,
-                                quarter,
-                                schedule,
-                                student,
-                                student_discipline,
-                                sum,
-                                studyplan,
-                                studyplan_discipline,
-                                mac,
-                                pp,
-                                pt,             
-                            )
-                        )                                                
+                    #Verifica se a avaliação tem como operação percentual
+                    if classes_student_avaliation.classes_avaliation.studyplan_avaliation.perct_weighted == True:
 
-        #Criação de pautas
-        if len (schedule_list) > 0:
-            ClassesGrades.create_schedule(schedule_list)
+                        #Definição das avaliações que devem aparecer na pauta, de acordo ao critério da instituição
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Avaliação contínua":
+                            mac += (round(classes_student_avaliation.grade) * (classes_student_avaliation.classes_avaliation.studyplan_avaliation.percent / 100))  
+                            
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova do professor":
+                            pp += (round(classes_student_avaliation.grade) * (classes_student_avaliation.classes_avaliation.studyplan_avaliation.percent / 100))  
+                            
+                        if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova trimestral":
+                            pt += (round(classes_student_avaliation.grade) * (classes_student_avaliation.classes_avaliation.studyplan_avaliation.percent / 100))  
+
+                        #Cálculo das avaliações
+                        weighted_sum = mac + pp + pt  
+
+        #Cálculo das avaliações para serem mostradas na pauta
+        if mac_count != 0:                    
+            mac = mac / mac_count
+        if pp_count != 0:
+            pp = pp / pp_count
+        if pt_count != 0:
+            pt = pt / pt_count
+
+        #Operação realizada com base em 3 avaliações
+        arithmetic_sum = mac + pp + pt
+        count_arithmetic = 3
+        
+        #Cálculo da média final
+        if count_arithmetic > 0:
+            #Caso tenha uma avaliação percentuas
+            if weighted_sum > 0:
+                #Cálculo final é a operação aritimétrica e percentual
+                sum = (weighted_sum + (arithmetic_sum / count_arithmetic)) / 2
+            else: 
+                sum = round((arithmetic_sum / count_arithmetic))
+
         else:
-            cls.raise_user_error("Infelizmente não foi possivél criar a pauta, porque os estudantes ainda não possuem avaliações lançadas.")
-
+            sum = weighted_sum   
+                
+        return [mac, pp, pt, sum]
 
 
 class PublicHistoricCreateWizardStart(ModelView):
@@ -362,304 +369,97 @@ class PublicHistoricCreateWizard(Wizard):
         state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
         
         if len(Classes.classe_student) > 0:
-            for StudentClasses in Classes.classe_student:
-                #VERIFICA O ESTADO DA MATRÍCULA
-                if StudentClasses.state not in state_student:
-                    #Pesquisa pelo discente nas transfêrencias
-                    students_transfer = Transfrer.search([('course_classe', '=', Classes.studyplan.classe), ('student', '=', StudentClasses)])
-                                                            
-                    if len(StudentClasses.classe_student_discipline) > 0:
-                        for student_discipline in StudentClasses.classe_student_discipline:
-                            discipline.append(student_discipline)
-                            if len(StudentClasses.classes_grades) > 0:
-                                for grades in StudentClasses.classes_grades:
-                                    #Verifica se as disciplinas constam no mesmo plano de estudo                            
-                                    if grades.student_discipline.studyplan_discipline == student_discipline.studyplan_discipline:
-                                        average += grades.value                                        
-                                        count += 1   
-                                                              
-                                if count > 0:
-                                    result = (average/count)
+            schedule_block  = ClassesSchedule.search([
+                ('state', '=', False),
+                ('lective_year', '=', Classes.lective_year),
+                ('classes', '=', Classes)
+            ])
+            
+            if len(schedule_block) < 1:
+                for StudentClasses in Classes.classe_student:
+                    #VERIFICA O ESTADO DA MATRÍCULA
+                    if StudentClasses.state not in state_student:
+                        #Pesquisa pelo discente nas transfêrencias
+                        students_transfer = Transfrer.search([
+                                ('course_classe', '=', Classes.studyplan.classe), 
+                                ('student', '=', StudentClasses.student),
+                                ('external', '=', True)
+                            ])                    
+                                                                
+                        if len(StudentClasses.classe_student_discipline) > 0:
+                            for student_discipline in StudentClasses.classe_student_discipline:
+                                discipline.append(student_discipline)
+                                if len(StudentClasses.classes_student_schedule) > 0:
+                                    for classes_student_schedule in StudentClasses.classes_student_schedule:
+                                        #Verifica se as disciplinas constam no mesmo plano de estudo                            
+                                        if classes_student_schedule.classes_schedule.studyplan_discipline == student_discipline.studyplan_discipline:
+                                            average += classes_student_schedule.average                                        
+                                            count += 1   
+                                                                
+                                    if count > 0:
+                                        result = (average/count)
+                                    else:
+                                        result = 0
+                                                                        
+                                    HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, student_discipline.studyplan_discipline, result)                                 
+                                    average = 0
+                                    count = 0
+
                                 else:
-                                    result = 0
-                                                                    
-                                HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, student_discipline.studyplan_discipline, result) 
-                                
-                                average = 0
-                                count = 0
-                            else:
-                                self.raise_user_error("Infelizmente ainda não existem pautas publicadas para o discente "+StudentClasses.student.party.name+", na disciplina de "+student_discipline.studyplan_discipline.discipline.name+", "+Classes.name)            
-                                            
-                    if len(students_transfer) > 0:
-                        #VALIDAR DE ACORDO A DISCIPLINA E CLASSE  
-                        studyplan_discipline_exit = []
-
-                        #Faz a equivalencia dos planos de estudo
-                        if len(students_transfer[0].student_transfer_discipline) > 0:
-                            for studyplan_discipline in Classes.studyplan.studyplan_discipline:          
-                                for student_transfer_discipline in students_transfer[0].student_transfer_discipline:
-                                    if student_transfer_discipline.course_classe == Classes.studyplan.classe:
-                                        # Verifica se a disciplina do discente é a mesma do plano de estudo 
-                                        if (student_transfer_discipline.discipline ==  studyplan_discipline.discipline):
-                                            studyplan_discipline_exit.append(studyplan_discipline)                                               
-                                             
-                                            if (student_transfer_discipline.average >= studyplan_discipline.average):
-                                                final_grade = student_transfer_discipline.average 
-
-                                                HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
+                                    self.raise_user_error("Infelizmente ainda não existem pautas publicadas para o discente "+StudentClasses.student.party.name+", na disciplina de "+student_discipline.studyplan_discipline.discipline.name+", "+Classes.name)            
                         
-                        #Caso tenha todas as displinas do plano de estudo
-                        if len(Classes.studyplan.studyplan_discipline) != len(discipline):                            
-                            for studyplan_discipline in Classes.studyplan.studyplan_discipline:                                                                
-                                if StudentClasses.classe_student_discipline == studyplan_discipline.classe_student_discipline:
-                                    if studyplan_discipline not in studyplan_discipline_exit and studyplan_discipline not in discipline:                                                                                                              
-                                        for discipline_grades in studyplan_discipline.classe_student_discipline:
-                                            for student_grades in discipline_grades.classes_grades:
-                                                final_grade += student_grades.value
-                                                count += 1
-                                            
-                                            if count > 0:
-                                                final_grade = (final_grade/count)
-                                            else:
-                                                final_grade = 0
-                                            
-                                        HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
-                                        final_grade = 0
-                                        count = 0
+                        # Quando se tratar de um discente transfêrido                        
+                        if len(students_transfer) > 0:
+                            #VALIDAR DE ACORDO A DISCIPLINA E CLASSE  
+                            studyplan_discipline_exit = []
 
-                        discipline.clear()                                                           
-                else:
-                    self.raise_user_error("Infelizmente o discente "+StudentClasses.student.party.name+", ainda não têm disciplinas associadas na, "+Classes.name)                                              
+                            #Faz a equivalencia dos planos de estudo
+                            if len(students_transfer[0].student_transfer_discipline) > 0:
+                                for studyplan_discipline in Classes.studyplan.studyplan_discipline:          
+                                    for student_transfer_discipline in students_transfer[0].student_transfer_discipline:
+                                        if student_transfer_discipline.course_classe == Classes.studyplan.classe:
+                                            # Verifica se a disciplina do discente é a mesma do plano de estudo 
+                                            if (student_transfer_discipline.discipline ==  studyplan_discipline.discipline):
+                                                studyplan_discipline_exit.append(studyplan_discipline)                                               
+                                                
+                                                if (student_transfer_discipline.average >= studyplan_discipline.average):
+                                                    final_grade = student_transfer_discipline.average 
+                                                    HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
+                            
+                            #Caso tenha todas as displinas do plano de estudo
+                            if len(Classes.studyplan.studyplan_discipline) != len(discipline):                            
+                                for studyplan_discipline in Classes.studyplan.studyplan_discipline:                                                                
+                                    if StudentClasses.classe_student_discipline == studyplan_discipline.classe_student_discipline:
+                                        if studyplan_discipline not in studyplan_discipline_exit and studyplan_discipline not in discipline: 
+                                            for classes_schedule in studyplan_discipline.classes_schedule:
+                                                if classes_schedule.classes == Classes:
+                                                    for classes_student_schedule in classes_schedule.classes_student_schedule:
+                                                        if classes_student_schedule.classes_student == StudentClasses:
+
+                                                            final_grade = classes_student_schedule.average                                            
+                                                            HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
+                                                            final_grade = 0
+                                                            count = 0
+
+                            discipline.clear() 
+
+                    else:
+                        self.raise_user_error("Infelizmente o discente "+StudentClasses.student.party.name+", ainda não têm disciplinas associadas na, "+Classes.name)                  
+            
+            else:
+                self.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não bloqueada") 
+
         else:
             self.raise_user_error("Infelizmente não foi possivél lançar as notas no percurso académico, por falta de alunos na turma, ", self.start.classes.name)                                       
         
         return 'end'
 
                             
-class ClasseStudentGrades(ModelSQL, ModelView):
-    'Classe Student Grades'
-    __name__ = 'akademy.classe_student-grades'
+class ClassesAvaliation(ModelSQL, ModelView):
+    'Classes Avaliation'
+    __name__ = 'akademy.classes-avaliation'
+    _rec_name = 'studyplan_avaliation'
 
-    code = fields.Char(string=u'Código', size=20)
-    value = fields.Numeric(string=u'Nota', digits=(2,1))
-    presence = fields.Selection(selection=sel_presence, string=u'Presença')
-    studyplan = fields.Function(
-		fields.Integer(
-			string=u'Plano de estudo'
-		), 'on_change_with_studyplan')
-    employee = fields.Function(
-        fields.Many2One(
-            model_name='company.employee', string=u'Docente'
-        ), 'on_change_with_employee', searcher='search_company') 
-    quarter = fields.Many2One(
-		model_name="akademy.quarter",  string=u'Trimestre', 
-		required=True, help="Escolha o trimestre em que a avaliação será lecionada.")
-    lective_year = fields.Many2One(
-        model_name='akademy.lective-year', string=u'Ano lectivo',  
-        required=True)  
-    classes = fields.Many2One(
-        model_name='akademy.classes', string=u'Turma', 
-        required=True)
-    student = fields.Many2One(
-		model_name='akademy.classe-student', string=u'Discente',
-        required=True, domain=[('classes', '=', Eval('classes', -1))],
-        depends=['classes'])
-    studyplan_discipline = fields.Many2One(
-        model_name='akademy.studyplan-discipline', string=u'Disciplina',
-        domain=[('studyplan.id', '=', Eval('studyplan', -1))],
-        depends=['studyplan'])
-    student_discipline = fields.Many2One(
-        model_name='akademy.classe_student-discipline', string=u'Disciplina', 
-        required=True, domain=[('classe_student', '=', Eval('student', -1))],
-        depends=['student'])
-    studyplan_avaliation = fields.Many2One(
-        model_name='akademy.studyplan-avaliation', string=u'Avaliação', 
-        required=True)
-            
-    @fields.depends('studyplan_discipline')
-    def on_change_with_employee(self, name=None): 
-        for classe_teacher in self.classes.classe_teacher:
-            for teacher_discipline in classe_teacher.classe_teacher_discipline:                
-                if (teacher_discipline.studyplan == self.classes.studyplan.id) and (teacher_discipline.studyplan_discipline == self.student_discipline.studyplan_discipline):                    
-                    return classe_teacher.employee.id
-    
-    @classmethod
-    def search_company(cls, name, clause):
-        """ search in company
-        """
-        return [('classes.company',) + tuple(clause[1:])]
-
-    @fields.depends('classes')
-    def on_change_with_studyplan(self, name=None): 
-        if self.classes:
-            return self.classes.studyplan.id
-        else:
-            return None 
-    
-    @classmethod
-    def default_presence(cls):
-        return "Presente"
-
-    @classmethod
-    def default_value(cls):
-        return 0
-
-    @classmethod
-    def __setup__(cls):
-        super(ClasseStudentGrades, cls).__setup__()
-        table = cls.__table__()
-        cls._sql_constraints = [
-            ('key', 
-            Unique(table, table.lective_year, table.quarter, table.classes, table.student_discipline, table.studyplan_avaliation), 
-            u'Não foi possível atribuir a nota da avaliação, porque o discente já possui uma nota neste ano lectivo e disciplina.'),
-            ('grade_max', Check(table, table.value <= 20),
-            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
-            ('grade_min', Check(table, table.value >= 0),
-            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
-        ]   
-        cls._order = [('classes', 'ASC')]          
-
-
-#ClassesSchedule  
-class ClassesGrades(ModelSQL, ModelView):
-    'Classes Grades'
-    __name__ = 'akademy.classes-grades'
-
-    code = fields.Char(string=u'Código', size=20)
-    mac = fields.Numeric(string=u'MAC', digits=(2,1))
-    pp = fields.Numeric(string=u'PP', digits=(2,1))
-    pt = fields.Numeric(string=u'PT', digits=(2,1))
-    value = fields.Numeric(string=u'Nota', digits=(2,1))
-    studyplan = fields.Function(
-		fields.Integer(
-			string=u'Plano de estudo'
-		), 'on_change_with_studyplan')
-    quarter = fields.Many2One(
-		model_name="akademy.quarter",string=u'Trimestre', 
-		required=True, help="Escolha o trimestre da pauta.")
-    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
-    lective_year = fields.Many2One(model_name='akademy.lective-year', string=u'Ano lectivo', ondelete='CASCADE')
-    classes = fields.Many2One(
-        model_name='akademy.classes', string=u'Turma',
-        ondelete='CASCADE',
-        domain=[('lective_year', '=', Eval('lective_year', -1))],
-        depends=['lective_year'])
-    student = fields.Many2One(
-		model_name='akademy.classe-student', string=u'Discente',
-        domain=[('classes', '=', Eval('classes', -1))],
-        depends=['classes'])
-    student_discipline = fields.Many2One(
-		model_name='akademy.classe_student-discipline', string=u'Disciplina',
-        required=True, domain=[('classe_student', '=', Eval('student', -1))],
-        depends=['student'])
-    studyplan_discipline = fields.Many2One(
-        model_name='akademy.studyplan-discipline', string=u'Plano de estudo - Disciplina',
-        domain=[('studyplan.id', '=', Eval('studyplan', -1))],
-        depends=['studyplan'])
-    employee = fields.Function(
-        fields.Many2One(
-            model_name='company.employee', string=u'Docente'
-        ), 'on_change_with_employee', searcher='search_company')
-
-    @fields.depends('studyplan_discipline')
-    def on_change_with_employee(self, name=None): 
-        for classe_teacher in self.classes.classe_teacher:
-            for teacher_discipline in classe_teacher.classe_teacher_discipline:                
-                if (teacher_discipline.studyplan == self.classes.studyplan.id) and (teacher_discipline.studyplan_discipline == self.student_discipline.studyplan_discipline):                                   
-                    return classe_teacher.employee.id        
-    
-    @classmethod
-    def search_company(cls, name, clause):
-        """ search in company
-        """
-        return [('classes.company',) + tuple(clause[1:])]
-
-    @fields.depends('classes')
-    def on_change_with_studyplan(self, name=None): 
-        return self.classes.studyplan.id 
-
-    @classmethod
-    def default_value(cls):
-        return 0 
-
-    @classmethod
-    def create_schedule(cls, student_list):
-        StudentSchedule = Pool().get('akademy.classes-grades') 
-        schedule = []     
-
-        for list in student_list: 
-            student_update_grade = StudentSchedule.search(
-                [
-                    ('student', '=', list[4]), 
-                    ('student_discipline', '=', list[5]),
-                    ('schedule', '=', list[3]),
-                    ('quarter', '=' ,list[2]),
-                    ('classes', '=' ,list[1]),
-                ]
-            )
-            
-            if len(student_update_grade) > 0:
-                student_update_grade[0].value = round(list[6])
-                student_update_grade[0].mac = round(list[9])
-                student_update_grade[0].pp = round(list[10])
-                student_update_grade[0].pt = round(list[11])
-                student_update_grade[0].save()
-            else:                
-                schedule = StudentSchedule(
-                    code = list[5].studyplan_discipline.discipline.code,
-                    lective_year = list[0],
-                    classes = list[1],
-                    quarter = list[2],
-                    schedule = list[3],
-                    student = list[4],
-                    student_discipline = list[5],
-                    value = round(list[6]),
-                    studyplan = list[7],
-                    studyplan_discipline = list[8],
-                    mac = round(list[9]),
-                    pp = round(list[10]),
-                    pt = round(list[11])
-                )  
-                schedule.save() 
-
-    @classmethod
-    def __setup__(cls):
-        super(ClassesGrades, cls).__setup__()
-        table = cls.__table__()
-        cls._sql_constraints = [
-			('key',
-			Unique(table, table.classes, table.student, table.student_discipline, table.lective_year, table.quarter),
-			u'Não foi possivél lançar a nota do discente, por favor verifica se o discente já têm uma média na disciplina.'),
-            ('max_value', Check(table, table.value <= 20),
-            u'Não foi possivél lançar a nota do discente, por favor verifica se a média é superior a 20 valores.'),
-            ('max_mac', Check(table, table.mac <= 20),
-            u'Não foi possivél lançar a nota do discente, por favor verifica se o MAC é superior a 20 valores.'),
-            ('max_pp', Check(table, table.pp <= 20),
-            u'Não foi possivél lançar a nota do discente, por favor verifica se o PP é superior a 20 valores.'),
-            ('max_pt', Check(table, table.pt <= 20),
-            u'Não foi possivél lançar a nota do discente, por favor verifica se O PT é superior a 20 valores.'),
-            ('min_value', Check(table,table.value >= 0),
-            u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.'),
-            ('min_mac', Check(table, table.mac >= 0),
-            u'Não foi possivél lançar a nota do discente, por favor se o MAC é inferior a 0 valores.'),
-            ('min_pp', Check(table, table.pp >= 0),
-            u'Não foi possivél lançar a nota do discente, por favor se o PP é inferior a 0 valores.'),
-            ('min_pt', Check(table, table.pt >= 0),
-            u'Não foi possivél lançar a nota do discente, por favor se o PT é inferior a 0 valores.')
-        ]
-        cls._order = [('classes', 'ASC')] 
-
-
-class DisciplineSchedule(ModelSQL, ModelView):
-    'Discipline Schedule'
-    __name__ = 'akademy.discipline-schedule'
-
-    code = fields.Char(string=u'Código', size=20)
-    first_quarter = fields.Numeric(string=u'T1', digits=(2,1))
-    second_quarter = fields.Numeric(string=u'T2', digits=(2,1))
-    third_quarter = fields.Numeric(string=u'T3', digits=(2,1))
-    final_grade = fields.Numeric(string=u'T1', digits=(2,1))
-    value = fields.Numeric(string=u'Média', digits=(2,1))
     lective_year = fields.Many2One(
         model_name='akademy.lective-year', string=u'Ano lectivo', 
         ondelete='CASCADE')
@@ -667,19 +467,435 @@ class DisciplineSchedule(ModelSQL, ModelView):
         model_name='akademy.classes', string=u'Turma',
         ondelete='CASCADE',
         domain=[('lective_year', '=', Eval('lective_year', -1))],
-        depends=['lective_year'])
-    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
-    student = fields.Many2One(
-		model_name='akademy.classe-student', string=u'Discente',
-        domain=[('classes', '=', Eval('classes', -1))],
+        depends=['lective_year'])    
+    quarter = fields.Many2One(
+		model_name="akademy.quarter",string=u'Trimestre', 
+		required=True, help="Escolha o trimestre da pauta.")
+    classe_teacher_discipline = fields.Many2One(
+        model_name='akademy.classe_teacher-discipline', string=u'Docente', 
+        required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
         depends=['classes'])
     studyplan_discipline = fields.Many2One(
-        model_name='akademy.studyplan-discipline', string=u'Disciplina')
-    employee = fields.Many2One(
-        model_name='company.employee', string=u'Docente',
-        domain=[('classes', '=', Eval('classes', -1))],
-        depends=['classes']
-        )
+        model_name='akademy.studyplan-discipline', string=u'Disciplina', 
+        required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
+        depends=['classe_teacher_discipline'])
+    studyplan_avaliation = fields.Many2One(
+        model_name='akademy.studyplan-avaliation', string=u'Avaliação', 
+        required=True, domain=[('studyplan_discipline', '=', Eval('studyplan_discipline', -1))],
+        depends=['studyplan_discipline'])
+    classes_student_avaliation = fields.One2Many(
+        'akademy.classes_student-avaliation', 'classes_avaliation', 
+        string="Lista de discentes")
+
+    @classmethod
+    def save_classes_avaliation(cls, fields, quarter, studyplan_avaliation):
+        classes_avaliation = ClassesAvaliation.search([
+            ('lective_year', '=', fields.classes.lective_year),
+            ('classes', '=', fields.classes),
+            ('quarter', '=', quarter),
+            ('studyplan_discipline', '=', fields.studyplan_discipline),
+            ('studyplan_avaliation', '=', studyplan_avaliation)
+        ])        
+
+        if len(classes_avaliation) <= 0:
+            for classe_teacher_discipline in fields.studyplan_discipline.classe_teacher_discipline:
+                if classe_teacher_discipline.studyplan_discipline == fields.studyplan_discipline:
+
+                    avaliation = ClassesAvaliation(
+                        lective_year = fields.classes.lective_year,
+                        classes = fields.classes,
+                        quarter = quarter,
+                        classe_teacher_discipline = classe_teacher_discipline,
+                        studyplan_discipline = fields.studyplan_discipline,
+                        studyplan_avaliation = studyplan_avaliation,
+                    )
+                    avaliation.save()
+
+                    break
+
+        else:
+            classes_avaliation[0].write_date = date.today()
+            classes_avaliation[0].save()
+            avaliation = classes_avaliation[0]
+        
+        return avaliation
+
+
+class ClassesStudentAvaliation(ModelSQL, ModelView):
+    'Classes-Student Avaliation'
+    __name__ = 'akademy.classes_student-avaliation'
+    _rac_name = 'classes_avaliation'
+
+    grade = fields.Numeric(string=u'Nota', digits=(2,1))
+    presence = fields.Selection(selection=sel_presence, string=u'Presença')
+    classes_avaliation = fields.Many2One(
+        model_name='akademy.classes-avaliation', string=u'Avaliação', 
+        ondelete='CASCADE')
+    classes_student = fields.Many2One(
+		model_name='akademy.classe-student', string=u'Discente',
+        domain=[('classes.classes_avaliation', '=', Eval('classes_avaliation', -1))],
+        depends=['classes_avaliation'])
+    
+    @classmethod
+    def default_presence(cls):
+        return "Presente"
+
+    @classmethod
+    def save_classes_student_avaliation(cls, classe_student, classe_avaliation):
+        classes_student_avaliation = ClassesStudentAvaliation.search([
+            ('classes_student', '=', classe_student),
+            ('classes_avaliation', '=', classe_avaliation)
+        ])
+
+        if len(classes_student_avaliation) <= 0:
+            
+            student_avaliation = ClassesStudentAvaliation(
+                grade = 0,
+                presence = "Presente",
+                classes_avaliation = classe_avaliation,
+                classes_student = classe_student
+            )
+            student_avaliation.save()
+
+        else:
+            cls.raise_user_error("O discente já possui uma nota nesta avaliação.")    
+
+    @classmethod
+    def __setup__(cls):
+        super(ClassesStudentAvaliation, cls).__setup__()
+        table = cls.__table__()
+        cls._sql_constraints = [            
+            ('grade_max', Check(table, table.grade <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('grade_min', Check(table, table.grade >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
+        ]                        
+
+
+#Discipline Quarter Schedule 
+class ClassesScheduleQuarter(ModelSQL, ModelView):
+    'Classes Schedule-Quarter'
+    __name__ = 'akademy.classes_schedule-quarter'
+    _rec_name = 'studyplan_discipline'
+
+    code = fields.Char(string=u'Código', size=20)
+    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquer para para a edição.")
+    lective_year = fields.Many2One(
+        model_name='akademy.lective-year', string=u'Ano lectivo', 
+        ondelete='CASCADE')
+    classes = fields.Many2One(
+        model_name='akademy.classes', string=u'Turma',
+        ondelete='CASCADE',
+        domain=[('lective_year', '=', Eval('lective_year', -1))],
+        depends=['lective_year'])    
+    quarter = fields.Many2One(
+		model_name="akademy.quarter",string=u'Trimestre', 
+		required=True, help="Escolha o trimestre da pauta.")
+    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
+    classe_teacher_discipline = fields.Many2One(
+        model_name='akademy.classe_teacher-discipline', string=u'Docente', 
+        required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
+        depends=['classes'])
+    classe_teacher = fields.Many2One(
+        model_name='akademy.classe-teacher', string=u'Docente')
+    studyplan_discipline = fields.Many2One(
+        model_name='akademy.studyplan-discipline', string=u'Disciplina', 
+        required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
+        depends=['classe_teacher_discipline'])
+    classes_student_schedule_quarter = fields.One2Many(
+        'akademy.classes_student-schedule_quarter', 'classes_schedule_quarter', 
+        string="Lista de discentes")
+
+    @classmethod
+    def default_state(cls):
+        return False
+
+    #Create a Classe Schedule Quarter
+    @classmethod
+    def save_classes_schedule_quarter(cls, fields, quarter):        
+        for classe_teacher in fields.classes.classe_teacher: 
+            for teacher_discipline in classe_teacher.classe_teacher_discipline:
+                if teacher_discipline.studyplan_discipline == fields.studyplan_discipline: 
+                    
+                    schedule_update = ClassesScheduleQuarter.search([
+                            ('lective_year', '=', fields.classes.lective_year),
+                            ('classes', '=', fields.classes),
+                            ('quarter', '=', quarter),
+                            ('schedule', '=', fields.schedule),
+                            ('classe_teacher_discipline', '=', teacher_discipline),
+                            ('studyplan_discipline', '=', fields.studyplan_discipline)
+                        ])
+
+                    if len(schedule_update) <= 0:     
+                        
+                        schedule = ClassesScheduleQuarter (
+                            lective_year = fields.classes.lective_year,
+                            classes = fields.classes,
+                            quarter = quarter,
+                            schedule = fields.schedule,
+                            classe_teacher_discipline = teacher_discipline,
+                            studyplan_discipline = fields.studyplan_discipline
+                        )
+                        schedule.save()
+
+                        break
+
+                    else:
+                        schedule_update[0].write_date = date.today()
+                        schedule_update[0].save()
+                        schedule = schedule_update[0]
+            
+        return schedule        
+
+
+class ClassesStudentScheduleQuarter(ModelSQL, ModelView):
+    'Classes_Student-Schedule_Quarter'
+    __name__ = 'akademy.classes_student-schedule_quarter'
+    
+    mac = fields.Numeric(string=u'Mac', digits=(2,1))
+    pp = fields.Numeric(string=u'PP', digits=(2,1))
+    pt = fields.Numeric(string=u'PT', digits=(2,1))
+    average = fields.Numeric(string=u'Média', digits=(2,1))
+    classes_schedule_quarter = fields.Many2One(
+        model_name='akademy.classes_schedule-quarter', string=u'Pauta', 
+        ondelete='CASCADE')
+    classes_student = fields.Many2One(
+		model_name='akademy.classe-student', string=u'Discente')
+        
+    @classmethod
+    def save_classes_student_schedule_quarter(cls, mac, pp, pt, grade, schedule, classes_student):
+        if schedule.state == False:            
+            student_schedule_update = ClassesStudentScheduleQuarter.search([
+                ('classes_schedule_quarter', '=', schedule),
+                ('classes_student', '=', classes_student)
+            ])
+
+            if len(student_schedule_update) <= 0:                
+                student_schedule = ClassesStudentScheduleQuarter(
+                    mac = mac,
+                    pp = pp,
+                    pt = pt,            
+                    average = grade,
+                    classes_schedule_quarter = schedule,
+                    classes_student = classes_student,
+                )
+                
+                student_schedule.save()
+
+            else:
+                student_schedule_update[0].mac = mac
+                student_schedule_update[0].pp = pp
+                student_schedule_update[0].pt = pt
+                student_schedule_update[0].average = grade
+                student_schedule_update[0].write_date = date.today()
+                student_schedule_update[0].save()
+
+        else:
+            cls.raise_user_error("A pauta está bloqueado para edição.")
+    
+    @classmethod
+    def __setup__(cls):
+        super(ClassesStudentScheduleQuarter, cls).__setup__()
+        table = cls.__table__()
+        cls._sql_constraints = [            
+            ('mac_max', Check(table, table.mac <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('mac_min', Check(table, table.mac >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('pp_max', Check(table, table.pp <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('pp_min', Check(table, table.pp >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('pt_max', Check(table, table.pt <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('pt_min', Check(table, table.pt >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('average_max', Check(table, table.average <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('average_min', Check(table, table.average >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
+        ]        
+
+
+#Discipline Final Schedule 
+class ClassesSchedule(ModelSQL, ModelView):
+    'Classes Schedule'
+    __name__ = 'akademy.classes-schedule'
+    _rec_name = 'studyplan_discipline'
+
+    code = fields.Char(string=u'Código', size=20)
+    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquer para para a edição.")
+    lective_year = fields.Many2One(
+        model_name='akademy.lective-year', string=u'Ano lectivo', 
+        ondelete='CASCADE')
+    classes = fields.Many2One(
+        model_name='akademy.classes', string=u'Turma',
+        ondelete='CASCADE',
+        domain=[('lective_year', '=', Eval('lective_year', -1))],
+        depends=['lective_year'])    
+    quarter = fields.Many2One(
+		model_name="akademy.quarter",string=u'Trimestre', 
+		required=True, help="Escolha o trimestre da pauta.")
+    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
+    classe_teacher_discipline = fields.Many2One(
+        model_name='akademy.classe_teacher-discipline', string=u'Docente', 
+        required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
+        depends=['classes'])
+    studyplan_discipline = fields.Many2One(
+        model_name='akademy.studyplan-discipline', string=u'Disciplina', 
+        required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
+        depends=['classe_teacher_discipline'])
+    classes_student_schedule = fields.One2Many(
+        'akademy.classes_student-schedule', 'classes_schedule', 
+        string="Lista de discentes")
+
+    @classmethod
+    def default_state(cls):
+        return False
+
+    #Create a Classe Schedule
+    @classmethod
+    def save_classes_schedule(cls, fields):
+                    
+        count_schedule_lock = 0
+        classes_schedule_quarter = ClassesScheduleQuarter.search([
+                ('lective_year', '=', fields.classes.lective_year),
+                ('classes', '=', fields.classes),
+                #('quarter', '=', fields.studyplan_discipline.quarter),
+                #('schedule', '=', fields.schedule),
+                #classe_teacher_discipline', '=', teacher_discipline),
+                ('studyplan_discipline', '=', fields.studyplan_discipline)
+            ])
+
+        #Verifica quantas pautas estão trançadas
+        for schedule_quarter in classes_schedule_quarter:
+            if schedule_quarter.state == True:
+                count_schedule_lock += 1
+
+        if len(classes_schedule_quarter) == count_schedule_lock:
+        
+            for classe_teacher in fields.classes.classe_teacher: 
+                for teacher_discipline in classe_teacher.classe_teacher_discipline:
+                    if teacher_discipline.studyplan_discipline == fields.studyplan_discipline:      
+                        
+                        schedule_update = ClassesSchedule.search([
+                                ('lective_year', '=', fields.classes.lective_year),
+                                ('classes', '=', fields.classes),
+                                ('quarter', '=', fields.studyplan_discipline.quarter),
+                                ('schedule', '=', fields.schedule),
+                                ('classe_teacher_discipline', '=', teacher_discipline),
+                                ('studyplan_discipline', '=', fields.studyplan_discipline)
+                            ])
+
+                        if len(schedule_update) <= 0: 
+
+                            schedule = ClassesSchedule (
+                                lective_year = fields.classes.lective_year,
+                                classes = fields.classes,
+                                quarter = fields.studyplan_discipline.quarter,
+                                schedule = fields.schedule,
+                                classe_teacher_discipline = teacher_discipline,
+                                studyplan_discipline = fields.studyplan_discipline
+                            )
+                            schedule.save()
+                            
+                            break
+
+                        else:
+                            schedule_update[0].write_date = date.today()
+                            schedule_update[0].save()
+                            schedule = schedule_update[0]
+            
+            return schedule
+
+        else:
+            cls.raise_user_error("Infelizmente não foi possivél criar a pauta final de "+fields.studyplan_discipline.discipline.name+", porque a pauta trimestral ainda não foi bloqueada.")
+
+
+class ClassesStudentSchedule(ModelSQL, ModelView):
+    'Classes_Student-Schedule'
+    __name__ = 'akademy.classes_student-schedule'
+
+    first_quarter = fields.Numeric(string=u'T1', digits=(2,1))
+    second_quarter = fields.Numeric(string=u'T2', digits=(2,1))
+    third_quarter = fields.Numeric(string=u'T3', digits=(2,1))
+    final_grade = fields.Numeric(string=u'PF', digits=(2,1))
+    average = fields.Numeric(string=u'Média', digits=(2,1))
+    obs = fields.Char(string=u'Observação', size=25)
+    classes_schedule = fields.Many2One(
+        model_name='akademy.classes-schedule', string=u'Pauta', 
+        ondelete='CASCADE')
+    classes_student = fields.Many2One(
+		model_name='akademy.classe-student', string=u'Discente',
+        domain=[('classes.classes_schedule', '=', Eval('classes_schedule', -1))],
+        depends=['classes_schedule'])
+
+    @classmethod
+    def save_classes_student_schedule(cls, first_quarter, second_quarter, third_quarter, final_grade, student_final_grade, schedule, classes_student, discipline_average):        
+        if schedule.state == False:
+            if student_final_grade >= discipline_average:
+                result = "Aprovado(a)"
+            else:
+                result = "Reprovado(a)"
+
+            student_schedule_update = ClassesStudentSchedule.search([
+                    ('classes_schedule', '=', schedule),
+                    ('classes_student', '=', classes_student)
+                ])
+
+            if len(student_schedule_update) <= 0:
+            
+                student_schedule = ClassesStudentSchedule(
+                    first_quarter = first_quarter,
+                    second_quarter = second_quarter,
+                    third_quarter = third_quarter,
+                    final_grade = final_grade,
+                    average = student_final_grade,
+                    obs = result,
+                    classes_schedule = schedule,
+                    classes_student = classes_student,
+                )
+                student_schedule.save()
+            
+            else:
+                student_schedule_update[0].first_quarter = first_quarter
+                student_schedule_update[0].second_quarter =  second_quarter
+                student_schedule_update[0].third_quarter =  third_quarter
+                student_schedule_update[0].final_grade = final_grade
+                student_schedule_update[0].average = student_final_grade
+                student_schedule_update[0].obs = result
+                student_schedule_update[0].write_date = date.today()
+                student_schedule_update[0].save()   
+
+        else:
+            cls.raise_user_error("A pauta está bloqueado para edição.")
+
+    @classmethod
+    def __setup__(cls):
+        super(ClassesStudentSchedule, cls).__setup__()
+        table = cls.__table__()
+        cls._sql_constraints = [            
+            ('first_quarter_max', Check(table, table.first_quarter <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('first_quarter_min', Check(table, table.first_quarter >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('second_quarter_max', Check(table, table.second_quarter <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('second_quarter_min', Check(table, table.second_quarter >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('third_quarter_max', Check(table, table.third_quarter <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('third_quarter_min', Check(table, table.third_quarter >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('final_grade_max', Check(table, table.final_grade <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('final_grade_min', Check(table, table.final_grade >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.'),           
+            ('average_grade_max', Check(table, table.average <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('average_grade_min', Check(table, table.average >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
+        ]           
 
 
 class HistoricGrades(ModelSQL, ModelView):
@@ -781,3 +997,4 @@ class HistoricGrades(ModelSQL, ModelView):
             u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.')
         ]
         cls._order = [('classes', 'ASC')] 
+
