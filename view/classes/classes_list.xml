@@ -10,6 +10,5 @@
     <field name="max_teacher"/>
     <field name="studyplan"/>     
     <field name="coordinator"/>
-    <field name="company"/>
     <button name="matriculation_state" string="Avaliar matrícula"/>
 </tree>

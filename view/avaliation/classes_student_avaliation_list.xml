@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<tree>     
+    <field name="classes_student"/> 
+    <field name="classes_avaliation"/>  
+    <field name="presence"/>        
+    <field name="grade">
+        <suffix name="grade" string="Valores"/>
+    </field>  
+    <field name="create_date" widget="date" string="Data de Lançamento"/> 
+    <field name="write_date" widget="date" string="Data da Actualização"/>
+</tree>

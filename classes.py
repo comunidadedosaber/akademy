@@ -37,21 +37,15 @@ class Classes(ModelSQL, ModelView):
 	coordinator = fields.Many2One(
 		model_name="company.employee", string=u'Coordenador',
 		domain=[('employee', '=', True)], help=u'Nome do coordenador do plano de estudo.')
-	company = fields.Many2One(string=u'Company', model_name='company.company',
-        states={
-            'readonly': 
-                ~And(
-                    Id('res', 'group_admin').in_(Eval('context', {}).get('groups', [])),
-                    Eval('id', -1) == -1
-                ),
-        }, required=True, select=True)
 	classe_timerule = fields.One2Many('akademy.classe-timerule', 'classes', string=u'Horário')
 	classe_student = fields.One2Many('akademy.classe-student', 'classes', string=u'Discente')
 	classe_teacher = fields.One2Many('akademy.classe-teacher', 'classes', string=u'Docente')
 	stundent_grades = fields.One2Many('akademy.classe_student-grades', 'classes', string=u'Discente nota')
-	classes_grades = fields.One2Many('akademy.classes-grades', 'classes', string=u'Avaliações')
-	historic_grades = fields.One2Many('akademy.historic-grades', 'classes', string="Percurso académico")
 	classe_teacher_lesson = fields.One2Many('akademy.classe_teacher-lesson', 'classes', string="Plano de aula")		
+	classes_avaliation = fields.One2Many('akademy.classes-avaliation', 'classes', string="Avaliações")
+	classes_schedule_quarter = fields.One2Many('akademy.classes_schedule-quarter', 'classes', string="Pauta trimestral")
+	classes_schedule = fields.One2Many('akademy.classes-schedule', 'classes', string="Pauta final")	
+	historic_grades = fields.One2Many('akademy.historic-grades', 'classes', string="Percurso académico")
 		
 	@classmethod
 	def default_modality(cls):
@@ -65,13 +59,6 @@ class Classes(ModelSQL, ModelView):
 	def default_max_teacher(cls):
 		return 1
 
-	@classmethod
-	def default_company(cls):
-		""" set active company to default
-		"""
-		context = Transaction().context
-		return context.get('company')
-
 	#Ao clicar no botão avaliar estado da matrícula
 	@classmethod
 	@ModelView.button
@@ -80,22 +67,28 @@ class Classes(ModelSQL, ModelView):
 		student_discipline_possitive = []
 
 		for classes_list in classes:
-			for studyplan_discipline in classes_list.studyplan.studyplan_discipline:
-				if studyplan_discipline.state == "Obrigatório":
-					discipline_required.append(studyplan_discipline)
+			if len(classes_list.historic_grades) > 0:
 
-			for classes_student in classes_list.classe_student:
-				count = 0
-				for historic_grades in classes_student.historic_grades:
-					if (historic_grades.studyplan_discipline in discipline_required) and (classes_student.classe_student_discipline[count].state == "Aprovado(a)"):
-						student_discipline_possitive.append(historic_grades.studyplan_discipline)
-					count += 1
+				for studyplan_discipline in classes_list.studyplan.studyplan_discipline:
+					if studyplan_discipline.state == "Obrigatório":
+						discipline_required.append(studyplan_discipline)
 
-				#Muda o estado da matrícula na turma
-				Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
-								
-				student_discipline_possitive.clear()	
-			discipline_required.clear()
+				for classes_student in classes_list.classe_student:
+					count = 0
+					
+					for historic_grades in classes_student.historic_grades:
+						if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
+							student_discipline_possitive.append(historic_grades.studyplan_discipline)							
+						count += 1
+
+					#Muda o estado da matrícula na turma
+					Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
+									
+					student_discipline_possitive.clear()	
+				discipline_required.clear()
+		
+			else:
+				cls.raise_user_erro("Não é possivél determinar se os discentes aprovam ou reprovam, porque ainda não exite um percurso académico para os mesmo.")
 
 	@classmethod
 	def matriculation_classes_state(cls, discipline_required, student_discipline, classes_student):
@@ -155,12 +148,15 @@ class ClasseStudent(ModelSQL, ModelView):
 	classe_student_discipline = fields.One2Many(
 		'akademy.classe_student-discipline', 'classe_student', 
 		string=u'Discente disciplina')
-	classes_grades = fields.One2Many(
-		'akademy.classes-grades', 'student', 
-		string=u'Pautas')
-	student_grades = fields.One2Many(
-        'akademy.classe_student-grades', 'student',
-        string=u'Avaliacões')	
+	classes_student_avaliation = fields.One2Many(
+		'akademy.classes_student-avaliation', 'classes_student',
+		string=u'Avaliações')
+	classes_student_schedule_quarter = fields.One2Many(
+		'akademy.classes_student-schedule_quarter', 'classes_student', 
+		string=u'Pauta trimestral')	
+	classes_student_schedule = fields.One2Many(
+		'akademy.classes_student-schedule', 'classes_student', 
+		string="Pauta final")
 	historic_grades = fields.One2Many(
         'akademy.historic-grades', 'student',
         string=u'Percurso académico')
@@ -215,9 +211,6 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 	student_grades = fields.One2Many(
 		'akademy.classe_student-grades', 'student_discipline', 
 		string=u'Discente nota')
-	classes_grades = fields.One2Many(
-		'akademy.classes-grades', 'student_discipline', 
-		string=u'Avaliações')
 
 	@fields.depends('classe_student')
 	def on_change_with_studyplan(self, name=None):
@@ -316,6 +309,12 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	classe_teacher_lesson = fields.One2Many(
 		'akademy.classe_teacher-lesson', 'classe_teacher_discipline', 
 		string="Plano de aula")
+	classes_schedule_quarter = fields.One2Many(
+		'akademy.classes_schedule-quarter', 'classe_teacher_discipline', 
+		string="Pauta trimestral")
+	classes_schedule = fields.One2Many(
+		'akademy.classes-schedule', 'classe_teacher_discipline', 
+		string="Pauta final")
 		
 	@fields.depends('classe_teacher')
 	def on_change_with_studyplan(self, name=None):

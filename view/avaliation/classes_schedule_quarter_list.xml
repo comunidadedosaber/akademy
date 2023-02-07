@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="code"/>
+    <field name="lective_year"/>
+    <field name="classes"/>  
+    <field name="quarter"/> 
+    <field name="schedule"/> 
+    <field name="classe_teacher_discipline"/>  
+    <field name="studyplan_discipline"/> 
+    <field name="state"/> 
+    <field name="create_date" widget="date" string="Data de Lançamento"/> 
+    <field name="write_date" widget="date" string="Data da Actualização"/>
+</tree>

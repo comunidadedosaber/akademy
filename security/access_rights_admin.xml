@@ -69,22 +69,10 @@
                     <field name="menu" ref="akademy_publicgrades_wiz"/>
                     <field name="group" ref="group_akademy_admin"/>
                 </record>
-            <!-- Atribuir acesso ao NOTAS DISCENTES -->
-                <record model="ir.ui.menu-res.group" 
-                    id="menu_avaliations-group_akademy_admin-access_students_grades">
-                    <field name="menu" ref="akademy_classe_student_grades"/>
-                    <field name="group" ref="group_akademy_admin"/>
-                </record>
             <!-- Atribuir acesso ao PUBLICAR PAUTA -->
                 <record model="ir.ui.menu-res.group" 
                     id="menu_avaliations-group_akademy_admin-access_classes_schedule">
                     <field name="menu" ref="akademy_schedule_wiz"/>
-                    <field name="group" ref="group_akademy_admin"/>
-                </record>
-            <!-- Atribuir acesso ao PAUTA DISCENTES -->
-                <record model="ir.ui.menu-res.group" 
-                    id="menu_avaliations-group_akademy_admin-access_classes_grades">
-                    <field name="menu" ref="akademy_classes_grades"/>
                     <field name="group" ref="group_akademy_admin"/>
                 </record>
             <!-- Atribuir acesso ao PUBLICAR PERCUSO -->

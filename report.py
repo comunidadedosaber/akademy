@@ -262,12 +262,23 @@ class StudentGradesReport(Report):
 		StudentGrades = Pool().get('akademy.classe-student')
 
 		context = super().get_context(records, data)
-		student = StudentGrades.browse(data['ids'])
+		classe_student = StudentGrades.browse(data['ids'])
 
-		context['student_grades'] = student
-		context['create_date'] = date.today()
+		if len(classe_student[0].classes_student_avaliation) > 0:
+			context['erro'] = True
+			context['erro_message'] = ""
+			context['student_grades'] = classe_student
+			context['create_date'] = date.today()
 
-		return context
+			return context
+		
+		else:
+			context['erro'] = True
+			context['erro_message'] = "O discente "+classe_student.student.party.name+" ainda não possui avaliações."
+			context['student_grades'] = classe_student
+			context['create_date'] = date.today()
+
+			return context
 
 
 #REPORT PAUTA DISCIPINA
@@ -277,53 +288,40 @@ class ScheduleDisciplineReport(Report):
 	@classmethod
 	def get_context(cls, records, data):
 		TeacherDiscipline = Pool().get('akademy.classe_teacher-discipline')
-		Quarter = Pool().get('akademy.quarter')
 
 		context = super().get_context(records, data)
 		teacher_discipline = TeacherDiscipline.browse(data['ids'])		
 
-		schedule = []
-		student_number = 0		
-		#Verifica o trimestre com base na data actual	
-		quarter = Quarter.search([('start', '<=', date.today()), ('end', '>=', date.today())])
-
-		classes_schedule = Pool().get('akademy.classes-grades')
-
-		for discipline in teacher_discipline:
-			for classe_student_discipline in discipline.studyplan_discipline.classe_student_discipline:	
-				if classe_student_discipline.studyplan_discipline.discipline == discipline.studyplan_discipline.discipline:
-				
-					#Pesquisa pela pauta do discente na disciplina
-					discipline_schedule = classes_schedule.search([
-						('lective_year', '=', discipline.classe_teacher.classes.lective_year),
-						('classes', '=', discipline.classe_teacher.classes),
-						('quarter', '=', quarter[0]),
-						('student_discipline', '=', classe_student_discipline),
-						#('employee', '=', discipline.classe_teacher.employee.id)
-					])
+		if (len(teacher_discipline[0].classes_schedule_quarter) > 0):
+			for classes_schedule_quarter in teacher_discipline[0].classes_schedule_quarter:
+				if classes_schedule_quarter.state == True:					
+					if classes_schedule_quarter.studyplan_discipline == teacher_discipline[0].studyplan_discipline:
 					
-					#Incrementa o número de ordem
-					student_number = student_number +1
-					#Lista de discentes
-					schedule.append(
-						(
-							student_number,
-							discipline_schedule[0].student_discipline.classe_student.student.party.name,
-							discipline_schedule[0].mac,
-							discipline_schedule[0].pp,
-							discipline_schedule[0].pt,
-							discipline_schedule[0].value
-						)
-					
-					)			
+						context['erro'] = True
+						context['erro_message'] = ""
+						context['discipline'] = teacher_discipline
+						context['schedule'] = classes_schedule_quarter.classes_student_schedule_quarter
+						context['quarter'] = classes_schedule_quarter.quarter
+						context['create_date'] = date.today()
 
-		context['discipline'] = teacher_discipline
-		context['schedule'] = schedule
-		context['quarter'] = quarter[0]
-		context['create_date'] = date.today()
+						return context					
+					break
 
-		return context
+				else:
+					context['erro'] = False
+					context['erro_message'] = "Não foi possivél exibir a pauta trimestral, por favor verique se a mesma está bloqueada para edição."
+					context['discipline'] = teacher_discipline
+					context['create_date'] = date.today()
 
+					return context
+
+		else:
+			context['erro'] = False
+			context['erro_message'] = "Não foi possivél exibir a pauta trimestral, porque a mesma ainda não foi criada."
+			context['discipline'] = teacher_discipline
+			context['create_date'] = date.today()
+
+			return context	
 
 
 #REPORT PAUTA FINAL DISCIPINA
@@ -337,49 +335,36 @@ class ScheduleDisciplineFinalReport(Report):
 		context = super().get_context(records, data)
 		teacher_discipline = TeacherDiscipline.browse(data['ids'])	
 
-		schedule = []
-		student_number = 0
-		classes_schedule = Pool().get('akademy.discipline-schedule')
+		if (len(teacher_discipline[0].classes_schedule) > 0):
+			for classes_schedule in teacher_discipline[0].classes_schedule:
+				if classes_schedule.state == True:					
+					if classes_schedule.studyplan_discipline == teacher_discipline[0].studyplan_discipline:
+					
+						context['erro'] = True
+						context['erro_message'] = ""
+						context['discipline'] = teacher_discipline
+						context['schedule'] = classes_schedule.classes_student_schedule
+						context['quarter'] = classes_schedule.quarter
+						context['create_date'] = date.today()
 
-		for discipline in teacher_discipline:			
-			#Pesquisa pela pauta do discente na disciplina
-			discipline_schedule = classes_schedule.search([
-				('lective_year', '=', discipline.classe_teacher.classes.lective_year),
-				('classes', '=', discipline.classe_teacher.classes),
-				#('quarter', '=', quarter[0]),
-				('studyplan_discipline', '=', discipline.studyplan_discipline),
-				('employee', '=', discipline.classe_teacher.employee)
-			])
-			
-			for student in discipline_schedule:
-				#Incrementa o número de ordem					
-				student_number = student_number +1
+						return context					
+					break
 
-				#Verifica se o discente aprova ou reprova
-				if student.value >= discipline.studyplan_discipline.average:
-					obs = "Aprovado(a)"
 				else:
-					obs = "Reprovado(a)"
+					context['erro'] = False
+					context['erro_message'] = "Não foi possivél exibir a pauta final, por favor verique se a mesma está bloqueada para edição."
+					context['discipline'] = teacher_discipline
+					context['create_date'] = date.today()
 
-				#Lista de discentes
-				schedule.append(
-					(
-						student_number,
-						student.student.student.party.name,
-						student.first_quarter,
-						student.second_quarter,
-						student.third_quarter,
-						student.value,
-						obs
-					)				
-				)			
+					return context
 
-		context['discipline'] = teacher_discipline
-		context['schedule'] = schedule
-		context['create_date'] = date.today()
+		else:
+			context['erro'] = False
+			context['erro_message'] = "Não foi possivél exibir a pauta final, porque a mesma ainda não foi criada."
+			context['discipline'] = teacher_discipline
+			context['create_date'] = date.today()
 
-		return context
-
+			return context
 
 
 #REPORT PLANO DE AULA

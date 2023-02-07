@@ -19,9 +19,17 @@
             <field name="classe_student_discipline" mode="tree,form" colspan="4" 
                 view_ids="akademy.classe_student_discipline_view_tree,akademy.classe_student_discipline_view_form"/>
         </page>
-        <page string="Avaliações" id="student_avaliations">
-            <field name="classes_grades" mode="tree,form" colspan="4" 
-                view_ids="akademy.classes_grades_view_list,akademy.classes_grades_view_form"/>
+        <page string="Avaliações" id="classes_student_avaliation">
+            <field name="classes_student_avaliation" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_student_avaliation_view_tree,akademy.classes_student_avaliation_view_form"/>
+        </page>
+        <page string="Pauta trimestral" id="classes_student_schedule_quarter">
+            <field name="classes_student_schedule_quarter" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_student_schedule_quarter_view_tree,akademy.classes_student_schedule_quarter_view_form"/>
+        </page>
+        <page string="Pauta final" id="classes_student_schedule">
+            <field name="classes_student_schedule" mode="tree,form" colspan="4" 
+                view_ids="akademy.classes_student_schedule_view_tree,akademy.classes_student_schedule_view_form"/>
         </page>
         <page string="Percurso académico" id="student_gardes">
             <field name="historic_grades" mode="tree,form" colspan="4" 

@@ -175,6 +175,7 @@
                         <field name="type">tree</field>
                         <field name="name">classes/classe_timerule_list</field>
                 </record>
+                <!--
                 <record model="ir.action.act_window" id="act_classe_timerule">
                         <field name="name">Criar Horário</field>
                         <field name="res_model">akademy.classe-timerule</field>
@@ -189,7 +190,6 @@
                         <field name="view" ref="classe_timerule_view_list"/>
                         <field name="act_window" ref="act_classe_timerule"/>
                 </record>
-                <!--
                 <menuitem name="Criar Horário" parent="akademy.akademy_classes" id="akademy_classe_timerule" 
                         sequence="30" action="act_classe_timerule"/>
                 -->               

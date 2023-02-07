@@ -14,35 +14,48 @@
             <menuitem action="act_publicgrades_wizard" parent="akademy.akademy_avaliations" id="akademy_publicgrades_wiz" 
                 sequence="12"/>        
         <!-- end DISCENTES PUBLICAR NOTAS -->
-	
-        <!-- start DISCENTES AVALIAÇÕES -->
-            <record model="ir.ui.view" id="classe_student_grades_view_form">
-                <field name="model">akademy.classe_student-grades</field>
+ 
+        <!-- start TURMA AVALIAÇÕES -->
+            <record model="ir.ui.view" id="classes_avaliation_view_form">
+                <field name="model">akademy.classes-avaliation</field>
                 <field name="type">form</field>
-                <field name="name">avaliation/classe_student_grades_form</field>
+                <field name="name">avaliation/classes_avaliation_form</field>
             </record>
-            <record model="ir.ui.view" id="classe_student_grades_view_list">
-                <field name="model">akademy.classe_student-grades</field>
+            <record model="ir.ui.view" id="classes_avaliation_view_list">
+                <field name="model">akademy.classes-avaliation</field>
                 <field name="type">tree</field>
-                <field name="name">avaliation/classe_student_grades_list</field>
+                <field name="name">avaliation/classes_avaliation_list</field>
             </record>
-            <record model="ir.action.act_window" id="act_classe_student_grades">
-                <field name="name">Avaliações</field>
-                <field name="res_model">akademy.classe_student-grades</field>
+            <record model="ir.action.act_window" id="act_classes_avaliation">
+                <field name="name">Avaliação</field>
+                <field name="res_model">akademy.classes-avaliation</field>
             </record>
-            <record model="ir.action.act_window.view" id="act_classe_student_grades_view_form">
+            <record model="ir.action.act_window.view" id="act_classes_avaliation_view_form">
                 <field name="sequence" eval="16"/>
-                <field name="view" ref="classe_student_grades_view_form"/>
-                <field name="act_window" ref="act_classe_student_grades"/>
+                <field name="view" ref="classes_avaliation_view_form"/>
+                <field name="act_window" ref="act_classes_avaliation"/>
             </record>
-            <record model="ir.action.act_window.view" id="act_classe_student_grades_view_list">
+            <record model="ir.action.act_window.view" id="act_classes_avaliation_view_list">
                 <field name="sequence" eval="15"/>
-                <field name="view" ref="classe_student_grades_view_list"/>
-                <field name="act_window" ref="act_classe_student_grades"/>
+                <field name="view" ref="classes_avaliation_view_list"/>
+                <field name="act_window" ref="act_classes_avaliation"/>
             </record>
-            <menuitem name="Avaliações" parent="akademy.akademy_avaliations" id="akademy_classe_student_grades" 
-                sequence="14" action="act_classe_student_grades"/>
-        <!-- end DISCENTES AVALIAÇÕES -->
+            <menuitem name="Avaliação" parent="akademy.akademy_avaliations" id="akademy_classes_avaliation" 
+                sequence="14" action="act_classes_avaliation"/>
+        <!-- end TURMA AVALIAÇÕES -->
+
+        <!-- start TURMA DOCENTES AVALIAÇÕES -->
+                <record model="ir.ui.view" id="classes_student_avaliation_view_form">
+                        <field name="model">akademy.classes_student-avaliation</field>
+                        <field name="type">form</field>
+                        <field name="name">avaliation/classes_student_avaliation_form</field>
+                </record>
+                <record model="ir.ui.view" id="classes_student_avaliation_view_tree">
+                        <field name="model">akademy.classes_student-avaliation</field>
+                        <field name="type">tree</field>
+                        <field name="name">avaliation/classes_student_avaliation_list</field>
+                </record>
+        <!-- end TURMA DOCENTES AVALIAÇÕES -->
 
         <!-- start DISCENTES PUBLICAR NOTAS -->
             <record model="ir.action.wizard" id="act_schedule_wizard">
@@ -56,65 +69,91 @@
             </record>
             <menuitem action="act_schedule_wizard" parent="akademy.akademy_avaliations" id="akademy_schedule_wiz" 
                 sequence="17"/>        
-        <!-- end DISCENTES PUBLICAR NOTAS -->
+        <!-- end DISCENTES PUBLICAR NOTAS -->          
 
-        <!-- start TURMA DISCENTES NOTAS -->
-            <record model="ir.ui.view" id="classes_grades_view_form">
-                <field name="model">akademy.classes-grades</field>
+        <!-- start TURMA PAUTAS TRIMESTRAL -->
+            <record model="ir.ui.view" id="classes_schedule_quarter_view_form">
+                <field name="model">akademy.classes_schedule-quarter</field>
                 <field name="type">form</field>
-                <field name="name">avaliation/classes_grades_form</field>
+                <field name="name">avaliation/classes_schedule_quarter_form</field>
             </record>
-            <record model="ir.ui.view" id="classes_grades_view_list">
-                <field name="model">akademy.classes-grades</field>
+            <record model="ir.ui.view" id="classes_schedule_quarter_view_list">
+                <field name="model">akademy.classes_schedule-quarter</field>
                 <field name="type">tree</field>
-                <field name="name">avaliation/classes_grades_list</field>
+                <field name="name">avaliation/classes_schedule_quarter_list</field>
             </record>
-            <record model="ir.action.act_window" id="act_classes_grades">
-                <field name="name">Pautas</field>
-                <field name="res_model">akademy.classes-grades</field>
+            <record model="ir.action.act_window" id="act_classes_schedule_quarter">
+                <field name="name">Pauta trimestral</field>
+                <field name="res_model">akademy.classes_schedule-quarter</field>
             </record>
-            <record model="ir.action.act_window.view" id="act_classes_grades_view_form">
+            <record model="ir.action.act_window.view" id="act_classes_schedule_quarter_view_form">
                 <field name="sequence" eval="20"/>
-                <field name="view" ref="classes_grades_view_form"/>
-                <field name="act_window" ref="act_classes_grades"/>
+                <field name="view" ref="classes_schedule_quarter_view_form"/>
+                <field name="act_window" ref="act_classes_schedule_quarter"/>
             </record>
-            <record model="ir.action.act_window.view" id="act_classes_grades_view_list">
+            <record model="ir.action.act_window.view" id="act_classes_schedule_quarter_view_list">
                 <field name="sequence" eval="19"/>
-                <field name="view" ref="classes_grades_view_list"/>
-                <field name="act_window" ref="act_classes_grades"/>
+                <field name="view" ref="classes_schedule_quarter_view_list"/>
+                <field name="act_window" ref="act_classes_schedule_quarter"/>
             </record>
-            <menuitem name="Pautas" parent="akademy.akademy_avaliations" id="akademy_classes_grades" 
-                sequence="18" action="act_classes_grades"/>
-        <!-- end TURMA DISCENTES NOTAS -->
+            <menuitem name="Pautas trimestral" parent="akademy.akademy_avaliations" id="akademy_classes_schedule_quarter" 
+                sequence="18" action="act_classes_schedule_quarter"/>
+        <!-- end TURMA PAUTAS TRIMESTRAL -->         
 
-        <!-- start TURMA DISCENTES NOTAS -->
-            <record model="ir.ui.view" id="discipline_schedule_view_form">
-                <field name="model">akademy.discipline-schedule</field>
+        <!-- start DOCENTES PAUTA TRIMESTRAL -->
+            <record model="ir.ui.view" id="classes_student_schedule_quarter_view_form">
+                    <field name="model">akademy.classes_student-schedule_quarter</field>
+                    <field name="type">form</field>
+                    <field name="name">avaliation/classes_student_schedule_quarter_form</field>
+            </record>
+            <record model="ir.ui.view" id="classes_student_schedule_quarter_view_tree">
+                    <field name="model">akademy.classes_student-schedule_quarter</field>
+                    <field name="type">tree</field>
+                    <field name="name">avaliation/classes_student_schedule_quarter_list</field>
+            </record>
+        <!-- end DOCENTES PAUTA TRIMESTRAL -->
+ 
+        <!-- start TURMA PAUTA FINAL -->
+            <record model="ir.ui.view" id="classes_schedule_view_form">
+                <field name="model">akademy.classes-schedule</field>
                 <field name="type">form</field>
-                <field name="name">avaliation/discipline_schedule_form</field>
+                <field name="name">avaliation/classes_schedule_form</field>
             </record>
-            <record model="ir.ui.view" id="discipline_schedule_view_list">
-                <field name="model">akademy.discipline-schedule</field>
+            <record model="ir.ui.view" id="classes_schedule_view_list">
+                <field name="model">akademy.classes-schedule</field>
                 <field name="type">tree</field>
-                <field name="name">avaliation/discipline_schedule_list</field>
+                <field name="name">avaliation/classes_schedule_list</field>
             </record>
-            <record model="ir.action.act_window" id="act_discipline_schedule">
+            <record model="ir.action.act_window" id="act_classes_schedule">
                 <field name="name">Pauta final</field>
-                <field name="res_model">akademy.discipline-schedule</field>
+                <field name="res_model">akademy.classes-schedule</field>
             </record>
-            <record model="ir.action.act_window.view" id="act_discipline_schedule_view_form">
+            <record model="ir.action.act_window.view" id="act_classes_schedule_view_form">
                 <field name="sequence" eval="24"/>
-                <field name="view" ref="discipline_schedule_view_form"/>
-                <field name="act_window" ref="act_discipline_schedule"/>
+                <field name="view" ref="classes_schedule_view_form"/>
+                <field name="act_window" ref="act_classes_schedule"/>
             </record>
-            <record model="ir.action.act_window.view" id="act_discipline_schedule_view_list">
+            <record model="ir.action.act_window.view" id="act_classes_schedule_view_list">
                 <field name="sequence" eval="23"/>
-                <field name="view" ref="discipline_schedule_view_list"/>
-                <field name="act_window" ref="act_discipline_schedule"/>
+                <field name="view" ref="classes_schedule_view_list"/>
+                <field name="act_window" ref="act_classes_schedule"/>
             </record>
-            <menuitem name="Pauta final" parent="akademy.akademy_avaliations" id="akademy_discipline_schedule" 
-                sequence="22" action="act_discipline_schedule"/>
-        <!-- end TURMA DISCENTES NOTAS -->
+            <menuitem name="Pautas final" parent="akademy.akademy_avaliations" id="akademy_classes_schedule" 
+                sequence="22" action="act_classes_schedule"/>
+        <!-- end TURMA PAUTA FINAL -->
+
+        <!-- start DOCENTES PAUTA FINAL -->
+                <record model="ir.ui.view" id="classes_student_schedule_view_form">
+                        <field name="model">akademy.classes_student-schedule</field>
+                        <field name="type">form</field>
+                        <field name="name">avaliation/classes_student_schedule_form</field>
+                </record>
+                <record model="ir.ui.view" id="classes_student_schedule_view_tree">
+                        <field name="model">akademy.classes_student-schedule</field>
+                        <field name="type">tree</field>
+                        <field name="name">avaliation/classes_student_schedule_list</field>
+                </record>
+        <!-- end DOCENTES PAUTA FINAL -->
 	
         <!-- start DISCENTES PUBLICAR PERCURSO -->
             <record model="ir.action.wizard" id="act_publichistoric_wizard">
@@ -157,6 +196,6 @@
             </record>
             <menuitem name="Percurso Académico" parent="akademy.akademy_avaliations" id="akademy_historic_grades" 
                 sequence="28" action="act_historic_grades"/>    
-        <!-- end DISCENTES HISTÓRICO AVALIAÇÕES -->     
+        <!-- end DISCENTES HISTÓRICO AVALIAÇÕES -->  
 	</data>
 </trytond>
