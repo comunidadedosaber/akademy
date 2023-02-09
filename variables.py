@@ -1,5 +1,5 @@
 
-#Variáveis Globais
+#Variaveis Globais
 sel_state = (
     ('Obrigatório', 'Obrigatório'), ('Opcional', 'Opcional')
 )
@@ -131,5 +131,9 @@ sel_course_yaer = (
 #RH - GA
 sel_position = (
     ('Direitor administrativo', 'Direitor administrativo'),('Direitor pedagógico', 'Direitor pedagógico'),
-    ('Coordenator', 'Coordenator'), ('Sub-coordenator', 'Sub-coordenator'),
+    ('Sub-direitor administrativo', 'Sub-direitor administrativo'),('Sub-direitor pedagógico', 'Sub-direitor pedagógico'),
+    ('Coordenador', 'Coordenador'), ('Sub-coordenador', 'Sub-coordenador'),
+    ('Coordenador da área', 'Coordenador da área'), ('Coordenador do curso', 'Coordenador do curso'),
+    ('Coordenador da classe', 'Coordenador da classe'), ('Professor', 'Professor'),
+    ('Professor extagiário', 'Professor extagiário'),
 )
