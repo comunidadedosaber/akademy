@@ -1,0 +1,104 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+# menu: akademy/configuration/lective-year
+msgctxt "model:akademy.lective-year,name"
+msgid "Lective Year"
+msgstr "Ano lectivo"
+
+msgctxt "field:akademy.lective-year,code"
+msgid "Code"
+msgstr "Código"
+
+msgctxt "field:akademy.lective-year,name"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "field:akademy.lective-year,start"
+msgid "Start"
+msgstr "Início"
+
+msgctxt "field:akademy.lective-year,end"
+msgid "End"
+msgstr "Término"
+
+msgctxt "field:akademy.lective-year,description"
+msgid "Description"
+msgstr "Descrição"
+
+msgctxt "field:akademy.lective-year,application_criteria"
+msgid "Application_criteria"
+msgstr "Critério de admissão"
+
+msgctxt "field:akademy.lective-year,student_transfer"
+msgid "Student_transfer"
+msgstr "Discente Transferido"
+
+msgctxt "field:akademy.lective-year,classes"
+msgid "Classes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "
+msgstr "Turma"
+
+msgctxt "field:akademy.lective-year,student_grades"
+msgid "Student_grades"
+msgstr "Discente notas"
+
+msgctxt "field:akademy.lective-year,classes_student_schedule_quarter"
+msgid "Classes_student_schedule_quarter"
+msgstr "Pauta trimestral"
+
+msgctxt "field:akademy.lective-year,classes_schedule"
+msgid "Classes_schedule"
+msgstr "Pauta final"
+
+msgctxt "field:akademy.lective-year,historic_grades"
+msgid "Historic_grades"
+msgstr "Percuso académico"
+
+msgctxt "field:akademy.lective-year,applications"
+msgid "Applications"
+msgstr "Candidaturas"
+
+msgctxt "field:akademy.lective-year,applications_result"
+msgid "Applications_result"
+msgstr "Candidaturas resultado"
+
+msgctxt "field:akademy.lective-year,quarter"
+msgid "Quarter"
+msgstr "Trimestre"
+
+msgctxt "field:akademy.lective-year,phase"
+msgid "Phase"
+msgstr "Fase de admissão"
+
+msgctxt "field:akademy.lective-year,school_chart"
+msgid "School_chart"
+msgstr "Organograma"
+
+msgctxt "help:akademy.lective-year,code"
+msgid "Código do ano lectivo.\nEx: 22/23"
+msgstr "Código do ano lectivo.\nEx: 22/23"
+
+msgctxt "help:akademy.lective-year,name"
+msgid "Nome do ano lectivo."
+msgstr "Nome do ano lectivo."
+
+msgctxt "help:akademy.lective-year,start"
+msgid "Data de início do ano lectivo."
+msgstr "Data de início do ano lectivo."
+
+msgctxt "help:akademy.lective-year,end"
+msgid "Data de término do ano lectivo."
+msgstr "Data de término do ano lectivo."
+
+msgctxt "error:akademy.lective-year."
+msgid "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o nome inserido já existe."
+msgstr "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o nome inserido já existe."
+
+msgctxt "field:akademy.lective-year"
+msgid "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o código inserido já existe."
+msgstr "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o código inserido já existe."
+
+msgctxt "field:akademy.lective-year"
+msgid "Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor que a data de término."
+msgstr "Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor que a data de término."
