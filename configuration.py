@@ -46,7 +46,7 @@ class LectiveYear(ModelSQL, ModelView):
 		string=u'Candidaturas')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades', 'lective_year', 
-		string=u'Percuso académico') 
+		string=u'Percurso académico') 
     quarter = fields.One2Many(
 		'akademy.quarter', 'lective_year', 
 		string=u'Trimestre')
@@ -557,7 +557,7 @@ class Phase(ModelSQL, ModelView):
         string=u'Candidaturas')
     application_result = fields.One2Many(
         'akademy.applications-result', 'phase', 
-        string=u'Resultado candidaturas')
+        string=u'Resultado das candidaturas')
     
     @classmethod
     def default_start(cls):
@@ -596,7 +596,7 @@ class ClasseRoom(ModelSQL, ModelView):
         },  depends=['lesson_teoric'],
         help="Sala para aulas práticas.")
     capacity = fields.Integer(string=u'Capacidade',
-        help="Capacidade maxima da sala de aula.")
+        help="Capacidade máxima da sala de aula.")
     description = fields.Text(string=u'Descrição')
 
     @classmethod
@@ -626,7 +626,7 @@ class ApplicationCriteria(ModelSQL, ModelView):
         help="Nome do critéio de admissão.")
     description = fields.Text(string=u'Descrição')
     age = fields.Integer(string=u'Idade', required=True, 
-        help=u'Informe a idade maxima para admissão.')
+        help=u'Informe a idade máxima para admissão.')
     average = fields.Numeric(string=u'Média', digits=(2,1), 
         required=True, 
         help=u'Informe a média mínima para admissão.')
@@ -655,7 +655,7 @@ class ApplicationCriteria(ModelSQL, ModelView):
         required=True)
     application_result = fields.One2Many(
         'akademy.applications-result', 'application_criteria', 
-        string=u'Candidaturas')
+        string=u'Resultado das candidaturas')
 
     @classmethod
     def __setup__(cls):
@@ -838,8 +838,8 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             'invisible': Bool(Eval('perct_weighted')),
             'required': Not(Bool(Eval('perct_weighted')))
         },
-        help=u'Calcula a média com base na operação artitmétrica.\n'+
-        'Ex: Soma das avaliações, divido pelo número de avalições.')
+        help=u'Calcula a média com base na operação aritmética.\n'+
+        'Ex: Soma das avaliações, dividido pelo número de avaliações.')
     perct_weighted = fields.Boolean(
         string='Média ponderada',
         states={
@@ -847,7 +847,7 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             'required': Not(Bool(Eval('perct_arithmetic')))
         }, depends=['perct_arithmetic'], 
         help=u'Calcula a média com base na operação ponderada.\n'+
-        'Ex: Soma da multiplicação das ponderações das avalições, divido pela soma das ponderações.')  
+        'Ex: Soma da multiplicação das ponderações das avaliações, dividido pela soma das ponderações.')  
     percent = fields.Numeric(
         string=u'Percetagem', depends=['perct_weighted'],  
         states={
@@ -866,9 +866,9 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', 
         string=u'Disciplina do plano de estudo') 
-    stundent_grades = fields.One2Many(
-		'akademy.classe_student-grades', 'studyplan_avaliation', 
-		string=u'Discente nota')
+    #stundent_grades = fields.One2Many(
+	#	'akademy.classe_student-grades', 'studyplan_avaliation', 
+	#	string=u'Discente nota')
 
     @classmethod
     def default_perct_arithmetic(cls):
@@ -893,7 +893,7 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             u'Não foi possível cadastrar avaliação, por favor verifica se já existe uma avaliação, neste nível trimestre.'),
             ('percent_max',
             Check(table, table.percent <= 100),
-            u'Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem é superior a 100%.'),
+            u'Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem é superior a 100%.'),
             ('percent_min',
             Check(table, table.percent > 0),
             u'Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem é inferior ou igual a 0%.')

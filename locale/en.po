@@ -12,87 +12,87 @@ msgstr "Configuration"
 
 msgctxt "model:akademy.lective-year,name:"
 msgid "Lective Year"
-msgstr "Ano lectivo"
+msgstr "Lective Year"
 
 msgctxt "view:akademy.lective-year:"
 msgid "Lective Year"
-msgstr "Ano lectivo"
+msgstr "Lective Year"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_lective_year"
 msgid "Lective Year"
-msgstr "Ano lectivo"
+msgstr "Lective Year"
 
 msgctxt "model:ir.action,name:act_lective_year"
 msgid "Lective Year"
-msgstr "Ano lectivo"
+msgstr "Lective Year"
 
 msgctxt "field:akademy.lective-year,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.lective-year,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.lective-year,start:"
 msgid "Início"
-msgstr "Início"
+msgstr "Start"
 
 msgctxt "field:akademy.lective-year,end:"
 msgid "Término"
-msgstr "Término"
+msgstr "End"
 
 msgctxt "field:akademy.lective-year,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.lective-year,application_criteria:"
 msgid "Critério de admissão"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.lective-year,student_transfer:"
 msgid "Transferências"
-msgstr "Transferências"
+msgstr "Transfers"
 
 msgctxt "field:akademy.lective-year,classes:"
 msgid "Turma"
-msgstr "Turma"
+msgstr "Class"
 
 # msgctxt "field:akademy.lective-year,student_grades:"
 # msgid "Discente nota"
-# msgstr "Discente nota"
+# msgstr "Student grade"
 
 msgctxt "field:akademy.lective-year,classes_student_schedule_quarter:"
 msgid "Pauta trimestral"
-msgstr "Pauta trimestral"
+msgstr "Schedule quartely"
 
 msgctxt "field:akademy.lective-year,classes_schedule:"
 msgid "Pauta final"
-msgstr "Pauta final"
+msgstr "Schedule final"
 
 msgctxt "field:akademy.lective-year,historic_grades:"
 msgid "Percurso académico"
-msgstr "Percurso académico"
+msgstr "Academic path"
 
 msgctxt "field:akademy.lective-year,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.lective-year,applications_result:"
 msgid "Candidaturas resultado"
-msgstr "Candidaturas resultado"
+msgstr "Applications result"
 
 msgctxt "field:akademy.lective-year,quarter:"
 msgid "Trimestre"
-msgstr "Trimestre"
+msgstr "Quarter"
 
 msgctxt "field:akademy.lective-year,phase:"
 msgid "Fase de admissão"
-msgstr "Fase de admissão"
+msgstr "Phase"
 
 msgctxt "field:akademy.lective-year,school_chart:"
 msgid "Organograma"
-msgstr "Organograma"
+msgstr "School chart"
 
 msgctxt "field:akademy.lective-year,id:"
 msgid "ID"
@@ -100,85 +100,87 @@ msgstr "ID"
 
 msgctxt "field:akademy.lective-year,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.lective-year,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.lective-year,write_date:"
 msgid "Write Date"
-msgstr "Data de gravação"
+msgstr "Write Date"
 
 msgctxt "field:akademy.lective-year,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.lective-year,code:"
 msgid "Código do ano lectivo.\nEx: 22/23"
-msgstr "Código do ano lectivo.\nEx: 22/23"
+msgstr "Academic year code.\nEx: 22/23"
 
 msgctxt "help:akademy.lective-year,name:"
 msgid "Nome do ano lectivo."
-msgstr "Nome do ano lectivo."
+msgstr "Academic year name."
 
 msgctxt "help:akademy.lective-year,start:"
 msgid "Data de início do ano lectivo."
-msgstr "Data de início do ano lectivo."
+msgstr "Academic year start date."
 
 msgctxt "help:akademy.lective-year,end:"
 msgid "Data de término do ano lectivo."
-msgstr "Data de término do ano lectivo."
+msgstr "Academic year end date."
 
 msgctxt "error:akademy.lective-year:"
 msgid ""
 "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o nome inserido já existe."
 msgstr ""
-"Não foi possível cadastrar o novo ano lectivo, por favor verifica se o nome inserido já existe."
+"It was not possible to register the new academic year, please check if the name entered already "
+"exists."
 
 msgctxt "error:akademy.lective-year:"
 msgid ""
 "Não foi possível cadastrar o novo ano lectivo, por favor verifica se o código inserido já existe."
 msgstr ""
-"Não foi possível cadastrar o novo ano lectivo, por favor verifica se o código inserido já existe."
+"It was not possible to register the new academic year, please check if the code entered already "
+"exists."
 
 msgctxt "error:akademy.lective-year:"
 msgid ""
-"Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor "
-"que a data de término."
+"Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor que "
+"a data de término."
 msgstr ""
-"Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor "
-"que a data de término."
+"It was not possible to register the new academic year, please check if the start date is less "
+"than end date."
 
 # menu: akademy/configuration/school-chart
 
 msgctxt "model:akademy.school-chart,name:"
-msgid "Cargos lectivo"
-msgstr "Cargos lectivo"
+msgid "School Chart"
+msgstr "Academic possitions"
 
 msgctxt "view:akademy.school-chart:"
 msgid "School Chart"
-msgstr "Cargos lectivo"
+msgstr "School Chart"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Diretor administrativo"
-msgstr "Diretor administrativo"
+msgstr "Managing director"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Diretor pedagógico"
-msgstr "Diretor pedagógico"
+msgstr "Pedagogical director"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Sub-diretor administrativo"
-msgstr "Sub-diretor administrativo"
+msgstr "Deputy administrative director"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Sub-diretor pedagógico"
-msgstr "Sub-diretor pedagógico"
+msgstr "Pedagogical deputy director"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Coordenador"
-msgstr "Coordenador"
+msgstr "Coordinator"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Sub-coordenador"
@@ -186,47 +188,47 @@ msgstr "Sub-coordenador"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Coordenador da área"
-msgstr "Coordenador da área"
+msgstr "Area coordinator"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Coordenador do curso"
-msgstr "Coordenador do curso"
+msgstr "Course coordinator"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Coordenador da classe"
-msgstr "Coordenador da classe"
+msgstr "Class coordinator"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Professor"
-msgstr "Professor"
+msgstr "Teacher"
 
 msgctxt "selection:akademy.school-chart,school_position:"
 msgid "Professor estagiário"
-msgstr "Professor estagiário"
+msgstr "Trainee teacher"
 
 msgctxt "field:akademy.school-chart,employee:"
 msgid "Funcionário"
-msgstr "Funcionário"
+msgstr "Employee"
 
 msgctxt "field:akademy.school-chart,lective_year:"
 msgid "Ano lectivo"
-msgstr "Ano lectivo"
+msgstr "Lective year"
 
 msgctxt "field:akademy.school-chart,academiclevel:"
 msgid "Nível académico"
-msgstr "Nível académico"
+msgstr "Academic level"
 
 msgctxt "field:akademy.school-chart,area:"
 msgid "Área"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.school-chart,course:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.school-chart,course_classe:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.school-chart,id:"
 msgid "ID"
@@ -234,77 +236,77 @@ msgstr "ID"
 
 msgctxt "field:akademy.school-chart,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.school-chart,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.school-chart,write_date:"
 msgid "Write Date"
-msgstr "Data de gravação"
+msgstr "Write Date"
 
 msgctxt "field:akademy.school-chart,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.school-chart,employee:"
 msgid "Nome do funcionário."
-msgstr "Nome do funcionário."
+msgstr "Employee name."
 
 msgctxt "help:akademy.school-chart,lective_year:"
 msgid "Nome do ano lectivo."
-msgstr "Nome do ano lectivo."
+msgstr "Lective year name."
 
 msgctxt "error:akademy.school-chart:"
 msgid ""
-"Não foi possível cadastrar a disciplina neste critério de transição de classe, por favor "
-"verifica se a disciplina selecionada já existe."
+"Não foi possível cadastrar a disciplina neste critério de transição de classe, por favor verifica "
+"se a disciplina selecionada já existe."
 msgstr ""
-"Não foi possível cadastrar a disciplina neste critério de transição de classe, por favor "
-"verifica se a disciplina selecionada já existe."
+"It was not possible to register the subject in this class transition criterion, please check if "
+"the selected subject already exists."
 
 # menu: akademy/configuration/quarter
 
 msgctxt "model:akademy.quarter,name:"
 msgid "Quarter"
-msgstr "Trimestre"
+msgstr "Quarter"
 
 msgctxt "view:akademy.quarter:"
 msgid "Quarter"
-msgstr "Trimestre"
+msgstr "Quarter"
 
 msgctxt "field:akademy.quarter,code:"
-msgid "Código"
-msgstr "Código"
+msgid "Code"
+msgstr "Code"
 
 msgctxt "field:akademy.quarter,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.quarter,start:"
 msgid "Início"
-msgstr "Início"
+msgstr "Start"
 
 msgctxt "field:akademy.quarter,end:"
 msgid "Término"
-msgstr "Término"
+msgstr "End"
 
 msgctxt "field:akademy.quarter,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.quarter,lective_year:"
 msgid "Ano lectivo"
-msgstr "Ano lectivo"
+msgstr "Lective year"
 
 msgctxt "field:akademy.quarter,studyplan_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Subject of the study plan"
 
 msgctxt "field:akademy.quarter,studyplan_avaliations:"
 msgid "Avaliação do plano de estudo"
-msgstr "Avaliação do plano de estudo"
+msgstr "Evaluation of the study plan"
 
 # msgctxt "field:akademy.quarter,classe_student_grades:"
 # msgid "Avaliação"
@@ -312,11 +314,11 @@ msgstr "Avaliação do plano de estudo"
 
 msgctxt "field:akademy.quarter,classes_student_schedule_quarter:"
 msgid "Pauta trimestral"
-msgstr "Pauta trimestral"
+msgstr "Schedule quarterly"
 
 msgctxt "field:akademy.quarter,classes_schedule:"
 msgid "Pauta final"
-msgstr "Pauta final"
+msgstr "Schedule final"
 
 msgctxt "field:akademy.quarter,id:"
 msgid "ID"
@@ -324,107 +326,107 @@ msgstr "ID"
 
 msgctxt "field:akademy.quarter,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.quarter,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.quarter,write_date:"
 msgid "Write Date"
-msgstr "Data de gravação"
+msgstr "Write Date"
 
 msgctxt "field:akademy.quarter,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.quarter,code:"
 msgid "Código do Trimestre.\nEx: Trimestre-1"
-msgstr "Código do Trimestre.\nEx: Trimestre-1"
+msgstr "Quarter code.\nEx: Quarter-1"
 
 msgctxt "help:akademy.quarter,name:"
 msgid "Nome do trimestre."
-msgstr "Nome do trimestre."
+msgstr "Quarter name."
 
 msgctxt "help:akademy.quarter,start:"
 msgid "Data de início do trimestre."
-msgstr "Data de início do trimestre."
+msgstr "Quarter start date."
 
 msgctxt "help:akademy.quarter,end:"
 msgid "Data de término do trimestre."
-msgstr "Data de término do trimestre."
+msgstr "Quarter end date."
 
 msgctxt "help:akademy.quarter,lective_year:"
 msgid "Nome do ano lectivo."
-msgstr "Nome do ano lectivo."
+msgstr "Lective year name."
 
 msgctxt "error:akademy.quarter:"
 msgid ""
 "Não foi possível cadastrar o novo trimestre, por favor verifica se o nome inserido já existe."
 msgstr ""
-"Não foi possível cadastrar o novo trimestre, por favor verifica se o nome inserido já existe."
+"It was not possible to register the new quarter, please check if the name entered already exists."
 
 msgctxt "error:akademy.quarter:"
 msgid ""
 "Não foi possível cadastrar o novo trimestre, por favor verifica se a data de início é menor que "
 "a data de término."
 msgstr ""
-"Não foi possível cadastrar o novo trimestre, por favor verifica se a data de início é menor que "
-"a data de término."
+"It was not possible to register the new quarter, please check if the start date is less than "
+"the end date."
 
 # menu: akademy/configuration/area
 
 msgctxt "model:akademy.area,name:"
 msgid "Area"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "view:akademy.area:"
 msgid "Area"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.area,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.area,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.area,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.area,academic_level:"
 msgid "Nível académico"
-msgstr "Nível académico"
+msgstr "Academic level"
 
 msgctxt "field:akademy.area,application_criteria:"
 msgid "Critério de admissão"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.area,studyplan:"
 msgid "Plano de estudo"
-msgstr "Plano de estudo"
+msgstr "Study plan"
 
 msgctxt "field:akademy.area,course:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.area,student_transfer:"
 msgid "Transferências"
-msgstr "Transferências"
+msgstr "Student transfer"
 
 msgctxt "field:akademy.area,candidates:"
 msgid "Candidatos"
-msgstr "Candidatos"
+msgstr "Candidate"
 
 msgctxt "field:akademy.area,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.area,company_student:"
 msgid "Discente"
-msgstr "Discente"
+msgstr "Student"
 
 msgctxt "field:akademy.area,id:"
 msgid "ID"
@@ -432,11 +434,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.area,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.area,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.area,write_date:"
 msgid "Write Date"
@@ -444,61 +446,61 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.area,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.area,code:"
 msgid "Código da área."
-msgstr "Código da área."
+msgstr "Area code."
 
 msgctxt "help:akademy.area,name:"
 msgid "Nome da área."
-msgstr "Nome da área."
+msgstr "Area name."
 
 msgctxt "error:akademy.area:"
 msgid ""
 "Não foi possível cadastrar a nova área, por favor verifica se o nome ou o código inserido já "
 "existe."
 msgstr ""
-"Não foi possível cadastrar a nova área, por favor verifica se o nome ou o código inserido já "
-"existe."
+"It was not possible to register the new area, please check if the name or code entered already "
+"exists."
 
 # menu: akademy/configuration/course
 
 msgctxt "model:akademy.course,name:"
 msgid "Course"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "view:akademy.course:"
 msgid "Course"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.course,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.course,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.course,duration:"
 msgid "Duração"
-msgstr "Duração"
+msgstr "Duration"
 
 msgctxt "field:akademy.course,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.course,area:"
 msgid "Área"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.course,course_classe:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.course,application_criteria:"
 msgid "Critério de admissão"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.course,studyplan:"
 msgid "Plano de estudo"
@@ -506,19 +508,19 @@ msgstr "Plano de estudo"
 
 msgctxt "field:akademy.course,student_transfer:"
 msgid "Transferências"
-msgstr "Transferências"
+msgstr "Transfer"
 
 msgctxt "field:akademy.course,candidates:"
 msgid "Candidatos"
-msgstr "Candidatos"
+msgstr "Candidates"
 
 msgctxt "field:akademy.course,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.course,company_student:"
 msgid "Discente"
-msgstr "Discente"
+msgstr "Student"
 
 msgctxt "field:akademy.course,id:"
 msgid "ID"
@@ -526,11 +528,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.course,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.course,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.course,write_date:"
 msgid "Write Date"
@@ -538,69 +540,69 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.course,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.course,code:"
 msgid "Código do curso"
-msgstr "Código do curso"
+msgstr "Course code"
 
 msgctxt "help:akademy.course,name:"
 msgid "Nome do curso."
-msgstr "Nome do curso."
+msgstr "Course name."
 
 msgctxt "help:akademy.course,duration:"
 msgid "Escolha a duração do curso em anos."
-msgstr "Escolha a duração do curso em anos."
+msgstr "Choose course duration in years."
 
 msgctxt "error:akademy.course:"
 msgid ""
 "Não foi possível cadastrar o novo curso, por favor verifica se o nome ou o código inserido já "
 "existe."
 msgstr ""
-"Não foi possível cadastrar o novo curso, por favor verifica se o nome ou o código inserido já "
-"existe."
+"It was not possible to register the new course, please check if the name or code entered "
+"already exists."
 
 # menu: akademy/configuration/classe
 
 msgctxt "model:akademy.classe,name:"
 msgid "Classe"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "view:akademy.classe:"
 msgid "Classe"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_classe"
 msgid "Classe"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "model:ir.action,name:act_classe"
 msgid "Classe"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "field:akademy.classe,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.classe,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.classe,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.classe,course_classe:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.classe,classes:"
 msgid "Turma"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "field:akademy.classe,student:"
 msgid "Discente"
-msgstr "Discente"
+msgstr "Student"
 
 msgctxt "field:akademy.classe,id:"
 msgid "ID"
@@ -608,11 +610,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.classe,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.classe,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.classe,write_date:"
 msgid "Write Date"
@@ -620,41 +622,41 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.classe,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.classe,code:"
-msgid "Código da classe.\nEx: Classe-7"
-msgstr "Código da classe.\nEx: Classe-7"
+msgid "Código da classe.\nEx: Class-7"
+msgstr "Class code.\nEx: Class-7"
 
 msgctxt "help:akademy.classe,name:"
 msgid "Nome da classe."
-msgstr "Nome da classe."
+msgstr "Class name"
 
 msgctxt "error:akademy.classe:"
 msgid ""
 "Não foi possível cadastrar a nova classe, por favor verifica se o nome inserido já existe."
 msgstr ""
-"Não foi possível cadastrar a nova classe, por favor verifica se o nome inserido já existe."
+"It was not possible to register the new class, please check if the name entered already exists."
 
 msgctxt "error:akademy.classe:"
 msgid ""
 "Não foi possível cadastrar a nova classe, por favor verifica se o código inserido já existe."
 msgstr ""
-"Não foi possível cadastrar a nova classe, por favor verifica se o código inserido já existe."
+"It was not possible to register the new class, please check if the inserted code already exists."
 
 # menu: akademy/configuration/course-classe
 
 msgctxt "model:akademy.course-classe,name:"
 msgid "Course Classe"
-msgstr "Curso e classe"
+msgstr "Course Class"
 
 msgctxt "view:akademy.course-classe:"
 msgid "Course Classe"
-msgstr "Curso e classe"
+msgstr "Course classe"
 
 msgctxt "field:akademy.course-classe,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "selection:akademy.course-classe,course_year:"
 msgid "1"
@@ -678,35 +680,35 @@ msgstr "5"
 
 msgctxt "field:akademy.course-classe,classe:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.course-classe,course:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.course-classe,studyplan:"
 msgid "Plano de estudo"
-msgstr "Plano de estudo"
+msgstr "Study plan"
 
 msgctxt "field:akademy.course-classe,student_transfer:"
 msgid "Transferências"
-msgstr "Transferências"
+msgstr "Transfers"
 
 msgctxt "field:akademy.course-classe,student_transfer_discipline:"
 msgid "Transferência disciplina"
-msgstr "Transferência disciplina"
+msgstr "Discipline transfer"
 
 msgctxt "field:akademy.course-classe,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.course-classe,application_criteria:"
 msgid "Critérios de admissão"
-msgstr "Critérios de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.course-classe,school_chart:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.course-classe,id:"
 msgid "ID"
@@ -714,11 +716,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.course-classe,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.course-classe,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.course-classe,write_date:"
 msgid "Write Date"
@@ -726,77 +728,77 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.course-classe,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.course-classe,course_year:"
 msgid "Escolha o ano do curso."
-msgstr "Escolha o ano do curso."
+msgstr "Choose course year."
 
 msgctxt "error:akademy.course-classe:"
 msgid ""
 "Não foi possível associar a classe ao curso, por favor verifica se classe e o curso já não se "
 "encontram associados."
 msgstr ""
-"Não foi possível associar a classe ao curso, por favor verifica se classe e o curso já não se "
-"encontram associados."
+"It was not possible to associate the class with the course, please check that the class and the "
+"course are no longer associated."
 
 # menu: akademy/configuration/academic-level
 
 msgctxt "model:akademy.academic-level,name:"
 msgid "Academic Level"
-msgstr "Nível académico"
+msgstr "Academic Level"
 
 msgctxt "view:akademy.academic-level:"
 msgid "Academic Level"
-msgstr "Nível académico"
+msgstr "Academic Level"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_academiclevel"
 msgid "Academic Level"
-msgstr "Nível académico"
+msgstr "Academic Level"
 
 msgctxt "model:ir.action,name:act_academiclevel"
 msgid "Academic Level"
-msgstr "Nível académico"
+msgstr "Academic Level"
 
 msgctxt "field:akademy.academic-level,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.academic-level,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.academic-level,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.academic-level,area:"
-msgid "Area"
-msgstr "Área"
+msgid "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.academic-level,application_criteria:"
 msgid "Critério de admissão"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.academic-level,studyplan:"
 msgid "Plano de estudo"
-msgstr "Plano de estudo"
+msgstr "Study plan"
 
 msgctxt "field:akademy.academic-level,student_transfer:"
 msgid "Transferências"
-msgstr "Transferências"
+msgstr "Transfers"
 
 msgctxt "field:akademy.academic-level,candidates:"
 msgid "Candidatos"
-msgstr "Candidatos"
+msgstr "Candidates"
 
 msgctxt "field:akademy.academic-level,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.academic-level,student:"
 msgid "Discente"
-msgstr "Discente"
+msgstr "Student"
 
 msgctxt "field:akademy.academic-level,id:"
 msgid "ID"
@@ -804,11 +806,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.academic-level,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.academic-level,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.academic-level,write_date:"
 msgid "Write Date"
@@ -816,61 +818,65 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.academic-level,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.academic-level,code:"
 msgid "Código do nível académico."
-msgstr "Código do nível académico."
+msgstr "Academic level code."
 
 msgctxt "help:akademy.academic-level,name:"
 msgid "Nome do nível académico."
-msgstr "Nome do nível académico."
+msgstr "Academic level name."
 
 msgctxt "error:akademy.academic-level:"
-msgid "Não foi possível cadastrar o novo nível académico, por favor verifica se o nome ou o código inserido já existe."
-msgstr "Não foi possível cadastrar o novo nível académico, por favor verifica se o nome ou o código inserido já existe."
+msgid ""
+"Não foi possível cadastrar o novo nível académico, por favor verifica se o nome ou o código "
+"inserido já existe."
+msgstr ""
+"It was not possible to register the new academic level, please check if the name or code entered "
+"already exists."
 
 # menu: akademy/configuration/time-course
 
 msgctxt "model:akademy.time-course,name:"
 msgid "Time Course"
-msgstr "Período"
+msgstr "Time Course"
 
 msgctxt "view:akademy.time-course:"
 msgid "Time Course"
-msgstr "Período"
+msgstr "Time Course"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_time_course"
 msgid "Time Course"
-msgstr "Período"
+msgstr "Time Course"
 
 msgctxt "model:ir.action,name:act_time_course"
 msgid "Time Course"
-msgstr "Período"
+msgstr "Time Course"
 
 msgctxt "field:akademy.time-course,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.time-course,name:"
 msgid "Período"
-msgstr "Período"
+msgstr "Period"
 
 msgctxt "field:akademy.time-course,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.time-course,start_time:"
 msgid "Entrada"
-msgstr "Entrada"
+msgstr "Start"
 
 msgctxt "field:akademy.time-course,end_time:"
 msgid "Saída"
-msgstr "Saída"
+msgstr "End"
 
 msgctxt "field:akademy.time-course,classes:"
 msgid "Turma"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "field:akademy.time-course,id:"
 msgid "ID"
@@ -878,11 +884,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.time-course,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.time-course,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.time-course,write_date:"
 msgid "Write Date"
@@ -890,65 +896,65 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.time-course,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.time-course,code:"
 msgid "Código do período."
-msgstr "Código do período."
+msgstr "Period code"
 
 msgctxt "help:akademy.time-course,name:"
 msgid "Nome do período."
-msgstr "Nome do período."
+msgstr "Period name."
 
 msgctxt "error:akademy.time-course:"
 msgid ""
 "Não foi possível cadastrar o novo período lectivo, por favor verifica se o nome ou o código "
 "inserido já existe."
 msgstr ""
-"Não foi possível cadastrar o novo período lectivo, por favor verifica se o nome ou o código "
-"inserido já existe."
+"It was not possible to register the new academic period, please check if the name or code "
+"entered already exists."
 
 msgctxt "error:akademy.time-course:"
 msgid ""
 "Não foi possível cadastrar o novo período lectivo, por favor verifica se a hora de entrada é "
 "menor que a hora de saída."
 msgstr ""
-"Não foi possível cadastrar o novo período lectivo, por favor verifica se a hora de entrada é "
-"menor que a hora de saída."
+"It was not possible to register the new academic period, please check if the start time is less "
+"than the end time."
 
 # menu: akademy/configuration/metric-avaliation
 
 msgctxt "model:akademy.metric-avaliation,name:"
 msgid "Metric Avaliation"
-msgstr "Métrica da avaliação"
+msgstr "Metric Avaliation"
 
 msgctxt "view:akademy.metric-avaliation:"
 msgid "Metric Avaliation"
-msgstr "Métrica da avaliação"
+msgstr "Metric Avaliation"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_metric"
 msgid "Metric Avaliation"
-msgstr "Métrica da avaliação"
+msgstr "Metric Avaliation"
 
 msgctxt "model:ir.action,name:act_metric"
 msgid "Metric Avaliation"
-msgstr "Métrica da avaliação"
+msgstr "Metric Avaliation"
 
 msgctxt "field:akademy.metric-avaliation,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.metric-avaliation,avaliation:"
 msgid "Avaliação"
-msgstr "Avaliação"
+msgstr "Avaliation"
 
 msgctxt "field:akademy.metric-avaliation,avaliation_type:"
 msgid "Tipo de avaliação"
-msgstr "Tipo de avaliação"
+msgstr "Avaliation type"
 
 msgctxt "field:akademy.metric-avaliation,studyplan_avaliation:"
 msgid "Plano de estudo avaliação"
-msgstr "Plano de estudo avaliação"
+msgstr "Avaliation study plan"
 
 msgctxt "field:akademy.metric-avaliation,id:"
 msgid "ID"
@@ -956,11 +962,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.metric-avaliation,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.metric-avaliation,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.metric-avaliation,write_date:"
 msgid "Write Date"
@@ -968,39 +974,39 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.metric-avaliation,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.metric-avaliation,name:"
 msgid "Nome da métrica que corresponde a avaliação."
-msgstr "Nome da métrica que corresponde a avaliação."
+msgstr "Name of the metric that corresponds to the avaliation."
 
 msgctxt "error:akademy.metric-avaliation:"
 msgid ""
 "Não foi possível cadastrar a nova métrica, por favor verifica se o nome inserido já existe."
 msgstr ""
-"Não foi possível cadastrar a nova métrica, por favor verifica se o nome inserido já existe."
+"It was not possible to register the new metric, please check if the name entered already exists."
 
 # menu: akademy/configuration/avaliation
 
 msgctxt "model:akademy.avaliation,name:"
 msgid "Avaliation"
-msgstr "Avaliação"
+msgstr "Avaliation"
 
 msgctxt "view:akademy.avaliation:"
 msgid "Avaliation"
-msgstr "Avaliação"
+msgstr "Avaliation"
 
 msgctxt "field:akademy.avaliation,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.avaliation,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.avaliation,metric_avaliation:"
 msgid "Avaliação"
-msgstr "Avaliação"
+msgstr "Avaliation"
 
 msgctxt "field:akademy.avaliation,id:"
 msgid "ID"
@@ -1008,11 +1014,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.avaliation,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.avaliation,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.avaliation,write_date:"
 msgid "Write Date"
@@ -1020,41 +1026,41 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.avaliation,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.avaliation,name:"
 msgid "Nome da avaliação."
-msgstr "Nome da avaliação."
+msgstr "Avaliation name."
 
 msgctxt "error:akademy.avaliation:"
 msgid ""
 "Não foi possível cadastrar a nova avaliação, por favor verifica se o nome inserido já existe "
 "para esta métrica."
 msgstr ""
-"Não foi possível cadastrar a nova avaliação, por favor verifica se o nome inserido já existe "
-"para esta métrica."
+"It was not possible to register the new assessment, please check if the name entered already "
+"exists for this metric."
 
 # menu: akademy/configuration/avaliation-type
 
 msgctxt "model:akademy.avaliation-type,name:"
 msgid "Avaliation Type"
-msgstr "Tipo de avaliação"
+msgstr "Avaliation Type"
 
 msgctxt "view:akademy.avaliation-type:"
 msgid "Avaliation Type"
-msgstr "Tipo de avaliação"
+msgstr "Avaliation Type"
 
 msgctxt "field:akademy.avaliation-type,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.avaliation-type,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.avaliation-type,metric_avaliation:"
 msgid "Tipo de avaliação"
-msgstr "Tipo de avaliação"
+msgstr "Avaliation type"
 
 msgctxt "field:akademy.avaliation-type,id:"
 msgid "ID"
@@ -1062,11 +1068,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.avaliation-type,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.avaliation-type,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.avaliation-type,write_date:"
 msgid "Write Date"
@@ -1074,65 +1080,65 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.avaliation-type,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.avaliation-type,name:"
 msgid "Nome do tipo de avaliação."
-msgstr "Nome do tipo de avaliação."
+msgstr "Avaliation type name."
 
 msgctxt "error:akademy.avaliation-type:"
 msgid ""
 "Não foi possível cadastrar o novo tipo de avaliação, por favor verifica se o nome inserido já "
 "existe para esta métrica."
 msgstr ""
-"Não foi possível cadastrar o novo tipo de avaliação, por favor verifica se o nome inserido já "
-"existe para esta métrica."
+"It was not possible to register the new type of evaluation, please check if the name entered "
+"already exists for this metric."
 
 # menu: akademy/configuration/discipline
 
 msgctxt "model:akademy.discipline,name:"
 msgid "Discipline"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "view:akademy.discipline:"
 msgid "Discipline"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_discipline"
 msgid "Discipline"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "model:ir.action,name:act_discipline"
 msgid "Discipline"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "field:akademy.discipline,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.discipline,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.discipline,lesson_teoric:"
 msgid "Teóricas"
-msgstr "Teóricas"
+msgstr "Teoric"
 
 msgctxt "field:akademy.discipline,lesson_pratic:"
 msgid "Práticas"
-msgstr "Práticas"
+msgstr "Pratic"
 
 msgctxt "field:akademy.discipline,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.discipline,studyplan_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "field:akademy.discipline,discipline_precentes:"
 msgid "Disciplina antecedentes"
-msgstr "Disciplina antecedentes"
+msgstr "Discipline background"
 
 msgctxt "field:akademy.discipline,id:"
 msgid "ID"
@@ -1140,11 +1146,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.discipline,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.discipline,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.discipline,write_date:"
 msgid "Write Date"
@@ -1152,81 +1158,81 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.discipline,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.discipline,student_transfer_discipline:"
 msgid "Transferência disciplina"
-msgstr "Transferência disciplina"
+msgstr "Discipline transfer"
 
 msgctxt "help:akademy.discipline,code:"
 msgid "Código da disciplina."
-msgstr "Código da disciplina."
+msgstr "Discipline code."
 
 msgctxt "help:akademy.discipline,name:"
 msgid "Nome da disciplina."
-msgstr "Nome da disciplina."
+msgstr "Discipline name."
 
 msgctxt "help:akademy.discipline,lesson_teoric:"
 msgid "A disciplina tem aulas teóricas."
-msgstr "A disciplina tem aulas teóricas."
+msgstr "The discipline has teoric classes."
 
 msgctxt "error:akademy.discipline:"
 msgid ""
 "Não foi possível cadastrar a nova disciplina, por favor verifica se o nome ou código inserido "
 "já existe."
 msgstr ""
-"Não foi possível cadastrar a nova disciplina, por favor verifica se o nome ou código inserido "
-"já existe."
+"It was not possible to register the new course, please check if the name or code entered "
+"already exists."
 
 # menu: akademy/configuration/phase
 
 msgctxt "model:akademy.phase,name:"
 msgid "Phase"
-msgstr "Fase"
+msgstr "Phase"
 
 msgctxt "view:akademy.phase:"
 msgid "Phase"
-msgstr "Fase"
+msgstr "Phase"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_phase"
 msgid "Phase"
-msgstr "Fase"
+msgstr "Phase"
 
 msgctxt "model:ir.action,name:act_phase"
 msgid "Phase"
-msgstr "Fase"
+msgstr "Phase"
 
 msgctxt "field:akademy.phase,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.phase,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.phase,start:"
 msgid "Início"
-msgstr "Início"
+msgstr "Start"
 
 msgctxt "field:akademy.phase,end:"
 msgid "Término"
-msgstr "Término"
+msgstr "End"
 
 msgctxt "field:akademy.phase,lective_year:"
 msgid "Ano lectivo"
-msgstr "Ano lectivo"
+msgstr "Lective year"
 
 msgctxt "field:akademy.phase,application_criteria:"
 msgid "Critério de admissão"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "field:akademy.phase,applications:"
 msgid "Candidaturas"
-msgstr "Candidaturas"
+msgstr "Applications"
 
 msgctxt "field:akademy.phase,application_result:"
 msgid "Resultado das candidaturas"
-msgstr "Resultado das candidaturas"
+msgstr "Applications result"
 
 msgctxt "field:akademy.phase,id:"
 msgid "ID"
@@ -1234,11 +1240,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.phase,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.phase,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.phase,write_date:"
 msgid "Write Date"
@@ -1246,81 +1252,81 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.phase,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.phase,code:"
 msgid "Código do fase."
-msgstr "Código do fase."
+msgstr "Phase code."
 
 msgctxt "help:akademy.phase,name:"
 msgid "Nome da fase de admissão."
-msgstr "Nome da fase de admissão."
+msgstr "Admission phase name."
 
 msgctxt "help:akademy.phase,start:"
 msgid "Data de início do ano lectivo."
-msgstr "Data de início do ano lectivo."
+msgstr "Lective year start date."
 
 msgctxt "help:akademy.phase,end:"
 msgid "Data de término do ano lectivo."
-msgstr "Data de término do ano lectivo."
+msgstr "Lective year end date."
 
 msgctxt "error:akademy.phase:"
 msgid ""
 "Não foi possível cadastrar a nova fase de admissão, por favor verifica se o nome ou código "
 "inserido já existe."
 msgstr ""
-"Não foi possível cadastrar a nova fase de admissão, por favor verifica se o nome ou código "
-"inserido já existe."
+"It was not possible to register the new admission phase, please check if the name or code "
+"entered already exists."
 
 msgctxt "error:akademy.phase:"
 msgid ""
 "Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor "
 "que a data de término."
 msgstr ""
-"Não foi possível cadastrar o novo ano lectivo, por favor verifica se a data de início é menor "
-"que a data de término."
+"It was not possible to register the new academic year, please check if the start date is less "
+"than the end date."
 
 # menu: akademy/configuration/classe-room
 
 msgctxt "model:akademy.classe-room,name:"
 msgid "Classe Room"
-msgstr "Sala de aula"
+msgstr "Class Room"
 
 msgctxt "view:akademy.classe-room:"
 msgid "Classe Room"
-msgstr "Sala de aula"
+msgstr "Classe Room"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_classeroom"
 msgid "Classe Room"
-msgstr "Sala de aula"
+msgstr "Classe Room"
 
 msgctxt "model:ir.action,name:act_classeroom"
 msgid "Classe Room"
-msgstr "Sala de aula"
+msgstr "Classe Room"
 
 msgctxt "field:akademy.classe-room,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.classe-room,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.classe-room,lesson_teoric:"
 msgid "Teóricas"
-msgstr "Teóricas"
+msgstr "Teoric"
 
 msgctxt "field:akademy.classe-room,lesson_pratic:"
 msgid "Práticas"
-msgstr "Práticas"
+msgstr "Pratic"
 
 msgctxt "field:akademy.classe-room,capacity:"
 msgid "Capacidade"
-msgstr "Capacidade"
+msgstr "Capacity"
 
 msgctxt "field:akademy.classe-room,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.classe-room,id:"
 msgid "ID"
@@ -1328,11 +1334,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.classe-room,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.classe-room,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.classe-room,write_date:"
 msgid "Write Date"
@@ -1340,109 +1346,108 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.classe-room,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.classe-room,code:"
 msgid "Código da sala de aula."
-msgstr "Código da sala de aula."
+msgstr "Class room code."
 
 msgctxt "help:akademy.classe-room,name:"
 msgid "Nome da sala de aula."
-msgstr "Nome da sala de aula."
+msgstr "Class room name."
 
 msgctxt "help:akademy.classe-room,lesson_teoric:"
 msgid "Sala para aulas teórica."
-msgstr "Sala para aulas teórica."
+msgstr "Room for teoric lessons."
 
 msgctxt "help:akademy.classe-room,lesson_pratic:"
 msgid "Sala para aulas práticas."
-msgstr "Sala para aulas práticas."
+msgstr "Room for pratic lessons."
 
 msgctxt "help:akademy.classe-room,capacity:"
 msgid "Capacidade máxima da sala de aula."
-msgstr "Capacidade máxima da sala de aula."
+msgstr "Maximum classroom capacity."
 
 msgctxt "error:akademy.classe-room:"
 msgid ""
 "Não foi possível cadastrar a nova sala de aula, por favor verifica se o nome inserido já existe."
 msgstr ""
-"Não foi possível cadastrar a nova sala de aula, por favor verifica se o nome inserido já existe."
+"It was not possible to register the new classroom, please check if the name entered already "
+"exists."
 
 msgctxt "error:akademy.classe-room:"
-msgid ""
-"Não foi possível cadastrar a nova sala de aula, por favor verifica se a capacidade."
-msgstr ""
-"Não foi possível cadastrar a nova sala de aula, por favor verifica se a capacidade."
+msgid "Não foi possível cadastrar a nova sala de aula, por favor verifica se a capacidade."
+msgstr "It was not possible to register the new classroom, please check if the capacity."
 
 # menu: akademy/configuration/application-criteria
 
 msgctxt "model:akademy.application-criteria,name:"
 msgid "Application Criteria"
-msgstr "Critério de admissão"
+msgstr "Application criteria"
 
 msgctxt "view:akademy.application-criteria:"
 msgid "Application Criteria"
-msgstr "Critério de admissão"
+msgstr "Application Criteria"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_applicationcriteria"
 msgid "Application Criteria"
-msgstr "Critério de admissão"
+msgstr "Application Criteria"
 
 msgctxt "model:ir.action,name:act_applicationcriteria"
 msgid "Application Criteria"
-msgstr "Critério de admissão"
+msgstr "Application Criteria"
 
 msgctxt "field:akademy.application-criteria,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.application-criteria,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.application-criteria,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "field:akademy.application-criteria,age:"
 msgid "Idade"
-msgstr "Idade"
+msgstr "Age"
 
 msgctxt "field:akademy.application-criteria,average:"
 msgid "Média"
-msgstr "Média"
+msgstr "Average"
 
 msgctxt "field:akademy.application-criteria,student_limit:"
 msgid "Total de vagas"
-msgstr "Total de vagas"
+msgstr "Student limit"
 
 msgctxt "field:akademy.application-criteria,lective_year:"
 msgid "Ano lectivo"
-msgstr "Ano lectivo"
+msgstr "Lective year"
 
 msgctxt "field:akademy.application-criteria,area:"
 msgid "Área"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.application-criteria,course:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.application-criteria,course_classe:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.application-criteria,phase:"
 msgid "Fase"
-msgstr "Fase"
+msgstr "Phase"
 
 msgctxt "field:akademy.application-criteria,application_result:"
-msgid "Nível académico"
-msgstr "Nível académico"
+msgid "Resultado das candidaturas"
+msgstr "Aplication result"
 
 msgctxt "field:akademy.application-criteria,academic_level:"
-msgid "Candidaturas"
-msgstr "Candidaturas"
+msgid "Nível académico"
+msgstr "Academic level"
 
 msgctxt "field:akademy.application-criteria,id:"
 msgid "ID"
@@ -1450,11 +1455,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.application-criteria,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.application-criteria,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.application-criteria,write_date:"
 msgid "Write Date"
@@ -1462,115 +1467,115 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.application-criteria,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.application-criteria,code:"
 msgid "Código do critério de admissão."
-msgstr "Código do critério de admissão."
+msgstr "Application criteria code."
 
 msgctxt "help:akademy.application-criteria,name:"
 msgid "Nome do critéio de admissão."
-msgstr "Nome do critéio de admissão."
+msgstr "Application criteria name."
 
 msgctxt "help:akademy.application-criteria,age:"
 msgid "Informe a idade máxima para admissão."
-msgstr "Informe a idade máxima para admissão."
+msgstr "Enter the maximum age for admission."
 
 msgctxt "help:akademy.application-criteria,average:"
 msgid "Informe a média mínima para admissão."
-msgstr "Informe a média mínima para admissão."
+msgstr "Enter the minimum average for admission."
 
 msgctxt "error:akademy.application-criteria:"
 msgid ""
 "Não foi possível cadastrar o novo critério de admissão, por favor verifica se já existe um "
 "critério de admissão com este nome, para este curso e ano lectivo."
 msgstr ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica se já existe um "
-"critério de admissão com este nome, para este curso e ano lectivo."
+"It was not possible to register the new admission criteria, please check if there is already an "
+"admission criterion with this name, for this course and academic year."
 
 msgctxt "error:akademy.application-criteria:"
 msgid ""
 "Não foi possível cadastrar o novo critério de admissão, por favor verifica se a idade inserida."
 msgstr ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica se a idade inserida."
+"It was not possible to register the new admission criteria, please verify that the entered age."
 
 msgctxt "error:akademy.application-criteria:"
 msgid ""
 "Não foi possível cadastrar o novo critério de admissão, por favor verifica se a média esta "
 "abaixo de 10 valores."
 msgstr ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica se a média esta "
-"abaixo de 10 valores."
+"It was not possible to register the new admission criteria, please check if the average is "
+"below 10 values."
 
 msgctxt "error:akademy.application-criteria:"
 msgid ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica se a média esta "
-"acima de 20 valores."
+"Não foi possível cadastrar o novo critério de admissão, por favor verifica se a média esta acima "
+"de 20 valores."
 msgstr ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica se a média esta "
-"acima de 20 valores."
+"It was not possible to register the new admission criteria, please check if the average is above "
+"20 values."
 
 msgctxt "error:akademy.application-criteria:"
 msgid ""
 "Não foi possível cadastrar o novo critério de admissão, por favor verifica o limite de vagas "
 "disponivés."
 msgstr ""
-"Não foi possível cadastrar o novo critério de admissão, por favor verifica o limite de vagas "
-"disponivés."
+"It was not possible to register the new admission criteria, please check if the average is "
+"above 20 values."
 
 # menu: akademy/configuration/studyplan
 
 msgctxt "model:akademy.studyplan,name:"
 msgid "StudyPlan"
-msgstr "Plano de estudo"
+msgstr "Study Plan"
 
 msgctxt "view:akademy.studyplan:"
 msgid "StudyPlan"
-msgstr "Plano de estudo"
+msgstr "Study Plan"
 
 msgctxt "model:ir.ui.menu,name:akademy_config_studyplan"
 msgid "StudyPlan"
-msgstr "Plano de estudo"
+msgstr "Study Plan"
 
 msgctxt "model:ir.action,name:act_studyplan"
 msgid "StudyPlan"
-msgstr "Plano de estudo"
+msgstr "Study Plan"
 
 msgctxt "field:akademy.studyplan,code:"
 msgid "Código"
-msgstr "Código"
+msgstr "Code"
 
 msgctxt "field:akademy.studyplan,name:"
 msgid "Nome"
-msgstr "Nome"
+msgstr "Name"
 
 msgctxt "field:akademy.studyplan,hours:"
 msgid "Total de horas"
-msgstr "Total de horas"
+msgstr "Hours total"
 
 msgctxt "field:akademy.studyplan,academic_level:"
 msgid "Nível académico"
-msgstr "Nível académico"
+msgstr "Academic level"
 
 msgctxt "field:akademy.studyplan,area:"
 msgid "Área"
-msgstr "Área"
+msgstr "Area"
 
 msgctxt "field:akademy.studyplan,course:"
 msgid "Curso"
-msgstr "Curso"
+msgstr "Course"
 
 msgctxt "field:akademy.studyplan,classe:"
 msgid "Classe"
-msgstr "Classe"
+msgstr "Class"
 
 msgctxt "field:akademy.studyplan,studyplan_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "field:akademy.studyplan,classes:"
 msgid "Turma"
-msgstr "Turma"
+msgstr "Class"
 
 msgctxt "field:akademy.studyplan,id:"
 msgid "ID"
@@ -1578,11 +1583,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.studyplan,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.studyplan,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.studyplan,write_date:"
 msgid "Write Date"
@@ -1590,57 +1595,57 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.studyplan,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.studyplan,code:"
 msgid "Código do plano de estudo."
-msgstr "Código do plano de estudo."
+msgstr "Study plan code."
 
 msgctxt "help:akademy.studyplan,name:"
 msgid "Nome do plano de estudo."
-msgstr "Nome do plano de estudo."
+msgstr "Study plan name."
 
 msgctxt "help:akademy.studyplan,hours:"
 msgid "Informe a carga horária."
-msgstr "Informe a carga horária."
+msgstr "Inform the course load."
 
 msgctxt "error:akademy.studyplan:"
 msgid ""
 "Não foi possível cadastrar o novo plano de estudo, por favor verifica se o nome ou código "
 "inserido já existe."
 msgstr ""
-"Não foi possível cadastrar o novo plano de estudo, por favor verifica se o nome ou código "
-"inserido já existe."
+"It was not possible to register the new study plan, please check if the name or code entered "
+"already exists."
 
 # menu: akademy/configuration/studyplan-discipline
 
 msgctxt "model:akademy.studyplan-discipline,name:"
 msgid "StudyPlan discipline"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "view:akademy.studyplan-discipline:"
 msgid "StudyPlan discipline"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "field:akademy.studyplan-discipline,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "selection:akademy.studyplan-discipline,state:"
 msgid "Obrigatório"
-msgstr "Obrigatório"
+msgstr "Required"
 
 msgctxt "selection:akademy.studyplan-discipline,state:"
 msgid "Opcional"
-msgstr "Opcional"
+msgstr "Optional"
 
 msgctxt "selection:akademy.studyplan-discipline,modality:"
 msgid "Presencial"
-msgstr "Presencial"
+msgstr "In person"
 
 msgctxt "selection:akademy.studyplan-discipline,modality:"
 msgid "Não presencial"
-msgstr "Não presencial"
+msgstr "Non-face-to-face"
 
 msgctxt "selection:akademy.studyplan-discipline,modality:"
 msgid "Virtual"
@@ -1648,47 +1653,47 @@ msgstr "Virtual"
 
 msgctxt "selection:akademy.studyplan-discipline,modality:"
 msgid "Todas"
-msgstr "Todas"
+msgstr "All"
 
 msgctxt "field:akademy.studyplan-discipline,quarter:"
 msgid "Trimestre"
-msgstr "Trimestre"
+msgstr "Quarter"
 
 msgctxt "field:akademy.studyplan-discipline,hours:"
 msgid "Total de horas"
-msgstr "Total de horas"
+msgstr "Hours total"
 
 msgctxt "field:akademy.studyplan-discipline,flaut:"
 msgid "Total de faltas"
-msgstr "Total de faltas"
+msgstr "Flaut total"
 
 msgctxt "field:akademy.studyplan-discipline,average:"
 msgid "Média"
-msgstr "Média"
+msgstr "Average"
 
 msgctxt "field:akademy.studyplan-discipline,studyplan:"
 msgid "Plano de estudo"
-msgstr "Plano de estudo"
+msgstr "Study plan"
 
 msgctxt "field:akademy.studyplan-discipline,discipline:"
 msgid "Disciplina"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "field:akademy.studyplan-discipline,studyplan_avaliations:"
 msgid "Disciplina avaliações"
-msgstr "Disciplina avaliações"
+msgstr "Discipline avaliation"
 
 msgctxt "field:akademy.studyplan-discipline,discipline_precedentes:"
 msgid "Disciplina precedentes"
-msgstr "Disciplina precedentes"
+msgstr "Preceding discipline"
 
 msgctxt "field:akademy.studyplan-discipline,classe_student_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "field:akademy.studyplan-discipline,classe_teacher_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 # msgctxt "field:akademy.studyplan-discipline,student_grades:"
 # msgid "Discente nota"
@@ -1696,15 +1701,15 @@ msgstr "Disciplina do plano de estudo"
 
 msgctxt "field:akademy.studyplan-discipline,historic_grades:"
 msgid "Discente nota"
-msgstr "Discente nota"
+msgstr "Student grade"
 
 msgctxt "field:akademy.studyplan-discipline,classes_student_schedule_quarter:"
 msgid "Pauta trimestral"
-msgstr "Pauta trimestral"
+msgstr "Schedule quarterly"
 
 msgctxt "field:akademy.studyplan-discipline,classes_schedule:"
 msgid "Pauta final"
-msgstr "Pauta final"
+msgstr "Schedule final"
 
 msgctxt "field:akademy.studyplan-discipline,id:"
 msgid "ID"
@@ -1712,69 +1717,80 @@ msgstr "ID"
 
 msgctxt "field:akademy.studyplan-discipline,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.studyplan-discipline,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.studyplan-discipline,write_date:"
 msgid "Write Date"
-msgstr "Data de gravação"
+msgstr "Write Date"
 
 msgctxt "field:akademy.studyplan-discipline,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.studyplan-discipline,sate:"
 msgid "Escolha o estado de frequência da disciplina."
-msgstr "Escolha o estado de frequência da disciplina."
+msgstr "Choose the frequency state of the discipline."
 
 msgctxt "help:akademy.studyplan-discipline,quarter:"
 msgid "Escolha o trimestre em que a disciplina será lecionada."
-msgstr "Escolha o trimestre em que a disciplina será lecionada."
+msgstr "Choose the quarter in which the subject will be taught."
 
 msgctxt "help:akademy.studyplan-discipline,hours:"
 msgid "Carga horária da disciplina."
-msgstr "Carga horária da disciplina."
+msgstr "Course load."
 
 msgctxt "help:akademy.studyplan-discipline,average:"
 msgid "Média para aprovação."
-msgstr "Média para aprovação."
+msgstr "Average for class transition."
 
 msgctxt "error:akademy.studyplan-discipline:"
-msgid "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a disciplina inserida já existe."
-msgstr "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a disciplina inserida já existe."
+msgid ""
+"Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a "
+"disciplina inserida já existe."
+msgstr ""
+"It was not possible to register the discipline in this study plan, please check if the inserted "
+"discipline already exists."
 
 msgctxt "error:akademy.studyplan-discipline:"
-msgid "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica a carga horária."
-msgstr "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica a carga horária."
+msgid ""
+"Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica a carga "
+"horária."
+msgstr ""
+"It was not possible to register the subject in this study plan, please check the workload."
 
 msgctxt "error:akademy.studyplan-discipline:"
-msgid "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a média de aprovação esta acima de 20 valores."
-msgstr "Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a média de aprovação esta acima de 20 valores."
+msgid ""
+"Não foi possível cadastrar a disciplina neste plano de estudo, por favor verifica se a média de "
+"aprovação esta acima de 20 valores."
+msgstr ""
+"It was not possible to register the discipline in this study plan, please check if the approval "
+"average is above 20 values."
 
 # menu: akademy/configuration/discipline-precedents
 
 msgctxt "model:akademy.discipline-precedents,name:"
 msgid "Discipline Precedents"
-msgstr "Disciplina prescedente"
+msgstr "Discipline precedents"
 
 msgctxt "view:akademy.discipline-precedents:"
 msgid "Discipline Precedents"
-msgstr "Disciplina prescedente"
+msgstr "Discipline precedents"
 
 msgctxt "field:akademy.discipline-precedents,discipline:"
 msgid "Disciplina"
-msgstr "Disciplina"
+msgstr "Discipline"
 
 msgctxt "field:akademy.discipline-precedents,studyplan_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 msgctxt "field:akademy.discipline-precedents,grade:"
 msgid "Nota"
-msgstr "Nota"
+msgstr "Grade"
 
 msgctxt "field:akademy.discipline-precedents,id:"
 msgid "ID"
@@ -1782,11 +1798,11 @@ msgstr "ID"
 
 msgctxt "field:akademy.discipline-precedents,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.discipline-precedents,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.discipline-precedents,write_date:"
 msgid "Write Date"
@@ -1794,63 +1810,64 @@ msgstr "Data de gravação"
 
 msgctxt "field:akademy.discipline-precedents,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "error:akademy.discipline-precedents:"
 msgid ""
 "Não foi possível cadastrar a disciplina, por favor verifica se a disciplina inserida já existe."
 msgstr ""
-"Não foi possível cadastrar a disciplina, por favor verifica se a disciplina inserida já existe."
+"It was not possible to register the discipline, please check if the inserted discipline already "
+"exists."
 
 # menu: akademy/configuration/discipline-precedents
 
 msgctxt "model:akademy.studyplan-avaliation,name:"
 msgid "StudyPlan Avaliation"
-msgstr "Avaliações do plano de estudo"
+msgstr "Avaliation study plan"
 
 msgctxt "view:akademy.studyplan-avaliation:"
 msgid "StudyPlan Avaliation"
-msgstr "Avaliações do plano de estudo"
+msgstr "Avaliation study plan"
 
 msgctxt "field:akademy.studyplan-avaliation,description:"
 msgid "Descrição"
-msgstr "Descrição"
+msgstr "Description"
 
 msgctxt "selection:akademy.studyplan-avaliation,state:"
 msgid "Obrigatório"
-msgstr "Obrigatório"
+msgstr "Required"
 
 msgctxt "selection:akademy.studyplan-avaliation,state:"
 msgid "Opcional"
-msgstr "Opcional"
+msgstr "Optional"
 
 msgctxt "field:akademy.studyplan-avaliation,perct_arithmetic:"
 msgid "Média aritmética"
-msgstr "Média aritmética"
+msgstr "Arithmetic average"
 
 msgctxt "field:akademy.studyplan-avaliation,perct_weighted:"
 msgid "Média ponderada"
-msgstr "Média ponderada"
+msgstr "Weighted average"
 
 msgctxt "field:akademy.studyplan-avaliation,percent:"
 msgid "Percetagem"
-msgstr "Percetagem"
+msgstr "Percentage"
 
 msgctxt "field:akademy.studyplan-avaliation,metric_avaliation:"
 msgid "Avaliação"
-msgstr "Avaliação"
+msgstr "Avaliation"
 
 msgctxt "field:akademy.studyplan-avaliation,quarter:"
 msgid "Trimestre"
-msgstr "Trimestre"
+msgstr "Quarter"
 
 msgctxt "field:akademy.studyplan-avaliation,studyplan_discipline:"
 msgid "Disciplina do plano de estudo"
-msgstr "Disciplina do plano de estudo"
+msgstr "Discipline study plan"
 
 # msgctxt "field:akademy.studyplan-avaliation,stundent_grades:"
 # msgid "Discente nota"
-# msgstr "Discente nota"
+# msgstr "Student grade"
 
 msgctxt "field:akademy.studyplan-avaliation,id:"
 msgid "ID"
@@ -1858,72 +1875,72 @@ msgstr "ID"
 
 msgctxt "field:akademy.studyplan-avaliation,create_date:"
 msgid "Create Date"
-msgstr "Data de criação"
+msgstr "Create Date"
 
 msgctxt "field:akademy.studyplan-avaliation,create_uid:"
 msgid "Create User"
-msgstr "Criado pelo usuário"
+msgstr "Create User"
 
 msgctxt "field:akademy.studyplan-avaliation,write_date:"
 msgid "Write Date"
-msgstr "Data de gravação"
+msgstr "Write Date"
 
 msgctxt "field:akademy.studyplan-avaliation,write_uid:"
 msgid "Write User"
-msgstr "Gravado pelo usuário"
+msgstr "Write User"
 
 msgctxt "help:akademy.studyplan-avaliation,state:"
 msgid "Escolha o estado de frequência da disciplina."
-msgstr "Escolha o estado de frequência da disciplina."
+msgstr "Choose the frequency state of the discipline."
 
 msgctxt "help:akademy.studyplan-avaliation,perct_arithmetic:"
 msgid ""
 "Calcula a média com base na operação aritmética.\nEx: Soma das avaliações, dividido pelo número "
 "de avaliações."
 msgstr ""
-"Calcula a média com base na operação aritmética.\nEx: Soma das avaliações, dividido pelo número "
-"de avaliações."
+"Calculates the mean based on the arithmetic operation.\nEx: Sum of avaliations divided by the "
+"number of avaliations."
 
 msgctxt "help:akademy.studyplan-avaliation,perct_weighted:"
 msgid ""
-"Calcula a média com base na operação ponderada.\nEx: Soma da multiplicação das ponderações das "
-"avaliações, dividido pela soma das ponderações."
-msgstr ""
 "Calcula a média com base na operação ponderada.\nEx: Soma da multiplicação das ponderações "
 "das avaliações, dividido pela soma das ponderações."
+msgstr ""
+"Calculates the average based on the weighted operation.\nEx: Sum of the multiplication of rating "
+"weights, divided by the sum of weights."
 
 msgctxt "help:akademy.studyplan-avaliation,percent:"
 msgid "A percetagem varia entre 1% a 100%."
-msgstr "A percetagem varia entre 1% a 100%."
+msgstr "The percentage ranges from 1% to 100%."
 
 msgctxt "help:akademy.studyplan-avaliation,metric_avaliation:"
 msgid "Nome da avaliação."
-msgstr "Nome da avaliação."
+msgstr "Avaliation name."
 
 msgctxt "help:akademy.studyplan-avaliation,quarter:"
 msgid "Escolha o trimestre em que a avaliação será lecionada."
-msgstr "Escolha o trimestre em que a avaliação será lecionada."
+msgstr "Choose the quarter in which the assessment will be taught."
 
 msgctxt "error:akademy.studyplan-avaliation:"
 msgid ""
 "Não foi possível cadastrar avaliação, por favor verifica se já existe uma avaliação, neste "
 "nível trimestre."
 msgstr ""
-"Não foi possível cadastrar avaliação, por favor verifica se já existe uma avaliação, neste "
-"nível trimestre."
+"It was not possible to register an evaluation, please check if there is already an evaluation, "
+"at this quarter level."
 
 msgctxt "error:akademy.studyplan-avaliation:"
 msgid ""
 "Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem é "
 "superior a 100%."
 msgstr ""
-"Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem "
-"é superior a 100%."
+"It was not possible to register evaluation in the study plan, please check if the percentage is "
+"greater than 100%."
 
 msgctxt "error:akademy.studyplan-avaliation:"
 msgid ""
-"Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem "
-"é inferior ou igual a 0%."
+"Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem é "
+"inferior ou igual a 0%."
 msgstr ""
-"Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem "
-"é inferior ou igual a 0%."
+"Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem é "
+"inferior ou igual a 0%."

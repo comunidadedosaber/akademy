@@ -130,10 +130,10 @@ sel_course_yaer = (
 
 #RH - GA
 sel_position = (
-    ('Direitor administrativo', 'Direitor administrativo'),('Direitor pedagógico', 'Direitor pedagógico'),
-    ('Sub-direitor administrativo', 'Sub-direitor administrativo'),('Sub-direitor pedagógico', 'Sub-direitor pedagógico'),
+    ('Diretor administrativo', 'Diretor administrativo'),('Diretor pedagógico', 'Diretor pedagógico'),
+    ('Sub-diretor administrativo', 'Sub-diretor administrativo'),('Sub-diretor pedagógico', 'Sub-diretor pedagógico'),
     ('Coordenador', 'Coordenador'), ('Sub-coordenador', 'Sub-coordenador'),
     ('Coordenador da área', 'Coordenador da área'), ('Coordenador do curso', 'Coordenador do curso'),
     ('Coordenador da classe', 'Coordenador da classe'), ('Professor', 'Professor'),
-    ('Professor extagiário', 'Professor extagiário'),
+    ('Professor estagiário', 'Professor estagiário'),
 )
