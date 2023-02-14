@@ -146,7 +146,7 @@
                         <field name="view" ref="classes_teacher_lesson_view_list"/>
                         <field name="act_window" ref="act_classes_teacher_lesson"/>
                 </record>      
-                <menuitem name="Plano de Aula" parent="akademy.akademy_classes" id="akademy_classes_lesson" 
+                <menuitem name="Plano de aula" parent="akademy.akademy_classes" id="akademy_classes_lesson" 
                         icon="akademy-teacher_lesson" sequence="24" action="act_classes_teacher_lesson"/>                   
         <!-- end PLANO DE AULA -->  
         
@@ -160,7 +160,7 @@
                         <field name="type">form</field>
                         <field name="name">classes/association_discipline_wizcreate_form</field>            
                 </record>
-                <menuitem action="act_associationdiscipline_wizard" parent="akademy.akademy_classes" id="menu_associationdiscipline_wiz" 
+                <menuitem action="act_associationdiscipline_wizard" parent="akademy.akademy_classes" id="akademy_associationdiscipline_wiz" 
                         sequence="28"/>
         <!-- end ASSOCIATION DISCIPLINE -->
 

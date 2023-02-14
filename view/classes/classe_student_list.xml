@@ -5,5 +5,5 @@
     <field name="state"/>     
     <field name="type"/>    
     <field name="classes"/>
-    <field name="create_date" widget="date" string="Data de matrícula"/>    
+    <field name="create_date" widget="date"/>    
 </tree>

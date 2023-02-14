@@ -6,6 +6,6 @@
     <field name="quarter"/> 
     <field name="studyplan_discipline"/> 
     <field name="studyplan_avaliation"/> 
-    <field name="create_date" widget="date" string="Data de Lançamento"/> 
-    <field name="write_date" widget="date" string="Data da Actualização"/>
+    <field name="create_date" widget="date"/> 
+    <field name="write_date" widget="date"/>
 </tree>

@@ -29,19 +29,20 @@ sel_category = (
 
 sel_state_teacher = (
 	('Matrículado(a)', 'Matrículado(a)'), ('Aguardando', 'Aguardando'), 
-	('Suspenço(a)', 'Suspenço(a)'), ('Transfêrido(a)', 'Transfêrido(a)')
+	('Suspenso(a)', 'Suspenso(a)'), ('Anulada', 'Anulada'), 
+    ('Transfêrido(a)', 'Transfêrido(a)')
 )
 
 sel_state_student = (
 	('Matrículado(a)', 'Matrículado(a)'), ('Aguardando', 'Aguardando'), 
-	('Suspenço(a)', 'Suspenço(a)'), ('Anulada', 'Anulada'), 
+	('Suspenso(a)', 'Suspenso(a)'), ('Anulada', 'Anulada'), 
 	('Transfêrido(a)', 'Transfêrido(a)'), ('Reprovado(a)', 'Reprovado(a)'),
     ('Aprovado(a)', 'Aprovado(a)')
 )
 
 sel_registration_type = (
     ('Candidato(a)', 'Candidato(a)'), ('Transfêrido(a)', 'Transfêrido(a)'), 
-    ('Repitente', 'Repitente'), ('Transição de classe', 'Transição de classe')
+    ('Repetente', 'Repetente'), ('Transição de classe', 'Transição de classe')
 )
 
 sel_type_enrollment = (
