@@ -4,6 +4,6 @@
     <field name="application_criteria"/> 
     <field name="phase"/>
     <field name="result"/>      
-    <field name="create_date" widget="date" string="Data de Admissão"/>
+    <field name="create_date" widget="date"/>
     <button name="application_matriculation" string="Matrícular"/>
 </tree>

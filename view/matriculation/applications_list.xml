@@ -13,6 +13,6 @@
       <suffix name="age" string="Anos"/>
     </field>
     <!-- <field name="result"/> -->
-    <field name="create_date" widget="date" string="Data da Candidatura"/>   
+    <field name="create_date" widget="date"/>   
     <button name="application_avaliation" string="Avaliar"/>
 </tree>

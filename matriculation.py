@@ -18,7 +18,7 @@ class Candidates(ModelSQL, ModelView):
 
     code = fields.Char(string=u'Código', size=20,
         help="Código do candidato.")
-    date_start = fields.Date(string=u'Data de matrícula',
+    date_start = fields.Date(string=u'Data de início',
         help="Data de início da formação.")
     date_end = fields.Date(string=u'Data de conclusão',
         help="Data de término da formação.") 
@@ -63,9 +63,9 @@ class Candidates(ModelSQL, ModelView):
             ('duration', Check(table, table.date_start < table.date_end),
             u'Não foi possível cadastrar o novo candidato, por favor verifica a data de matrícula e conclusão da formação académico.'),
             ('student', Check(table, table.average >= 10),
-            u'Não foi possível cadastrar o novo candidato, por favor verifica a média do certificado.'),
+            u'Não foi possível cadastrar o novo candidato, por favor verifica se a média do certificado é menor que 10.'),
             ('max_average', Check(table, table.average <= 20),
-            u'Não foi possível cadastrar o novo candidato, por favor verifica a média do certificado.')
+            u'Não foi possível cadastrar o novo candidato, por favor verifica se a média do certificado é maior que 20.')
         ]
         cls._order = [('party', 'ASC')]
 
@@ -163,7 +163,7 @@ class Applications(ModelSQL, ModelView):
                         if len(element.result) <= 1:
                             Applications.application_admission_avaliation(ApplicationCriteria, element, ApplicationResult, element.lective_year)
                         else:
-                            cls.raise_user_error("Não foi possível avaliar a candidatura do candidato "", por favor verifica se já existe uma candidatura avalida para o mesmo.")
+                            cls.raise_user_error("Não foi possível avaliar a candidatura do candidato "", por favor verifica se já existe uma candidatura avaliada para o mesmo.")
                     else:
                         cls.raise_user_error("Não foi possível avaliar a candidatura, porque já execdeu o limit establecido pela instituição.")
                 else:
@@ -228,7 +228,7 @@ class Applications(ModelSQL, ModelView):
         table = cls.__table__()
         cls._sql_constraints = [
             ('key', Unique(table, table.candidate, table.course, table.phase, table.lective_year),
-            u'Não foi possível matrícular os candidatos, porque o candidato já é discente desta instistuição, por favor verifique se o mesmo já têm um registro de matrícula.')
+            u'Não foi possível inscrever o candidato, porque o candidato já esta inscrito neste curso, fase e ano lectivo.')
         ]
         cls._buttons.update({
             'application_avaliation':{
@@ -239,7 +239,7 @@ class Applications(ModelSQL, ModelView):
                           	
     
 class ApplicationsResult(ModelSQL, ModelView):
-    'Applications'
+    'Applications Result'
     __name__ = 'akademy.applications-result'
     #_rec_name = 'application'
     
@@ -249,7 +249,7 @@ class ApplicationsResult(ModelSQL, ModelView):
         model_name='akademy.applications', string=u'Candidatura', 
         required=True, ondelete='CASCADE')
     application_criteria = fields.Many2One(
-        model_name='akademy.application-criteria', string=u'Critério de Admissão', 
+        model_name='akademy.application-criteria', string=u'Critério de admissão', 
         required=True, ondelete='CASCADE')
     lective_year = fields.Many2One(
         model_name='akademy.lective-year', string=u'Ano lectivo', 
@@ -284,15 +284,15 @@ class ApplicationsResult(ModelSQL, ModelView):
         table = cls.__table__()
         cls._sql_constraints = [
             ('key', Unique(table, table.application, table.application_criteria),
-            u'A candidatura já foi avalida.')
-        ]
-        cls._order = [('application.candidate.party', 'ASC')]
+            u'A candidatura já foi avaliada.')
+        ]     
+        cls._order = [('application.candidate.party', 'ASC')] 
         cls._buttons.update({
             'application_matriculation': {
                 'invisible': Eval('result') == 'Não Admitido',
                 'depends': ['result'],
             },
-        })
+        })          
 
 
 class StudentTransfer(ModelSQL, ModelView):
@@ -357,7 +357,7 @@ class StudentTransfer(ModelSQL, ModelView):
 	)
     student_transfer_discipline = fields.One2Many(
 		'akademy.student_transfer-discipline', 'student_transfer', 
-		string=u'Média Disciplina'
+		string=u'Disciplina'
 	)
 
     def get_rec_name(self, name):
@@ -419,26 +419,26 @@ class MatriculationCreateWzardStart(ModelView):
         states={
             'invisible':  Bool(Eval('is_transferred')) | Bool(Eval('is_student'))
         }, depends=['is_transferred', 'is_student'], 
-        help='A entidade é uma pessoa.')
+        help='Matrícula para candidato.')
     is_transferred = fields.Boolean(
         string=u'Transferido', 
         states={
             'invisible':  Bool(Eval('is_candidate')) | Bool(Eval('is_student'))
         }, depends=['is_candidate', 'is_student'], 
-        help='A entidade é uma instituição ou organização.')
+        help='Matrícula para estudante transferido.')
     is_student = fields.Boolean(
         string=u'Discente', 
         states={
             'invisible':  Bool(Eval('is_candidate')) | Bool(Eval('is_transferred'))
         }, depends=['is_candidate', 'is_transferred'], 
-        help='A entidade é uma instituição ou organização.')
+        help='Confirmação de matrícula para estudante.')
     applications = fields.Many2One(
         model_name='akademy.applications-result', string=u'Candidato',
         states={
             'invisible': Not(Bool(Eval('is_candidate'))), 
             'required': Bool(Eval('is_candidate'))
         }, domain=[('result', '=', 'Admitido')], 
-        help="Caro utilizador será feita a matrícula do discente.")
+        help="Caro utilizador será feita a matrícula do candidato.")
     transferred = fields.Many2One(
         model_name='akademy.student-transfer', string=u'Transferido',
         states={
@@ -789,7 +789,7 @@ class MatriculationCreateWzard(Wizard):
                 else:      
                     #Matrícula o discente na disciplina
                     MatriculationCreateWzard.save_student_discipline(Student_Discipline, MatriculationStudent, classes.studyplan.id, studyplan_discipline, False, "Matrículado(a)", "Presencial")
-                               
+        
     @classmethod
     def save_student_matriculation(cls, classe_student, ClasseStudent, state, type, student, classes, classe, not_update):        
         #Efectua a matrícula do discente

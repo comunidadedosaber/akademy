@@ -78,8 +78,8 @@ sel_classes_time = (
 sel_result = (
     ('Analizando', 'Analizando'),
     ('Admitido', 'Admitido'),
-    ('Não Admitido', 'Não Admitido'),
-    ('Lista de Espera', 'Lista de Espera')
+    ('Não admitido', 'Não admitido'),
+    ('Lista de espera', 'Lista de espera')
 )
 
 #Report Variables

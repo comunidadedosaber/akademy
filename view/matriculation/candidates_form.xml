@@ -16,13 +16,13 @@
         <field name="course"/>
     </group>            
     <label id="labr2" colspan="4" xalign="0.0" string="FORMAÇÃO"/>
-    <group id="grpday2" colspan="1" col="6">   
-        <label name="average"/>
-        <field name="average"/>
+    <group id="grpday2" colspan="1" col="6">  
         <label name="date_start"/>
         <field name="date_start"/>
         <label name="date_end"/>
-        <field name="date_end"/>
+        <field name="date_end"/> 
+        <label name="average"/>
+        <field name="average"/>
     </group>
     <notebook colspan="4">
         <page string="Candidaturas" id="applications_candidate">

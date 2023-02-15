@@ -8,5 +8,5 @@
     <field name="course_classe"/>   
     <field name="internal"/> 
     <field name="external"/>
-    <field name="create_date" widget="date" string="Data da Transfêrencia"/>    
+    <field name="create_date" widget="date"/>    
 </tree>
