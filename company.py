@@ -32,10 +32,10 @@ class Employee(ModelSQL, ModelView):
         help="Nome do discente.")
     school_chart = fields.One2Many(
         'akademy.school-chart', 'employee', 
-        string=u'Função')
+        string=u'Cargo')
     classe_treacher = fields.One2Many(
         'akademy.classe-teacher', 'employee',
-        string=u'Associar Turma')
+        string=u'Associar turma')
     classes = fields.One2Many(
         'akademy.classes', 'coordinator',
         string=u'Turma')
@@ -116,12 +116,12 @@ class CompanyStudent(ModelSQL, ModelView):
     def default_start_date(cls):
         return date.today()
 
-    def get_rec_name(self, name):
-        return self.party.rec_name
-
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    def get_rec_name(self, name):
+        return self.party.rec_name
 
     @classmethod
     def search_rec_name(cls, name, clause):
@@ -144,7 +144,7 @@ class CompanyStudent(ModelSQL, ModelView):
         table = cls.__table__()
         cls._sql_constraints = [
             ('key', Unique(table, table.party),
-            u'Não foi possível cadastrar a nova entidade, por favor verifica se a entidade já existe')
+            u'Não foi possível cadastrar o nova discente, por favor verifica se o discente já existe.')
         ]
         cls._order = [('party', 'ASC')]
 

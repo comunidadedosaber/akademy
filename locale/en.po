@@ -4246,3 +4246,306 @@ msgstr "Enroll"
 msgctxt "wizard_button:akademy.wizmatriculation_create,start,end:"
 msgid "Cancelar"
 msgstr "Cancel"
+
+# menu:akademy/GE
+
+msgctxt "model:ir.ui.menu,name:akademy_party"
+msgid "Gestão Entidades"
+msgstr "Entity Management"
+
+# menu:akademy/ententi
+
+msgctxt "model:ir.ui.menu,name:akademy_entities"
+msgid "Entidades"
+msgstr "Entity"
+
+# menu: akademy/party
+
+msgctxt "model:party.party,name:"
+msgid "Party"
+msgstr "Entity"
+
+msgctxt "field:party.party,is_person:"
+msgid "Pessoa"
+msgstr "Person"
+
+msgctxt "field:party.party,is_institution:"
+msgid "Instituição"
+msgstr "Institution"
+
+msgctxt "field:party.party,date_birth:"
+msgid "Nascimento"
+msgstr "Date birth"
+
+msgctxt "field:party.party,gender:"
+msgid "Genêro"
+msgstr "Gender"
+
+msgctxt "selection:party.party,gender:"
+msgid "Masculino"
+msgstr "Masculine"
+
+msgctxt "selection:party.party,gender:"
+msgid "Femenino"
+msgstr "Femel"
+
+msgctxt "field:party.party,marital_status:"
+msgid "Estado civil"
+msgstr "Marital status"
+
+msgctxt "selection:party.party,marital_status:"
+msgid "Solteiro(a)"
+msgstr "Single"
+
+msgctxt "selection:party.party,marital_status:"
+msgid "Casado(a)"
+msgstr "Married"
+
+msgctxt "selection:party.party,marital_status:"
+msgid "Divorciado(a)"
+msgstr "Divorced"
+
+msgctxt "selection:party.party,marital_status:"
+msgid "Víuvo(a)"
+msgstr "Widower"
+
+msgctxt "field:party.party,bi_number:"
+msgid "B.I nº"
+msgstr "I.U nº"
+
+msgctxt "field:party.party,father:"
+msgid "Pai"
+msgstr "Father"
+
+msgctxt "field:party.party,mother:"
+msgid "Mãe"
+msgstr "Mother"
+
+msgctxt "field:party.party,student:"
+msgid "Discente"
+msgstr "Student"
+
+msgctxt "field:party.party,candidates:"
+msgid "Candidato"
+msgstr "Candidates"
+
+msgctxt "help:party.party,is_person:"
+msgid "A entidade é uma pessoa."
+msgstr "The entity is a person."
+
+msgctxt "help:party.party,is_institution:"
+msgid "A entidade é uma instituição ou organização."
+msgstr "The entity is a organization."
+
+msgctxt "help:party.party,date_birth:"
+msgid "Data de nascimento."
+msgstr "The date of birth."
+
+msgctxt "help:party.party,bi_number:"
+msgid "Número do bilhete de intidade."
+msgstr "The unique number identifier of a person."
+
+msgctxt "help:party.party,father:"
+msgid "Nome do pai."
+msgstr "Father name."
+
+msgctxt "help:party.party,mother:"
+msgid "Nome da mãe."
+msgstr "Motyher name."
+
+# menu:akademy/company
+
+msgctxt "model:ir.ui.menu,name:akademy_company"
+msgid "Instituição"
+msgstr "Organization"
+
+# menu:akademy/company/employee
+
+msgctxt "model:ir.ui.menu,name:akademy_employee"
+msgid "Entidades"
+msgstr "Employee"
+
+# menu: akademy/employee
+
+msgctxt "model:company.employee,employee:"
+msgid "Funcionário"
+msgstr "Employee"
+
+msgctxt "field:company.employee,teacher:"
+msgid "Docente"
+msgstr "Tchear"
+
+msgctxt "field:company.employee,party:"
+msgid "Nome"
+msgstr "Name"
+
+msgctxt "field:company.employee,school_chart:"
+msgid "Cargo"
+msgstr "Possition"
+
+msgctxt "field:company.employee,classe_treacher:"
+msgid "Associar turma"
+msgstr "Class association"
+
+msgctxt "field:company.employee,classes:"
+msgid "Turma"
+msgstr "Class"
+
+msgctxt "help:company.employee,employee:"
+msgid "A entidade será tratada como funcionário."
+msgstr "The entity will be seen as employee."
+
+msgctxt "help:company.employee,teacher:"
+msgid "A entidade será tratada como docente."
+msgstr "The entity will be seen as teacher."
+
+msgctxt "help:company.employee,party:"
+msgid "Nome do discente."
+msgstr "Entity name."
+
+# menu: akademy/company/company.student
+
+msgctxt "model:company.student,name:"
+msgid "Student - Company"
+msgstr "Students"
+
+msgctxt "view:company.student:"
+msgid "Discentes"
+msgstr "Students"
+
+msgctxt "model:ir.ui.menu,name:akademy_company_student"
+msgid "Discentes"
+msgstr "Students"
+
+msgctxt "model:ir.action,name:act_company_student"
+msgid "Discentes"
+msgstr "Students"
+
+msgctxt "field:company.student,code:"
+msgid "Nº de matrícula"
+msgstr "Matriculation number"
+
+msgctxt "field:company.student,start_date:"
+msgid "Início"
+msgstr "Start"
+
+msgctxt "field:company.student,end_date:"
+msgid "Fim"
+msgstr "End"
+
+msgctxt "field:company.student,state:"
+msgid "Estado"
+msgstr "State"
+
+msgctxt "selection:company.student,state:"
+msgid "Matrículado(a)"
+msgstr "Matriculated"
+
+msgctxt "selection:company.student,state:"
+msgid "Aguardando"
+msgstr "Waiting"
+
+msgctxt "selection:company.student,state:"
+msgid "Suspenso(a)"
+msgstr "Suspended"
+
+msgctxt "selection:company.student,state:"
+msgid "Anulada"
+msgstr "Annulled"
+
+msgctxt "selection:company.student,state:"
+msgid "Transfêrido(a)"
+msgstr "Transferred"
+
+msgctxt "selection:company.student,state:"
+msgid "Reprovado(a)"
+msgstr "Disapproved"
+
+msgctxt "selection:company.student,state:"
+msgid "Aprovado(a)"
+msgstr "Approved"
+
+msgctxt "field:company.student,classe:"
+msgid "Classe"
+msgstr "Class"
+
+msgctxt "field:company.student,party:"
+msgid "Nome"
+msgstr "Name"
+
+msgctxt "field:company.student,company:"
+msgid "Instituição"
+msgstr "Organization"
+
+msgctxt "field:company.student,academiclevel:"
+msgid "Nível académico"
+msgstr "Academic level"
+
+msgctxt "field:company.student,area:"
+msgid "Área"
+msgstr "Area"
+
+msgctxt "field:company.student,course:"
+msgid "Curso"
+msgstr "Course"
+
+msgctxt "field:company.student,student_transfer:"
+msgid "Transferências"
+msgstr "Transferred"
+
+msgctxt "field:company.student,student:"
+msgid "Marículas"
+msgstr "Matriculation"
+
+msgctxt "field:company.student,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:company.student,create_date:"
+msgid "Create Date"
+msgstr "Create Date"
+
+msgctxt "field:company.student,create_uid:"
+msgid "Create User"
+msgstr "Create User"
+
+msgctxt "field:company.student,write_date:"
+msgid "Write Date"
+msgstr "Write Date"
+
+msgctxt "field:company.student,write_uid:"
+msgid "Write User"
+msgstr "Write User"
+
+msgctxt "help:company.student,code:"
+msgid "Número de matrícula do discente."
+msgstr "Student matriculation number."
+
+msgctxt "help:company.student,start_date:"
+msgid "Início da formação."
+msgstr "Start of training."
+
+msgctxt "help:company.student,end_date:"
+msgid "Fim da formação."
+msgstr "End of training."
+
+msgctxt "help:company.student,state:"
+msgid "Escolha o estado da matrícula."
+msgstr "Choose registration state."
+
+msgctxt "help:company.student,classe:"
+msgid "Nome da classe."
+msgstr "Class name."
+
+msgctxt "help:company.student,party:"
+msgid "Nome do discente."
+msgstr "Student name."
+
+msgctxt "help:company.student,company:"
+msgid "Nome da instituição."
+msgstr "Organization name."
+
+msgctxt "error:company.student:"
+msgid "Não foi possível cadastrar o nova discente, por favor verifica se o discente já existe."
+msgstr ""
+"It was not possible to register the new student, please check if the student already exists."
