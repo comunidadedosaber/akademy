@@ -20,9 +20,9 @@ class Classes(ModelSQL, ModelView):
 	name = fields.Char(string=u'Nome', required=True,
 		help="Nome da turma.")	
 	max_student = fields.Integer(string=u'Total de discentes', 
-		help=u'Limite máximo de discentes por adcionar na turma.')
+		help=u'Limite máximo de discentes por adicionar na turma.')
 	max_teacher = fields.Integer(string=u'Total de docentes', 
-		help=u'Limite máximo de docentes por adcionar na turma.')
+		help=u'Limite máximo de docentes por adicionar na turma.')
 	modality = fields.Selection(selection=sel_modality, string=u'Modalidade', required=True) 
 	classe = fields.Many2One(
 		model_name='akademy.classe', string=u'Classe', 
@@ -40,12 +40,12 @@ class Classes(ModelSQL, ModelView):
 	classe_timerule = fields.One2Many('akademy.classe-timerule', 'classes', string=u'Horário')
 	classe_student = fields.One2Many('akademy.classe-student', 'classes', string=u'Discente')
 	classe_teacher = fields.One2Many('akademy.classe-teacher', 'classes', string=u'Docente')
-	stundent_grades = fields.One2Many('akademy.classe_student-grades', 'classes', string=u'Discente nota')
+	#stundent_grades = fields.One2Many('akademy.classe_student-grades', 'classes', string=u'Discente nota')
+	historic_grades = fields.One2Many('akademy.historic-grades', 'classes', string="Percurso académico")
 	classe_teacher_lesson = fields.One2Many('akademy.classe_teacher-lesson', 'classes', string="Plano de aula")		
 	classes_avaliation = fields.One2Many('akademy.classes-avaliation', 'classes', string="Avaliações")
 	classes_schedule_quarter = fields.One2Many('akademy.classes_schedule-quarter', 'classes', string="Pauta trimestral")
 	classes_schedule = fields.One2Many('akademy.classes-schedule', 'classes', string="Pauta final")	
-	historic_grades = fields.One2Many('akademy.historic-grades', 'classes', string="Percurso académico")
 		
 	@classmethod
 	def default_modality(cls):
@@ -151,15 +151,15 @@ class ClasseStudent(ModelSQL, ModelView):
 	classes_student_avaliation = fields.One2Many(
 		'akademy.classes_student-avaliation', 'classes_student',
 		string=u'Avaliações')
-	classes_student_schedule_quarter = fields.One2Many(
-		'akademy.classes_student-schedule_quarter', 'classes_student', 
-		string=u'Pauta trimestral')	
-	classes_student_schedule = fields.One2Many(
-		'akademy.classes_student-schedule', 'classes_student', 
-		string="Pauta final")
 	historic_grades = fields.One2Many(
         'akademy.historic-grades', 'student',
         string=u'Percurso académico')
+	classes_student_schedule_quarter = fields.One2Many(
+		'akademy.classes_student-schedule_quarter', 'classes_student', 
+		string=u'Pauta trimestral')
+	classes_student_schedule = fields.One2Many(
+		'akademy.classes_student-schedule', 'classes_student', 
+		string="Pauta final")
 
 	@classmethod
 	def default_state(cls):
@@ -182,7 +182,7 @@ class ClasseStudent(ModelSQL, ModelView):
 			('key', Unique(table, table.student, table.classes), 
 			u'Não foi possivél cadastrar o novo discente, por favor verifica se o discente já está matriculado nesta turma.')
 		]
-		cls._order = [('student.paty', 'ASC')]
+		cls._order = [('student.party', 'ASC')]
 		
 	
 class ClasseStudentDiscipline(ModelSQL, ModelView):
@@ -208,9 +208,9 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 		model_name='akademy.studyplan-discipline', string=u'Disciplina', 
 		required=True, domain=[('studyplan.id', '=', Eval('studyplan', -1))],
 		depends=['studyplan'])
-	student_grades = fields.One2Many(
-		'akademy.classe_student-grades', 'student_discipline', 
-		string=u'Discente nota')
+	#student_grades = fields.One2Many(
+	#	'akademy.classe_student-grades', 'student_discipline', 
+	#	string=u'Discente nota')
 
 	@fields.depends('classe_student')
 	def on_change_with_studyplan(self, name=None):
@@ -235,7 +235,7 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 		table = cls.__table__()
 		cls._sql_constraints = [
 			('uniq_classes', Unique(table, table.classe_student, table.studyplan_discipline),
-			u'Não foi possivél associar o discente a discipline, por favor verica se o discente já está a frequentar está disciplina nesta turma.')
+			u'Não foi possivél associar o discente a disciplina, por favor verica se o discente já está a frequentar está disciplina nesta turma.')
 		]
 		cls._order = [('studyplan_discipline.discipline', 'ASC')]        
 
@@ -247,7 +247,7 @@ class ClasseTeacher(ModelSQL, ModelView):
 	
 	state = fields.Selection(
 		selection=sel_state_teacher, string=u'Estado', 
-		required=True, help="Seleciona um estado para matrícula.")
+		required=True, help="Escolha o estado da matrícula.")
 	description = fields.Text(string=u'Descrição')
 	employee = fields.Many2One(
 		model_name='company.employee', string=u'Nome', 
@@ -314,7 +314,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 		string="Pauta trimestral")
 	classes_schedule = fields.One2Many(
 		'akademy.classes-schedule', 'classe_teacher_discipline', 
-		string="Pauta final")
+		string="Pauta final")	
 		
 	@fields.depends('classe_teacher')
 	def on_change_with_studyplan(self, name=None):
@@ -361,47 +361,47 @@ class ClasseTimeRule(ModelSQL, ModelView):
 		model_name='akademy.classes', 
 		string=u'Turma', required=True)	
 	mon = fields.Many2One(
-		model_name='akademy.studyplan-discipline', string=u'Segunda-Feira', 
+		model_name='akademy.studyplan-discipline', string=u'Segunda-feira', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina.')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada na Segunda-feira.')
 	tue = fields.Many2One(
-		model_name='akademy.studyplan-discipline', string=u'Terça-Feira', 
+		model_name='akademy.studyplan-discipline', string=u'Terça-feira', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina.')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada na Terça-feira.')
 	wed = fields.Many2One(
-		model_name='akademy.studyplan-discipline', string=u'Quarta-Feira', 
+		model_name='akademy.studyplan-discipline', string=u'Quarta-feira', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina.')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada na Quarta-feira.')
 	thu = fields.Many2One(
-		model_name='akademy.studyplan-discipline', string=u'Quinta-Feira', 
+		model_name='akademy.studyplan-discipline', string=u'Quinta-feira', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada na Quinta-feira.')
 	fri = fields.Many2One(
-		model_name='akademy.studyplan-discipline', string=u'Sexta-Feira', 
+		model_name='akademy.studyplan-discipline', string=u'Sexta-feira', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina.')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada na Sexta-feira.')
 	sat = fields.Many2One(
 		model_name='akademy.studyplan-discipline', string=u'Sábado', 
 		domain=[('studyplan.id', '=', Eval('studyplan', -1))], 
-		depends=['studyplan'], help=u'Escolha a disciplina.')
+		depends=['studyplan'], help=u'Escolha a disciplina a ser lecionada no Sábado.')
 	mon_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada na Segunda-feira.')
 	tue_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		depends=['studyplan'], help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada na Terça-feira.')
 	wed_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		depends=['studyplan'], help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada na Quarta-feira.')
 	thu_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		depends=['studyplan'], help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada na Quinta-feira.')
 	fri_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		depends=['studyplan'], help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada na Sexta-feira.')
 	sat_room = fields.Many2One(
 		model_name='akademy.classe-room', string=u'Sala', 
-		depends=['studyplan'], help=u'Escolha a sala de aula em que a disciplina vai ser lecionada.')		
+		help=u'Escolha a sala de aula em que a disciplina vai ser lecionada no Sábado.')		
 
 	@fields.depends('classes')
 	def on_change_with_studyplan(self, name=None):
@@ -457,7 +457,7 @@ class AssociationDisciplineCreateWzardStart(ModelView):
 
 	classes = fields.Many2One(
 		model_name='akademy.classes', string=u'Turma',
-		help="Caro utilizador será feita uma associação entre os estudentes desta turma e as displinas existentes no plano de estudo."
+		help="Caro utilizador será feita uma associação entre os estudantes desta turma e as displinas existentes no plano de estudo."
 	)
 
 
@@ -479,7 +479,7 @@ class AssociationDisciplineCreateWzard(Wizard):
 	def transition_association(self):		
 		Student_Discipline = Pool().get('akademy.classe_student-discipline')
 
-		state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)']
 		list_matriculation = 0
 
 		for classe_student in self.start.classes.classe_student:

@@ -93,7 +93,7 @@
         <!-- end CANDIDATURAS RESULTADOS -->
 
         <!-- start TRANSFÊRENCIA -->  
-            <menuitem name="Transferência" id="akademy_registrations_transfer" sequence="22"
+            <menuitem name="Transferências" id="akademy_registrations_transfer" sequence="22"
                 parent="akademy.akademy_registrations"/>
 
         <!-- TRANSFÊRENCIA DISCENTE -->

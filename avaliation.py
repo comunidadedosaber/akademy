@@ -56,7 +56,7 @@ class PublicGradesCreateWizard(Wizard):
         view='akademy.act_publicgrades_wizard_from', \
         buttons=[
             Button(string=u'Cancelar', state='end', icon='tryton-cancel'),
-            Button(string=u'Gerar lista de discentes', state='studentgrades', icon='tryton-save')
+            Button(string=u'Lançar notas', state='studentgrades', icon='tryton-save')
         ]
     )
     studentgrades = StateTransition()
@@ -217,7 +217,7 @@ class ScheduleCreateWizard(Wizard):
                             classes_schedule_final,
                             classes_student,
                             self.start.studyplan_discipline.average
-                        )        
+                        )                                                 
 
         return 'end'
 
@@ -353,7 +353,7 @@ class PublicHistoricCreateWizard(Wizard):
         view='akademy.act_publichistoric_wizard_from', \
         buttons=[
             Button(string=u'Cancelar', state='end', icon='tryton-cancel'),
-            Button(string=u'Gerar lista de discentes', state='studenthistoricgrades', icon='tryton-save')
+            Button(string=u'Gerar percurso', state='studenthistoricgrades', icon='tryton-save')
         ]
     )
     studenthistoricgrades = StateTransition()
@@ -441,8 +441,7 @@ class PublicHistoricCreateWizard(Wizard):
                                                             final_grade = 0
                                                             count = 0
 
-                            discipline.clear() 
-
+                            discipline.clear()                                                           
                     else:
                         self.raise_user_error("Infelizmente o discente "+StudentClasses.student.party.name+", ainda não têm disciplinas associadas na, "+Classes.name)                  
             
@@ -454,11 +453,11 @@ class PublicHistoricCreateWizard(Wizard):
         
         return 'end'
 
-                            
+
 class ClassesAvaliation(ModelSQL, ModelView):
     'Classes Avaliation'
     __name__ = 'akademy.classes-avaliation'
-    _rec_name = 'studyplan_avaliation'
+    #_rec_name = 'studyplan_avaliation'
 
     lective_year = fields.Many2One(
         model_name='akademy.lective-year', string=u'Ano lectivo', 
@@ -518,7 +517,12 @@ class ClassesAvaliation(ModelSQL, ModelView):
             classes_avaliation[0].save()
             avaliation = classes_avaliation[0]
         
-        return avaliation
+        return avaliation    
+
+    def get_rec_name(self, name):
+        t1 = '%s' % \
+            (self.studyplan_avaliation.rec_name)
+        return t1
 
 
 class ClassesStudentAvaliation(ModelSQL, ModelView):
@@ -576,10 +580,10 @@ class ClassesStudentAvaliation(ModelSQL, ModelView):
 class ClassesScheduleQuarter(ModelSQL, ModelView):
     'Classes Schedule-Quarter'
     __name__ = 'akademy.classes_schedule-quarter'
-    _rec_name = 'studyplan_discipline'
+    #_rec_name = 'studyplan_discipline'
 
     code = fields.Char(string=u'Código', size=20)
-    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquer para para a edição.")
+    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquear para a edição.")
     lective_year = fields.Many2One(
         model_name='akademy.lective-year', string=u'Ano lectivo', 
         ondelete='CASCADE')
@@ -596,8 +600,8 @@ class ClassesScheduleQuarter(ModelSQL, ModelView):
         model_name='akademy.classe_teacher-discipline', string=u'Docente', 
         required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
         depends=['classes'])
-    classe_teacher = fields.Many2One(
-        model_name='akademy.classe-teacher', string=u'Docente')
+    #classe_teacher = fields.Many2One(
+    #    model_name='akademy.classe-teacher', string=u'Docente')
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', string=u'Disciplina', 
         required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
@@ -609,6 +613,11 @@ class ClassesScheduleQuarter(ModelSQL, ModelView):
     @classmethod
     def default_state(cls):
         return False
+
+    def get_rec_name(self, name):
+        t1 = '%s' % \
+            (self.studyplan_discipline.rec_name)
+        return t1
 
     #Create a Classe Schedule Quarter
     @classmethod
@@ -651,8 +660,9 @@ class ClassesScheduleQuarter(ModelSQL, ModelView):
 class ClassesStudentScheduleQuarter(ModelSQL, ModelView):
     'Classes_Student-Schedule_Quarter'
     __name__ = 'akademy.classes_student-schedule_quarter'
+    _rac_name = 'classes_schedule_quarter'
     
-    mac = fields.Numeric(string=u'Mac', digits=(2,1))
+    mac = fields.Numeric(string=u'MAC', digits=(2,1))
     pp = fields.Numeric(string=u'PP', digits=(2,1))
     pt = fields.Numeric(string=u'PT', digits=(2,1))
     average = fields.Numeric(string=u'Média', digits=(2,1))
@@ -721,10 +731,10 @@ class ClassesStudentScheduleQuarter(ModelSQL, ModelView):
 class ClassesSchedule(ModelSQL, ModelView):
     'Classes Schedule'
     __name__ = 'akademy.classes-schedule'
-    _rec_name = 'studyplan_discipline'
+    #_rec_name = 'studyplan_discipline'
 
     code = fields.Char(string=u'Código', size=20)
-    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquer para para a edição.")
+    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquear para para a edição.")
     lective_year = fields.Many2One(
         model_name='akademy.lective-year', string=u'Ano lectivo', 
         ondelete='CASCADE')
@@ -752,6 +762,11 @@ class ClassesSchedule(ModelSQL, ModelView):
     @classmethod
     def default_state(cls):
         return False
+
+    def get_rec_name(self, name):
+        t1 = '%s' % \
+            (self.studyplan_discipline.rec_name)
+        return t1
 
     #Create a Classe Schedule
     @classmethod
@@ -815,6 +830,7 @@ class ClassesSchedule(ModelSQL, ModelView):
 class ClassesStudentSchedule(ModelSQL, ModelView):
     'Classes_Student-Schedule'
     __name__ = 'akademy.classes_student-schedule'
+    _rac_name = 'classes_schedule'
 
     first_quarter = fields.Numeric(string=u'T1', digits=(2,1))
     second_quarter = fields.Numeric(string=u'T2', digits=(2,1))
@@ -959,7 +975,7 @@ class HistoricGrades(ModelSQL, ModelView):
                     student_historic_grades[0].average = round(average)
                     student_historic_grades[0].save()
                 else:
-                    HistoricGrades.save_historic_grades(cls, schedule, HistoricGrade, lective_year, classes, student, discipline, average)            
+                    HistoricGrades.save_historic_grades(schedule, HistoricGrade, lective_year, classes, student, discipline, average)            
 
     @classmethod
     def save_historic_grades(cls, schedule, HistoricGrades, lective_year, classes, student, discipline, average):

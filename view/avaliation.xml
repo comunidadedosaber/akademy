@@ -59,7 +59,7 @@
 
         <!-- start DISCENTES PUBLICAR NOTAS -->
             <record model="ir.action.wizard" id="act_schedule_wizard">
-                <field name="name">Gerar Pauta</field>
+                <field name="name">Gerar pauta</field>
                 <field name="wiz_name">akademy.wizschedule_create</field>
             </record>
             <record model="ir.ui.view" id="act_schedule_wizard_from">
@@ -83,7 +83,7 @@
                 <field name="name">avaliation/classes_schedule_quarter_list</field>
             </record>
             <record model="ir.action.act_window" id="act_classes_schedule_quarter">
-                <field name="name">Pauta trimestral</field>
+                <field name="name">Pautas trimestrais</field>
                 <field name="res_model">akademy.classes_schedule-quarter</field>
             </record>
             <record model="ir.action.act_window.view" id="act_classes_schedule_quarter_view_form">
@@ -96,7 +96,7 @@
                 <field name="view" ref="classes_schedule_quarter_view_list"/>
                 <field name="act_window" ref="act_classes_schedule_quarter"/>
             </record>
-            <menuitem name="Pautas trimestral" parent="akademy.akademy_avaliations" id="akademy_classes_schedule_quarter" 
+            <menuitem name="Pautas trimestrais" parent="akademy.akademy_avaliations" id="akademy_classes_schedule_quarter" 
                 sequence="18" action="act_classes_schedule_quarter"/>
         <!-- end TURMA PAUTAS TRIMESTRAL -->         
 
@@ -157,7 +157,7 @@
 	
         <!-- start DISCENTES PUBLICAR PERCURSO -->
             <record model="ir.action.wizard" id="act_publichistoric_wizard">
-                <field name="name">Gerar Percurso</field>
+                <field name="name">Gerar percurso</field>
                 <field name="wiz_name">akademy.wizpublichistoric_create</field>
             </record>
             <record model="ir.ui.view" id="act_publichistoric_wizard_from">
@@ -181,7 +181,7 @@
                 <field name="name">avaliation/historic_grades_list</field>
             </record>
             <record model="ir.action.act_window" id="act_historic_grades">
-                <field name="name">Percurso Académico</field>
+                <field name="name">Percurso académico</field>
                 <field name="res_model">akademy.historic-grades</field>
             </record>            
             <record model="ir.action.act_window.view" id="act_historic_grades_view_form">
@@ -194,7 +194,7 @@
                 <field name="view" ref="historic_grades_view_list"/>
                 <field name="act_window" ref="act_historic_grades"/>
             </record>
-            <menuitem name="Percurso Académico" parent="akademy.akademy_avaliations" id="akademy_historic_grades" 
+            <menuitem name="Percurso académico" parent="akademy.akademy_avaliations" id="akademy_historic_grades" 
                 sequence="28" action="act_historic_grades"/>    
         <!-- end DISCENTES HISTÓRICO AVALIAÇÕES -->  
 	</data>

@@ -1,5 +1,5 @@
 
-#Variáveis Globais
+#Variaveis Globais
 sel_state = (
     ('Obrigatório', 'Obrigatório'), ('Opcional', 'Opcional')
 )
@@ -29,19 +29,20 @@ sel_category = (
 
 sel_state_teacher = (
 	('Matrículado(a)', 'Matrículado(a)'), ('Aguardando', 'Aguardando'), 
-	('Suspenço(a)', 'Suspenço(a)'), ('Transfêrido(a)', 'Transfêrido(a)')
+	('Suspenso(a)', 'Suspenso(a)'), ('Anulada', 'Anulada'), 
+    ('Transfêrido(a)', 'Transfêrido(a)')
 )
 
 sel_state_student = (
 	('Matrículado(a)', 'Matrículado(a)'), ('Aguardando', 'Aguardando'), 
-	('Suspenço(a)', 'Suspenço(a)'), ('Anulada', 'Anulada'), 
+	('Suspenso(a)', 'Suspenso(a)'), ('Anulada', 'Anulada'), 
 	('Transfêrido(a)', 'Transfêrido(a)'), ('Reprovado(a)', 'Reprovado(a)'),
     ('Aprovado(a)', 'Aprovado(a)')
 )
 
 sel_registration_type = (
     ('Candidato(a)', 'Candidato(a)'), ('Transfêrido(a)', 'Transfêrido(a)'), 
-    ('Repitente', 'Repitente'), ('Transição de classe', 'Transição de classe')
+    ('Repetente', 'Repetente'), ('Transição de classe', 'Transição de classe')
 )
 
 sel_type_enrollment = (
@@ -77,8 +78,8 @@ sel_classes_time = (
 sel_result = (
     ('Analizando', 'Analizando'),
     ('Admitido', 'Admitido'),
-    ('Não Admitido', 'Não Admitido'),
-    ('Lista de Espera', 'Lista de Espera')
+    ('Não admitido', 'Não admitido'),
+    ('Lista de espera', 'Lista de espera')
 )
 
 #Report Variables
@@ -130,6 +131,10 @@ sel_course_yaer = (
 
 #RH - GA
 sel_position = (
-    ('Direitor administrativo', 'Direitor administrativo'),('Direitor pedagógico', 'Direitor pedagógico'),
-    ('Coordenator', 'Coordenator'), ('Sub-coordenator', 'Sub-coordenator'),
+    ('Diretor administrativo', 'Diretor administrativo'),('Diretor pedagógico', 'Diretor pedagógico'),
+    ('Sub-diretor administrativo', 'Sub-diretor administrativo'),('Sub-diretor pedagógico', 'Sub-diretor pedagógico'),
+    ('Coordenador', 'Coordenador'), ('Sub-coordenador', 'Sub-coordenador'),
+    ('Coordenador da área', 'Coordenador da área'), ('Coordenador do curso', 'Coordenador do curso'),
+    ('Coordenador da classe', 'Coordenador da classe'), ('Professor', 'Professor'),
+    ('Professor estagiário', 'Professor estagiário'),
 )

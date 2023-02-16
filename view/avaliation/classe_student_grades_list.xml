@@ -11,6 +11,6 @@
         <suffix name="value" string="Valores"/>
     </field>         
     <field name="employee"/> 
-    <field name="create_date" widget="date" string="Data de Lançamento"/> 
-    <field name="write_date" widget="date" string="Data da Actualização"/>
+    <field name="create_date" widget="date"/> 
+    <field name="write_date" widget="date"/>
 </tree>

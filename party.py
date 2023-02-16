@@ -41,7 +41,7 @@ class Party(metaclass = PoolMeta):
             'required': Bool(Eval('is_person'))
         })
     marital_status = fields.Selection(
-        selection=sel_marital_status, string=u'Estado Civil', 
+        selection=sel_marital_status, string=u'Estado civil', 
         states={
             'invisible': Not(Bool(Eval('is_person'))), 
             'required': Bool(Eval('is_person'))

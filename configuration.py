@@ -1,7 +1,7 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
 from trytond.pyson import Eval, Not, Bool
 from datetime import date
-from .varibales import sel_state, sel_modality, sel_course_yaer, sel_position
+from .variables import sel_state, sel_modality, sel_course_yaer, sel_position
 
 __all__ = [
         'LectiveYear', 'SchoolChart', 'Quarter', 'Area', 'Course', 'Classe', 'CourseClasse', 'AcademicLevel',
@@ -32,9 +32,9 @@ class LectiveYear(ModelSQL, ModelView):
     classes = fields.One2Many(
         'akademy.classes', 'lective_year',
         string=u'Turma')
-    student_grades = fields.One2Many(
-        'akademy.classe_student-grades', 'lective_year',
-        string=u'Discente nota')    
+    #student_grades = fields.One2Many(
+    #    'akademy.classe_student-grades', 'lective_year',
+    #    string=u'Discente nota')    
     classes_student_schedule_quarter = fields.One2Many(
         'akademy.classes_student-schedule_quarter', 'lective_year', 
         string=u'Pauta trimestral')
@@ -46,7 +46,7 @@ class LectiveYear(ModelSQL, ModelView):
 		string=u'Candidaturas')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades', 'lective_year', 
-		string=u'Percuso académico') 
+		string=u'Percurso académico') 
     quarter = fields.One2Many(
 		'akademy.quarter', 'lective_year', 
 		string=u'Trimestre')
@@ -85,7 +85,7 @@ class SchoolChart(ModelSQL, ModelView):
     school_position = fields.Selection(selection=sel_position, 
         string=u'Cargo') 
     employee = fields.Many2One(
-        model_name='company.employee', string=u'Nome', 
+        model_name='company.employee', string=u'Funcionário', 
         required=True, ondelete='CASCADE', 
         help="Nome do funcionário.")
     lective_year = fields.Many2One(
@@ -146,9 +146,9 @@ class Quarter(ModelSQL, ModelView):
     studyplan_avaliations = fields.One2Many(
 		'akademy.studyplan-avaliation', 'quarter', 
 		string=u'Avaliação do plano de estudo')
-    classe_student_grades = fields.One2Many(
-		'akademy.classe_student-grades', 'quarter', 
-		string=u'Avaliação')
+    #classe_student_grades = fields.One2Many(
+	#	'akademy.classe_student-grades', 'quarter', 
+	#	string=u'Avaliação')
     classes_student_schedule_quarter = fields.One2Many(
         'akademy.classes_student-schedule_quarter', 'quarter', 
         string=u'Pauta trimestral')
@@ -198,10 +198,10 @@ class Area(ModelSQL, ModelView):
         string=u'Transferências') 
     candidates = fields.One2Many(
         'akademy.candidates', 'area', 
-        string=u'Canndidatos')
+        string=u'Candidatos')
     applications = fields.One2Many(
         'akademy.applications', 'area', 
-        string=u'Canndidaturas')
+        string=u'Candidaturas')
     company_student = fields.One2Many(
 		'company.student', 'area', 
 		string=u'Discente')  
@@ -223,7 +223,7 @@ class Course(ModelSQL, ModelView):
     _rec_name = 'name'
 
     code = fields.Char(string=u'Código', size=20,
-        help="Codigo do curso.")
+        help="Código do curso.")
     name = fields.Char(string=u'Nome', required=True, 
         help="Nome do curso.")
     duration = fields.Selection(selection=sel_course_yaer,
@@ -273,11 +273,11 @@ class Classe(ModelSQL, ModelView):
         help="Código da classe.\nEx: Classe-7"
     )
     name = fields.Char(string=u'Nome', required=True, 
-        help="Nome da classe")
+        help="Nome da classe.")
     description = fields.Text(string=u'Descrição')
     course_classe = fields.One2Many(
         'akademy.course-classe', 'classe',     
-        string=u'Course')
+        string=u'Curso')
     classes = fields.One2Many(
         'akademy.classes', 'classe',
         string=u'Turma')
@@ -354,7 +354,7 @@ class AcademicLevel(ModelSQL, ModelView):
     __name__ = 'akademy.academic-level'
 
     code = fields.Char( string=u'Código', size=20,
-        help="Codio do nível académico.")
+        help="Código do nível académico.")
     name = fields.Char(string=u'Nome', required=True, 
         help="Nome do nível académico.")
     description = fields.Text(string=u'Descrição')
@@ -378,7 +378,7 @@ class AcademicLevel(ModelSQL, ModelView):
         string=u'Candidaturas')
     student = fields.One2Many(
         'company.student', 'academic_level', 
-        string=u'Disciplina')
+        string=u'Discente')
 
     @classmethod
     def __setup__(cls):
@@ -421,7 +421,7 @@ class TimeCourse(ModelSQL, ModelView):
 
 class MetricAvaliation(ModelSQL, ModelView):
     'Metric Avaliation'
-    __name__ = 'akademy.metric-avaliation'    
+    __name__ = 'akademy.metric-avaliation'
  
     name = fields.Char(string=u'Nome', required=True,
         help="Nome da métrica que corresponde a avaliação.")    
@@ -507,7 +507,7 @@ class Discipline(ModelSQL, ModelView):
         states={
             'required': Not(Bool(Eval('lesson_teoric')))
         }, depends=['lesson_teoric'],
-        help="A disciplina tem aulas praticas.")
+        help="A disciplina tem aulas práticas.")
     description = fields.Text(string=u'Descrição')
     studyplan_discipline = fields.One2Many(
         'akademy.studyplan-discipline', 'discipline', 
@@ -517,7 +517,7 @@ class Discipline(ModelSQL, ModelView):
         string=u'Disciplina antecedentes')  
     student_transfer_discipline = fields.One2Many(
         'akademy.student_transfer-discipline', 'discipline', 
-        string=u'Disciplina')    
+        string=u'Transferência disciplina')    
 
     @classmethod
     def default_lesson_teoric(cls):
@@ -547,7 +547,7 @@ class Phase(ModelSQL, ModelView):
     end = fields.Date(string=u'Término', required=True, 
         help="Data de término do ano lectivo.")
     lective_year = fields.Many2One(
-        model_name='akademy.lective-year',string=u'Ano Lectivo', 
+        model_name='akademy.lective-year',string=u'Ano lectivo', 
         required=True, ondelete='CASCADE')
     application_criteria = fields.One2Many(
         'akademy.application-criteria', 'phase', 
@@ -557,7 +557,7 @@ class Phase(ModelSQL, ModelView):
         string=u'Candidaturas')
     application_result = fields.One2Many(
         'akademy.applications-result', 'phase', 
-        string=u'Candidaturas')
+        string=u'Resultado das candidaturas')
     
     @classmethod
     def default_start(cls):
@@ -582,7 +582,7 @@ class ClasseRoom(ModelSQL, ModelView):
     code = fields.Char(string=u'Código', size=20,
         help="Código da sala de aula.")
     name = fields.Char(string=u'Nome', required=True,
-        help="Nome da sala de aula")
+        help="Nome da sala de aula.")
     lesson_teoric = fields.Boolean(
         string=u'Teóricas',
         states={
@@ -596,7 +596,7 @@ class ClasseRoom(ModelSQL, ModelView):
         },  depends=['lesson_teoric'],
         help="Sala para aulas práticas.")
     capacity = fields.Integer(string=u'Capacidade',
-        help="Capacidade maxima da sala de aula.")
+        help="Capacidade máxima da sala de aula.")
     description = fields.Text(string=u'Descrição')
 
     @classmethod
@@ -626,7 +626,7 @@ class ApplicationCriteria(ModelSQL, ModelView):
         help="Nome do critéio de admissão.")
     description = fields.Text(string=u'Descrição')
     age = fields.Integer(string=u'Idade', required=True, 
-        help=u'Informe a idade maxima para admissão.')
+        help=u'Informe a idade máxima para admissão.')
     average = fields.Numeric(string=u'Média', digits=(2,1), 
         required=True, 
         help=u'Informe a média mínima para admissão.')
@@ -655,7 +655,7 @@ class ApplicationCriteria(ModelSQL, ModelView):
         required=True)
     application_result = fields.One2Many(
         'akademy.applications-result', 'application_criteria', 
-        string=u'Candidaturas')
+        string=u'Resultado das candidaturas')
 
     @classmethod
     def __setup__(cls):
@@ -682,7 +682,7 @@ class StudyPlan(ModelSQL, ModelView):
     code = fields.Char(string=u'Código', size=25,
         help="Código do plano de estudo.")    
     name = fields.Char(string=u'Nome', required=True,
-        help="Nnome do plano de estudo.")
+        help="Nome do plano de estudo.")
     hours = fields.Integer(string=u'Total de horas', required=True,
         help="Informe a carga horária.")    
     academic_level = fields.Many2One(
@@ -729,13 +729,13 @@ class StudyPlanDiscipline(ModelSQL, ModelView):
     state = fields.Selection(selection=sel_state, string=u'Estado', 
         required=True, help="Escolha o estado de frequência da disciplina.")
     modality = fields.Selection(selection=sel_modality, string=u'Modalidade',
-        required=True, help="Escolha a modalidade de ensino da disciplina")
+        required=True, help="Escolha a modalidade de ensino da disciplina.")
     quarter = fields.Many2One(
 		model_name="akademy.quarter",  string=u'Trimestre', 
 		required=True, help="Escolha o trimestre em que a disciplina será lecionada.")      
-    hours = fields.Integer(string=u'Total de Horas', required=True,
+    hours = fields.Integer(string=u'Total de horas', required=True,
         help="Carga horária da disciplina.")
-    flaut = fields.Integer(string=u'Total de Faltas', required=True,
+    flaut = fields.Integer(string=u'Total de faltas', required=True,
         help="Número máximo de faltas.")
     average = fields.Numeric(string=u'Média', digits=(2,2), 
         required=True, help='Média para aprovação.')
@@ -752,13 +752,13 @@ class StudyPlanDiscipline(ModelSQL, ModelView):
         string=u'Disciplina precedentes')
     classe_student_discipline = fields.One2Many(
         'akademy.classe_student-discipline', 'studyplan_discipline',
-        string=u'Plano de Estudo disciplina')
+        string=u'Disciplina do plano de estudo')
     classe_teacher_discipline = fields.One2Many(
         'akademy.classe_teacher-discipline', 'studyplan_discipline',
-        string=u'Plano de Estudo Disciplina')
-    student_grades = fields.One2Many(
-		'akademy.classe_student-grades', 'studyplan_discipline', 
-		string=u'Discente nota')
+        string=u'Disciplina do plano de estudo')
+    #student_grades = fields.One2Many(
+	#	'akademy.classe_student-grades', 'studyplan_discipline', 
+	#	string=u'Discente nota')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades',  'studyplan_discipline', 
 		string=u'Discente nota')
@@ -838,8 +838,8 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             'invisible': Bool(Eval('perct_weighted')),
             'required': Not(Bool(Eval('perct_weighted')))
         },
-        help=u'Calcula a média com base na operação artitmétrica.\n'+
-        'Ex: Soma das avaliações, divido pelo número de avalições.')
+        help=u'Calcula a média com base na operação aritmética.\n'+
+        'Ex: Soma das avaliações, dividido pelo número de avaliações.')
     perct_weighted = fields.Boolean(
         string='Média ponderada',
         states={
@@ -847,7 +847,7 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             'required': Not(Bool(Eval('perct_arithmetic')))
         }, depends=['perct_arithmetic'], 
         help=u'Calcula a média com base na operação ponderada.\n'+
-        'Ex: Soma da multiplicação das ponderações das avalições, divido pela soma das ponderações.')  
+        'Ex: Soma da multiplicação das ponderações das avaliações, dividido pela soma das ponderações.')  
     percent = fields.Numeric(
         string=u'Percetagem', depends=['perct_weighted'],  
         states={
@@ -866,9 +866,9 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', 
         string=u'Disciplina do plano de estudo') 
-    stundent_grades = fields.One2Many(
-		'akademy.classe_student-grades', 'studyplan_avaliation', 
-		string=u'Discente nota')
+    #stundent_grades = fields.One2Many(
+	#	'akademy.classe_student-grades', 'studyplan_avaliation', 
+	#	string=u'Discente nota')
 
     @classmethod
     def default_perct_arithmetic(cls):
@@ -893,7 +893,7 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
             u'Não foi possível cadastrar avaliação, por favor verifica se já existe uma avaliação, neste nível trimestre.'),
             ('percent_max',
             Check(table, table.percent <= 100),
-            u'Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem é superior a 100%.'),
+            u'Não foi possível cadastrar avaliação no plano de estudo, por favor verifica se a percetagem é superior a 100%.'),
             ('percent_min',
             Check(table, table.percent > 0),
             u'Não foi possível cadastrar avaliação neste plano de estudo, por favor verifica se a percetagem é inferior ou igual a 0%.')
