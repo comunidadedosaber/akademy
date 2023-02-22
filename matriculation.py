@@ -138,38 +138,41 @@ class Applications(ModelSQL, ModelView):
         Criteria = Pool().get('akademy.application-criteria')
         ApplicationResult = Pool().get('akademy.applications-result') 
         
-        if len(applications) >= 1:
-            application_sorted = []
-            for value in applications:
-                application_sorted.append(value)                
+        if applications[0].phase.start <= date.today() <= applications[0].phase.end:
+            if len(applications) >= 1:
+                application_sorted = []
+                for value in applications:
+                    application_sorted.append(value)                
 
-            #Ordena com base da idade e média do critério de admissão
-            application_sort = sorted(application_sorted, key=lambda application_sort: [application_sort.age, application_sort.candidate.average])           
-            
-            for element in application_sort:                
-                phase_admission = element.phase
-                ApplicationCriteria = Criteria.search([('course', '=', element.course), ('phase', '=', phase_admission)])
+                #Ordena com base da idade e média do critério de admissão
+                application_sort = sorted(application_sorted, key=lambda application_sort: [application_sort.age, application_sort.candidate.average])           
                 
-                Result = ApplicationResult.search([
-                    ('result', '=', 'Admitido'), 
-                    ('application_criteria', '=', ApplicationCriteria[0]),
-                    ('lective_year', '=', element.lective_year)
-                ]) 
-                                                
-                #Verifica se exite pelomenos uma candidatura admitida e um critério de admissão para o curso
-                limit = len(Result)
-                if len(ApplicationCriteria) >= 1:
-                    if ApplicationCriteria[0].student_limit >= limit: 
-                        if len(element.result) <= 1:
-                            Applications.application_admission_avaliation(ApplicationCriteria, element, ApplicationResult, element.lective_year)
+                for element in application_sort:                
+                    phase_admission = element.phase
+                    ApplicationCriteria = Criteria.search([('course', '=', element.course), ('phase', '=', phase_admission)])
+                    
+                    Result = ApplicationResult.search([
+                        ('result', '=', 'Admitido'), 
+                        ('application_criteria', '=', ApplicationCriteria[0]),
+                        ('lective_year', '=', element.lective_year)
+                    ]) 
+                                                    
+                    #Verifica se exite pelomenos uma candidatura admitida e um critério de admissão para o curso
+                    limit = len(Result)
+                    if len(ApplicationCriteria) >= 1:
+                        if ApplicationCriteria[0].student_limit >= limit: 
+                            if len(element.result) <= 1:
+                                Applications.application_admission_avaliation(ApplicationCriteria, element, ApplicationResult, element.lective_year)
+                            else:
+                                cls.raise_user_error("Não foi possível avaliar a candidatura do candidato "", por favor verifica se já existe uma candidatura avaliada para o mesmo.")
                         else:
-                            cls.raise_user_error("Não foi possível avaliar a candidatura do candidato "", por favor verifica se já existe uma candidatura avaliada para o mesmo.")
+                            cls.raise_user_error("Não foi possível avaliar a candidatura, porque já execdeu o limit establecido pela instituição.")
                     else:
-                        cls.raise_user_error("Não foi possível avaliar a candidatura, porque já execdeu o limit establecido pela instituição.")
-                else:
-                    cls.raise_user_error("Não foi possível avaliar a candidatura, por favor verifica se existe pelomenos um critério de admissão da "+element.phase.name+", para o curso de "
-                        +element.course.name+".\nOu se o candidato(a) "
-                        +element.candidate.party.name+", já têm uma candidatura para neste curso e neste ano lectivo.")
+                        cls.raise_user_error("Não foi possível avaliar a candidatura, por favor verifica se existe pelomenos um critério de admissão da "+element.phase.name+", para o curso de "
+                            +element.course.name+".\nOu se o candidato(a) "
+                            +element.candidate.party.name+", já têm uma candidatura para neste curso e neste ano lectivo.")
+        else:
+            cls.raise_user_error("Não foi possível avaliar a candidatura, porque já se encontra fora do período de avaliação de candidatura da "+applications[0].phase.name)
         
     #Avalia a candidatura
     @classmethod
@@ -189,7 +192,7 @@ class Applications(ModelSQL, ModelView):
                         result_avaliation = 'Admitido'
                         Applications.application_admission(ApplicationResult, application, application_criteria, result_avaliation, lective_year) 
                     else:                   
-                        result_avaliation = 'Não Admitido'
+                        result_avaliation = 'Não admitido'
                         Applications.application_admission(ApplicationResult, application, application_criteria, result_avaliation, lective_year)
         else:
             cls.raise_user_error("Não foi possível avaliar a candidatura, por favor verifica se existe pelomenos um critério de admissão para o curso de "+application.course.name+".")
@@ -289,7 +292,7 @@ class ApplicationsResult(ModelSQL, ModelView):
         cls._order = [('application.candidate.party', 'ASC')] 
         cls._buttons.update({
             'application_matriculation': {
-                'invisible': Eval('result') == 'Não Admitido',
+                'invisible': Eval('result') == 'Não admitido',
                 'depends': ['result'],
             },
         })          
@@ -362,6 +365,45 @@ class StudentTransfer(ModelSQL, ModelView):
 
     def get_rec_name(self, name):
         return self.student.rec_name
+
+    #Ao clicar no botão esta acção executada
+    @classmethod
+    @ModelView.button
+    def student_internal_transfer(cls, student_transfer): 
+        ClassesStudent = Pool().get('akademy.classe-student')
+        HistoricGrades = Pool().get('akademy.historic-grades')
+        StudentClasses = ClassesStudent.search([('student', '=', student_transfer[0].student)])
+        student_discipline_list = []        
+
+        for student in StudentClasses: 
+            for student_discipline in student.classe_student_discipline:
+                student_grades = HistoricGrades.search(
+                    [
+                        ('student', '=', student),
+                        #('lective_year', '=', student.classes.lective_year),
+                        ('studyplan_discipline', '=', student_discipline.studyplan_discipline)
+                    ]
+                )
+
+                if len(student_grades) > 0:
+                    average = student_grades[0].average
+                else:
+                    average = 0
+                
+                student_discipline_list.append(
+                    [
+                        student_transfer[0], 
+                        student_discipline,
+                        #student_discipline.studyplan_discipline.discipline, 
+                        #student_transfer[0].student.course.id, 
+                        #student_discipline.studyplan_discipline.studyplan.classe, 
+                        average
+                    ]
+                )
+        
+            StudentTransferDiscipline.save_student_transfer_discipline(student_discipline_list)                    
+        
+        #cls.raise_user_error("O candidato já foi matrículado."+student_transfer[0].student.party.name)
     
     @classmethod
     def __setup__(cls):
@@ -372,6 +414,11 @@ class StudentTransfer(ModelSQL, ModelView):
             Unique(table, table.lective_year, table.academic_level, table.course, table.course_classe, table.student),
             u'Não foi possível cadastrar a transferência, por favor verifique se o discente já se encontra com uma transferência com estes dados.')
         ]  
+        cls._buttons.update({
+            'student_internal_transfer':{
+                'invisible': ~Eval('internal')
+            }
+        })
 
 
 class StudentTransferDiscipline(ModelSQL, ModelView):
@@ -395,8 +442,37 @@ class StudentTransferDiscipline(ModelSQL, ModelView):
         depends=['course'], help="Nome da classe.")
 
     @fields.depends('student_transfer')
-    def on_change_with_course(self, name=None):
-        return self.student_transfer.course.id
+    def on_change_with_course(self, name=None):  
+        if self.student_transfer.external == True:
+            return self.student_transfer.course.id
+        else:
+            #print(self.student_transfer.student.last())
+            return self.student_transfer.student.course.id
+
+    @classmethod
+    def save_student_transfer_discipline(cls, internal_student):
+        StudentTransfer = Pool().get('akademy.student_transfer-discipline')
+
+        for student in internal_student:
+            save_discipline = StudentTransfer(
+                student_transfer = student[0],
+                discipline = student[1].studyplan_discipline.discipline,
+                course = student[1].studyplan_discipline.studyplan.course.id,
+                course_classe = student[1].studyplan_discipline.studyplan.classe,
+                average = student[2],
+            )
+            
+            save_discipline.save()
+
+            #Muda o estado das matrículas
+            student[1].state = "Transfêrido(a)"
+            student[1].save()
+
+            student[1].classe_student.state = "Transfêrido(a)"
+            student[1].classe_student.save()
+
+            student[0].student.state = "Transfêrido(a)"
+            student[0].student.save()
 
     @classmethod
     def __setup__(cls):

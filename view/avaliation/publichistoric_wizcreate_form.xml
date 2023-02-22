@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <form>
-	<label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4"> 
-        <label name="classes"/>
-        <field name="classes"/>
-    </group> 
+    <label name="classes"/>
+    <field name="classes"/>    
 </form>

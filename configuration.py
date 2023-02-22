@@ -723,7 +723,7 @@ class StudyPlan(ModelSQL, ModelView):
 class StudyPlanDiscipline(ModelSQL, ModelView):
     'StudyPlan Discipline'
     __name__ = 'akademy.studyplan-discipline'
-    _rec_name = 'discipline'
+    #_rec_name = 'discipline'
       
     description = fields.Text(string=u'Descrição')    
     state = fields.Selection(selection=sel_state, string=u'Estado', 

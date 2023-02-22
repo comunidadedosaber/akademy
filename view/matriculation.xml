@@ -135,6 +135,7 @@
                 <field name="type">tree</field>
                 <field name="name">matriculation/student_transfer_discipline_tree</field>
             </record>  
+            <!--
             <record model="ir.action.act_window" id="act_student_transfer_discipline">
                 <field name="name">Disciplinas</field>
                 <field name="res_model">akademy.student_transfer-discipline</field>
@@ -151,6 +152,7 @@
             </record>
             <menuitem name="Disciplinas" parent="akademy.akademy_registrations_transfer" id="akademy_student_transfer_discipline" 
                 sequence="10" action="act_student_transfer_discipline"/>      
+            -->
         <!-- end TRANSFÊRENCIA -->
 
         <!-- start MATRÍCULAR -->

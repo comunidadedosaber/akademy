@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
 <form>
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">  
-        <label name="discipline"/>
-        <field name="discipline"/>
-        <label name="grade"/>
-        <field name="grade"/>
-        <label name="studyplan_discipline"/>
-        <field name="studyplan_discipline"/>
-    </group> 
+    <label name="discipline"/>
+    <field name="discipline"/>
+    <label name="grade"/>
+    <field name="grade"/>
+    <label name="studyplan_discipline"/>
+    <field name="studyplan_discipline"/>    
 </form>

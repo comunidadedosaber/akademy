@@ -3,5 +3,6 @@
     <field name="employee"/>    
     <field name="state"/>    
     <field name="classes"/>
-    <field name="create_date" widget="date"/>   
+    <field name="create_date" widget="date"/>
+    <field name="write_date" widget="date"/>    
 </tree>

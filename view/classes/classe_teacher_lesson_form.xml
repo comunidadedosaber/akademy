@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday" colspan="4" col="4">
+    <group id="teacher_classe" colspan="4" col="4">
         <label name="classes"/>
         <field name="classes"/>
         <label name="classe_teacher"/>
@@ -11,7 +10,7 @@
         <label name="lesson_date"/>
         <field name="lesson_date"/>
     </group>  
-    <group id="grpday" colspan="4" col="6">
+    <group id="summary" colspan="4" col="6">
         <label name="unidate"/>
         <field name="unidate"/>
         <label name="lesson_type"/>
@@ -19,7 +18,7 @@
         <label name="lesson_number"/>
         <field name="lesson_number"/>
     </group>       
-    <group id="grpday" colspan="4" col="2">
+    <group id="description" colspan="4" col="2">
         <separator string="Objectivos" id="summary" colspan="2"/>
         <field name="objective" widget="richtext"/>        
         <separator string="Sumário" id="summary" colspan="2"/>

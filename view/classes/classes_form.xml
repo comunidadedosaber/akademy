@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <form> 
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">    
+    <group id="classe" colspan="4" col="4">    
         <label name="name"/>
         <field name="name"/>  
         <label name="code"/>
         <field name="code"/>  
     </group>  
-    <group id="grpday2" colspan="4" col="4">            
+    <group id="classe_info" colspan="4" col="4">            
         <label name="lective_year"/>
         <field name="lective_year"/>
         <label name="classe"/>
@@ -20,9 +19,8 @@
         <field name="studyplan"/>  
         <label name="coordinator"/>    
         <field name="coordinator"/>
-    </group>       
-    <label id="labr3" colspan="4" xalign="0.0" string="CRITÉRIO"/>
-    <group id="grpday3" colspan="4" col="4"> 
+    </group>
+    <group id="classe_criteria" colspan="4" col="4"> 
         <label name="max_student"/>  
         <field name="max_student"/>    
         <label name="max_teacher"/>    

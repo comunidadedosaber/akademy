@@ -1,5 +1,5 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
-from trytond.pyson import Eval, Id, And
+from trytond.pyson import Eval, Or, Equal, Not, Bool
 from trytond.wizard import Button, Wizard, StateView, StateTransition
 from trytond.pool import Pool
 from trytond.transaction import Transaction
@@ -66,6 +66,8 @@ class Classes(ModelSQL, ModelView):
 		discipline_required = []
 		student_discipline_possitive = []
 
+		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+
 		for classes_list in classes:
 			if len(classes_list.historic_grades) > 0:
 
@@ -74,26 +76,30 @@ class Classes(ModelSQL, ModelView):
 						discipline_required.append(studyplan_discipline)
 
 				for classes_student in classes_list.classe_student:
-					count = 0
-					
-					for historic_grades in classes_student.historic_grades:
-						if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
-							student_discipline_possitive.append(historic_grades.studyplan_discipline)							
-						count += 1
+					#Caso a matrícula esteja em um dos estados
+					if classes_student.state not in state_student:
+						count = 0
+						
+						for historic_grades in classes_student.historic_grades:
+							if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
+								if historic_grades.studyplan_discipline.state == "Obrigatório":
+									student_discipline_possitive.append(historic_grades.studyplan_discipline)							
+							count += 1
 
-					#Muda o estado da matrícula na turma
-					Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
-									
-					student_discipline_possitive.clear()	
+						#Muda o estado da matrícula na turma
+						Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
+										
+						student_discipline_possitive.clear()
+					
 				discipline_required.clear()
 		
 			else:
-				cls.raise_user_erro("Não é possivél determinar se os discentes aprovam ou reprovam, porque ainda não exite um percurso académico para os mesmo.")
+				cls.raise_user_error("Não é possivél determinar se os discentes aprovam ou reprovam, porque ainda não exite um percurso académico para os mesmo.")
 
 	@classmethod
 	def matriculation_classes_state(cls, discipline_required, student_discipline, classes_student):
 		#MUDA O ESTADO DA MATRÍCULA DO DISCENTE NA TURMA
-		if len(discipline_required) == len(student_discipline):
+		if len(discipline_required) >= len(student_discipline):
 			state = "Aprovado(a)"
 		else:
 			state = "Reprovado(a)"
@@ -174,6 +180,26 @@ class ClasseStudent(ModelSQL, ModelView):
 			(self.student.rec_name)
 		return t1
 
+	#Ao clicar no botão esta acção executada
+	@classmethod
+	@ModelView.button
+	def change_matriculation_state(cls, classe_student):
+
+		if classe_student[0].state == "Transfêrido(a)" or classe_student[0].state == "Matrículado(a)":
+			cls.raise_user_error("Não foi possivel proceguir com a mudança do estado da matricula")
+		else:
+			for classe_student_discipline in classe_student[0].classe_student_discipline:
+				
+				#Muda o estado das matrículas
+				classe_student_discipline.state = classe_student[0].state
+				classe_student_discipline.save()
+
+			#classe_student.state = "Transfêrido(a)"
+			#classe_student.save()
+
+			classe_student[0].student.state = classe_student[0].state
+			classe_student[0].student.save()		
+
 	@classmethod
 	def __setup__(cls):
 		super(ClasseStudent, cls).__setup__()
@@ -181,7 +207,22 @@ class ClasseStudent(ModelSQL, ModelView):
 		cls._sql_constraints = [
 			('key', Unique(table, table.student, table.classes), 
 			u'Não foi possivél cadastrar o novo discente, por favor verifica se o discente já está matriculado nesta turma.')
-		]
+		]		 
+		cls._buttons.update({
+			'change_matriculation_state': {
+				'invisible': 
+				Or(
+					~Not(
+						Equal(
+							Eval('state'), 'Transfêrido(a)'
+						)						
+					),
+					Equal(
+						Eval('state'), 'Matrículado(a)'
+					)
+				)
+			}
+		})
 		cls._order = [('student.party', 'ASC')]
 		
 	
@@ -251,7 +292,8 @@ class ClasseTeacher(ModelSQL, ModelView):
 	description = fields.Text(string=u'Descrição')
 	employee = fields.Many2One(
 		model_name='company.employee', string=u'Nome', 
-		required=True, ondelete='CASCADE')
+		required=True, ondelete='CASCADE',
+		domain=[('teacher', '=', True)])
 	classes = fields.Many2One(
 		model_name='akademy.classes', string=u'Turma', 
 		required=True)
@@ -285,7 +327,7 @@ class ClasseTeacher(ModelSQL, ModelView):
 class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	'TeacherDiscipline'
 	__name__ = 'akademy.classe_teacher-discipline'
-	#_rec_name = 'studyplan_discipline'
+	_rec_name = 'classe_teacher'
 		
 	state = fields.Selection(
 		selection=sel_state_teacher, string=u'Estado', 
@@ -308,7 +350,10 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 		depends=['studyplan'],)
 	classe_teacher_lesson = fields.One2Many(
 		'akademy.classe_teacher-lesson', 'classe_teacher_discipline', 
-		string="Plano de aula")
+		string="Plano de aula")		
+	classes_avaliation = fields.One2Many(
+		'akademy.classes-avaliation', 'classe_teacher_discipline', 
+		string="Avaliações")
 	classes_schedule_quarter = fields.One2Many(
 		'akademy.classes_schedule-quarter', 'classe_teacher_discipline', 
 		string="Pauta trimestral")
@@ -479,7 +524,7 @@ class AssociationDisciplineCreateWzard(Wizard):
 	def transition_association(self):		
 		Student_Discipline = Pool().get('akademy.classe_student-discipline')
 
-		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)']
+		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
 		list_matriculation = 0
 
 		for classe_student in self.start.classes.classe_student:
