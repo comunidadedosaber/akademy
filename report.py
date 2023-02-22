@@ -3,7 +3,7 @@ from trytond.report import Report
 from datetime import datetime, date
 
 __all_ = ['StudyplanReport', 'AppCriteriaReport', 'AcademicLevelReport'
-		'ApplicationResultReport','CandidatesReport', 'StudentTransferReport', 'MatriculationReport', 
+		'ApplicationResultReport','CandidatesReport', 'StudentTransferReport', 'StudentTransferInternalReport', 'MatriculationReport', 
 		'MatriculationTeacherReport', 'ClassesReport', 'ScheduleDisciplineFinalReport', 'ScheduleDisciplineReport', 'ClassesDisciplineLessonsReport',
 		'StudentDeclarationReport', 'StudentGradesReport', 'StudentDeclarationGradesReport', 'StudentCertificateReport',
 		'EquivalenceDisciplineReport']
@@ -104,10 +104,32 @@ class StudentTransferReport(Report):
 		context = super().get_context(records, data)
 		student = StudentTransfer.browse(data['ids'])
 		
-		list_students = StudentCertificateReport.student_academy_histori(student[0].student.student)
+		if student[0].external == True:
+			list_students = []
+		else:
+			list_students = StudentCertificateReport.student_academy_historic(student[0].student)
+
+		print(student, list_students)
 		
 		context['student'] = student
 		context['list_students'] = list_students
+		context['create_date'] = date.today()
+
+		return context
+
+
+#REPORT DISCENTE TRANSFERIDO INTERNAL
+class StudentTransferInternalReport(Report):
+	__name__ = 'akademy.student_transfer-internal_report'
+
+	@classmethod
+	def get_context(cls, records, data):
+		StudentTransfer = Pool().get('akademy.student-transfer')
+
+		context = super().get_context(records, data)
+		student = StudentTransfer.browse(data['ids'])
+				
+		context['student'] = student
 		context['create_date'] = date.today()
 
 		return context
@@ -281,47 +303,28 @@ class StudentGradesReport(Report):
 			return context
 
 
-#REPORT PAUTA DISCIPINA
+#REPORT PAUTA TRIMESTRAL DISCIPINA
 class ScheduleDisciplineReport(Report):
 	__name__ = 'akademy.schedule_discipline-report'
 
 	@classmethod
 	def get_context(cls, records, data):
-		TeacherDiscipline = Pool().get('akademy.classe_teacher-discipline')
+		ClassesScheduleQuarter = Pool().get('akademy.classes_schedule-quarter')
 
 		context = super().get_context(records, data)
-		teacher_discipline = TeacherDiscipline.browse(data['ids'])		
+		schedule_quarter = ClassesScheduleQuarter.browse(data['ids'])	
 
-		if (len(teacher_discipline[0].classes_schedule_quarter) > 0):
-			for classes_schedule_quarter in teacher_discipline[0].classes_schedule_quarter:
-				if classes_schedule_quarter.state == True:					
-					if classes_schedule_quarter.studyplan_discipline == teacher_discipline[0].studyplan_discipline:
-					
-						context['erro'] = True
-						context['erro_message'] = ""
-						context['discipline'] = teacher_discipline
-						context['schedule'] = classes_schedule_quarter.classes_student_schedule_quarter
-						context['quarter'] = classes_schedule_quarter.quarter
-						context['create_date'] = date.today()
-
-						return context					
-					break
-
-				else:
-					context['erro'] = False
-					context['erro_message'] = "Não foi possivél exibir a pauta trimestral, por favor verique se a mesma está bloqueada para edição."
-					context['discipline'] = teacher_discipline
-					context['create_date'] = date.today()
-
-					return context
-
+		context['schedule_quarter'] = schedule_quarter
+		context['create_date'] = date.today()
+		
+		if (len(schedule_quarter) > 0):
+			context['erro'] = True
+			context['erro_message'] = ""
 		else:
 			context['erro'] = False
-			context['erro_message'] = "Não foi possivél exibir a pauta trimestral, porque a mesma ainda não foi criada."
-			context['discipline'] = teacher_discipline
-			context['create_date'] = date.today()
+			context['erro_message'] = "Não foi possivél exibir a pauta trimestral, por favor verique se a mesma está bloqueada para edição."
 
-			return context	
+		return context		
 
 
 #REPORT PAUTA FINAL DISCIPINA
@@ -364,7 +367,7 @@ class ScheduleDisciplineFinalReport(Report):
 			context['discipline'] = teacher_discipline
 			context['create_date'] = date.today()
 
-			return context
+			return context	
 
 
 #REPORT PLANO DE AULA
@@ -429,7 +432,7 @@ class StudentCertificateReport(Report):
 		context = super().get_context(records, data)
 		certificates = StudentCertificate.browse(data['ids'])
 
-		list_students = StudentCertificateReport.student_academy_histori(certificates)
+		list_students = StudentCertificateReport.student_academy_historic(certificates)
 
 		context['certificate'] = certificates
 		context['list_students'] = list_students[0]
@@ -439,7 +442,7 @@ class StudentCertificateReport(Report):
 		return context
 
 	@classmethod
-	def student_academy_histori(cls, students):
+	def student_academy_historic(cls, students):
 		#Busca as nostas no percurso acadêmico do discente
 		list_students = []
 		list_students_transfer = []
@@ -463,3 +466,4 @@ class StudentCertificateReport(Report):
 												list_students_transfer.append(student_transfer_discipline)
 
 		return [list_students,list_students_transfer]
+

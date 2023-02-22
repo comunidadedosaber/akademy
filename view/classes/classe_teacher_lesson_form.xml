@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <form>
     <group id="teacher_classe" colspan="4" col="4">
-        <label name="classes"/>
-        <field name="classes"/>
         <label name="classe_teacher"/>
         <field name="classe_teacher"/>
+        <label name="classes"/>
+        <field name="classes"/>
         <label name="classe_timerule"/>
         <field name="classe_timerule"/>        
         <label name="lesson_date"/>
-        <field name="lesson_date"/>
+        <field name="lesson_date"/>      
+        <label name="classe_teacher_discipline"/>
+        <field name="classe_teacher_discipline"/>
     </group>  
     <group id="summary" colspan="4" col="6">
         <label name="unidate"/>

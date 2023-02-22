@@ -40,7 +40,6 @@ class Classes(ModelSQL, ModelView):
 	classe_timerule = fields.One2Many('akademy.classe-timerule', 'classes', string=u'Horário')
 	classe_student = fields.One2Many('akademy.classe-student', 'classes', string=u'Discente')
 	classe_teacher = fields.One2Many('akademy.classe-teacher', 'classes', string=u'Docente')
-	#stundent_grades = fields.One2Many('akademy.classe_student-grades', 'classes', string=u'Discente nota')
 	historic_grades = fields.One2Many('akademy.historic-grades', 'classes', string="Percurso académico")
 	classe_teacher_lesson = fields.One2Many('akademy.classe_teacher-lesson', 'classes', string="Plano de aula")		
 	classes_avaliation = fields.One2Many('akademy.classes-avaliation', 'classes', string="Avaliações")
@@ -194,9 +193,6 @@ class ClasseStudent(ModelSQL, ModelView):
 				classe_student_discipline.state = classe_student[0].state
 				classe_student_discipline.save()
 
-			#classe_student.state = "Transfêrido(a)"
-			#classe_student.save()
-
 			classe_student[0].student.state = classe_student[0].state
 			classe_student[0].student.save()		
 
@@ -249,9 +245,6 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 		model_name='akademy.studyplan-discipline', string=u'Disciplina', 
 		required=True, domain=[('studyplan.id', '=', Eval('studyplan', -1))],
 		depends=['studyplan'])
-	#student_grades = fields.One2Many(
-	#	'akademy.classe_student-grades', 'student_discipline', 
-	#	string=u'Discente nota')
 
 	@fields.depends('classe_student')
 	def on_change_with_studyplan(self, name=None):
@@ -392,7 +385,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 class ClasseTimeRule(ModelSQL, ModelView):
 	'Classe TimeRule'
 	__name__ = 'akademy.classe-timerule'
-	_order_name = 'lesson_time'
+	_rec_name = 'lesson_time'
 
 	lesson_time = fields.Selection(selection=sel_classes_time, string=u'Tempo', required=True)
 	start_lesson = fields.Time(string=u'Entrada', format='%H:%M', required=True)
@@ -493,6 +486,11 @@ class ClasseTeacherLesson(ModelSQL, ModelView):
 	@classmethod
 	def default_lesson_date(cls):
 		return date.today()
+
+	def get_rec_name(self, name):
+		t1 = '%s' % \
+			(self.classe_timerule.rec_name)
+		return t1
 
 
 #Assistente

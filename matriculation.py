@@ -446,7 +446,6 @@ class StudentTransferDiscipline(ModelSQL, ModelView):
         if self.student_transfer.external == True:
             return self.student_transfer.course.id
         else:
-            #print(self.student_transfer.student.last())
             return self.student_transfer.student.course.id
 
     @classmethod
@@ -633,7 +632,6 @@ class MatriculationCreateWzard(Wizard):
                                 
                 #VERIFICA SE O DISCENTE JÁ ESTA MATRÍCULADO
                 if len(student.student.student) > 0:
-                    #cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque o discente já está matriculado na turma, "+get_classes[0].name+".")
                     cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque o discente já está matriculado.")
                     pass
                 else:
@@ -830,10 +828,7 @@ class MatriculationCreateWzard(Wizard):
                     #Verificar se o discente está a pular de ano            
                     else:
                         cls.raise_user_error("Não foi possivél matrícular o discente "+company_student.party.name+", na classe "+classes.classe.name+", porque o mesmo ainda não têm uma matrículado na classe anterior.")
-                else:
-                    #Verificar se o discente está efectuando uma nova matrícula
-                    #if student.classes == classes:
-                    #    cls.raise_user_error("O discente já esta matrícula na turma, "+classes.name+".")
+                else:                    
                     pass
         else:
             course_frist_year = 1

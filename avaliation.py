@@ -441,9 +441,7 @@ class PublicHistoricCreateWizard(Wizard):
                                                             final_grade = 0
                                                             count = 0
 
-                            discipline.clear()                                                           
-                    #else:
-                        #self.raise_user_error("Infelizmente o discente "+StudentClasses.student.party.name+", ainda não têm disciplinas associadas na, "+Classes.name)                  
+                            discipline.clear() 
             
             else:
                 self.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não bloqueada") 
@@ -601,8 +599,6 @@ class ClassesScheduleQuarter(ModelSQL, ModelView):
         model_name='akademy.classe_teacher-discipline', string=u'Docente', 
         required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
         depends=['classes'])
-    #classe_teacher = fields.Many2One(
-    #    model_name='akademy.classe-teacher', string=u'Docente')
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', string=u'Disciplina', 
         required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
