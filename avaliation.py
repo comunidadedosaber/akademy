@@ -86,7 +86,7 @@ class PublicGradesCreateWizard(Wizard):
                         break            
 
         #ESTADO DA MATRÍCULA
-        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']        
+        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']        
         
         #Verifica se a discplina têm a avaliação
         if classes_avaliation != 0:
@@ -166,7 +166,7 @@ class ScheduleCreateWizard(Wizard):
                     classes_schedule_quarter = ClassesScheduleQuarter.save_classes_schedule_quarter(self.start, quarter_metric)
                     
                     #Pesquisa pelo discente       
-                    student_state = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+                    student_state = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
 
                     for classes_student in self.start.classes.classe_student:
                         #VERIFICA O ESTADO DA MATRÍCULA
@@ -187,7 +187,7 @@ class ScheduleCreateWizard(Wizard):
                     self.raise_user_error("Infelizmente não foi possivél criar a pauta, porque ainda não existem avaliações na turma "+self.start.classes.name+".")
 
             if self.start.schedule == schedule_f:
-                student_state = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+                student_state = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
                 
                 if len(self.start.classes.classes_schedule_quarter) > 0:
                     classes_schedule_final = ClassesSchedule.save_classes_schedule(self.start)
@@ -366,7 +366,7 @@ class PublicHistoricCreateWizard(Wizard):
         final_grade = 0
         result = 0
         Classes = self.start.classes
-        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
         
         if len(Classes.classe_student) > 0:
             schedule_block  = ClassesSchedule.search([
@@ -441,9 +441,7 @@ class PublicHistoricCreateWizard(Wizard):
                                                             final_grade = 0
                                                             count = 0
 
-                            discipline.clear()                                                           
-                    else:
-                        self.raise_user_error("Infelizmente o discente "+StudentClasses.student.party.name+", ainda não têm disciplinas associadas na, "+Classes.name)                  
+                            discipline.clear() 
             
             else:
                 self.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não bloqueada") 
@@ -573,7 +571,8 @@ class ClassesStudentAvaliation(ModelSQL, ModelView):
             u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
             ('grade_min', Check(table, table.grade >= 0),
             u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
-        ]                        
+        ]
+        cls._order = [('classes_avaliation', 'ASC')]                         
 
 
 #Discipline Quarter Schedule 
@@ -600,8 +599,6 @@ class ClassesScheduleQuarter(ModelSQL, ModelView):
         model_name='akademy.classe_teacher-discipline', string=u'Docente', 
         required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
         depends=['classes'])
-    #classe_teacher = fields.Many2One(
-    #    model_name='akademy.classe-teacher', string=u'Docente')
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', string=u'Disciplina', 
         required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
@@ -946,7 +943,7 @@ class HistoricGrades(ModelSQL, ModelView):
 
         state_matriculation = StudentDiscipline.search([('classe_student', '=', student), ('studyplan_discipline', '=', discipline)])
         schedule = [] 
-        state_student = ['Aguardando', 'Suspenço(a)', 'Anulada', 'Transfêrido(a)']
+        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
 
         #CASO TENHA ENCNTRADO UM DISCENTE
         if len(state_matriculation) > 0:

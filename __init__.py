@@ -78,6 +78,7 @@ def register():
         report.CandidatesReport,
         report.MatriculationReport,
         report.StudentTransferReport,
+        report.StudentTransferInternalReport,
         report.EquivalenceDisciplineReport,
         report.ClassesReport,
         report.MatriculationTeacherReport,

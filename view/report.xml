@@ -115,7 +115,7 @@
 
         <!-- start RELATÓRIO DISCENTE TRANSFERIDO EQUIVALENCIA-->
                 <record model="ir.action.report" id="equivalence_discipline_report">
-                        <field name="name">Gerar equivalencia</field>
+                        <field name="name">Gerar equivalência</field>
                         <field name="report_name">akademy.equivalence_discipline-report</field>
                         <field name="model">akademy.student-transfer</field>
                         <field name="report">akademy/reports/equivalence_discipline.odt</field>

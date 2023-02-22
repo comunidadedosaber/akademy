@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form> 
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">
+    <group id="transfer" colspan="4" col="4">
         <label name="student"/>
         <field name="student"/>   
         <label name="lective_year"/>
@@ -15,20 +14,20 @@
         <label name="course_classe"/>
         <field name="course_classe"/> 
     </group> 
-    <label id="labr2" colspan="4" xalign="0.0" string="TRANSFERÊNCIA"/>
-    <group id="grpday2" colspan="2" col="4">
+    <group id="transfer_type" colspan="2" col="6">
         <label name="internal"/>
         <field name="internal"/> 
         <label name="external"/>
         <field name="external"/> 
+        <button name="student_internal_transfer" string="Tranfererir" icon="tryton-forward"/>
     </group>  
     <notebook colspan="4">
-        <page string="Descrição" id="description">
+        <page string="DESCRIÇÃO" id="description">
             <field name="description" colspan="4"/>
         </page>
-        <page string="Disciplinas" id="student_transfer_discipline">
-            <field name="student_transfer_discipline" mode="tree" colspan="4" 
-                view_ids="akademy.student_transfer_discipline_view_list"/>
+        <page string="DISCIPLINAS" id="student_transfer_discipline">
+            <field name="student_transfer_discipline" mode="tree,form" colspan="4" 
+                view_ids="akademy.student_transfer_discipline_view_list,akademy.student_transfer_discipline_view_form"/>
         </page>
     </notebook> 
 </form>

@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>     
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">          
+    <group id="timerule" colspan="4" col="4">          
         <label name="lesson_time"/>
         <field name="lesson_time"/>       
         <label name="classes"/>
@@ -9,8 +8,7 @@
         <!-- <label name="studyplan" invisible="1"/> -->
         <field name="studyplan" invisible="1"/>
     </group>      
-    <label id="labr2" colspan="4" xalign="0.0" string="DISCIPLINA/SALA"/>
-    <group id="grpday2" colspan="4" col="4">       
+    <group id="timerule_description" colspan="4" col="4">       
         <label name="start_lesson"/>
         <field name="start_lesson"/> 
         <label name="end_lesson"/>

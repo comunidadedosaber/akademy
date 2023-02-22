@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <form>   
-    <group id="grpday1" colspan="4" col="6">     
+    <group id="student_avaliation" colspan="4" col="6">     
         <label name="classes_student"/>
         <field name="classes_student"/>   
         <label name="presence"/>

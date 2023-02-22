@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>  
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4"> 
+    <group id="applications" colspan="4" col="4"> 
         <label name="lective_year"/>
         <field name="lective_year" width="25"/> 
         <label name="academic_level"/>
@@ -18,10 +17,10 @@
         <field name="reference"/> 
     </group>    
     <notebook colspan="4">
-        <page string="Descrição" id="description">
+        <page string="DESCRIÇÃO" id="description">
             <field name="description" colspan="4"/>
         </page>
-        <page string="Resultado" id="application_result">
+        <page string="RESULTADO" id="application_result">
             <field name="result" mode="tree" colspan="4"
                 view_ids="akademy.applications_result_view_tree"/>
         </page>

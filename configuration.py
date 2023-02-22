@@ -32,9 +32,6 @@ class LectiveYear(ModelSQL, ModelView):
     classes = fields.One2Many(
         'akademy.classes', 'lective_year',
         string=u'Turma')
-    #student_grades = fields.One2Many(
-    #    'akademy.classe_student-grades', 'lective_year',
-    #    string=u'Discente nota')    
     classes_student_schedule_quarter = fields.One2Many(
         'akademy.classes_student-schedule_quarter', 'lective_year', 
         string=u'Pauta trimestral')
@@ -146,9 +143,6 @@ class Quarter(ModelSQL, ModelView):
     studyplan_avaliations = fields.One2Many(
 		'akademy.studyplan-avaliation', 'quarter', 
 		string=u'Avaliação do plano de estudo')
-    #classe_student_grades = fields.One2Many(
-	#	'akademy.classe_student-grades', 'quarter', 
-	#	string=u'Avaliação')
     classes_student_schedule_quarter = fields.One2Many(
         'akademy.classes_student-schedule_quarter', 'quarter', 
         string=u'Pauta trimestral')
@@ -723,7 +717,7 @@ class StudyPlan(ModelSQL, ModelView):
 class StudyPlanDiscipline(ModelSQL, ModelView):
     'StudyPlan Discipline'
     __name__ = 'akademy.studyplan-discipline'
-    _rec_name = 'discipline'
+    #_rec_name = 'discipline'
       
     description = fields.Text(string=u'Descrição')    
     state = fields.Selection(selection=sel_state, string=u'Estado', 
@@ -756,9 +750,6 @@ class StudyPlanDiscipline(ModelSQL, ModelView):
     classe_teacher_discipline = fields.One2Many(
         'akademy.classe_teacher-discipline', 'studyplan_discipline',
         string=u'Disciplina do plano de estudo')
-    #student_grades = fields.One2Many(
-	#	'akademy.classe_student-grades', 'studyplan_discipline', 
-	#	string=u'Discente nota')
     historic_grades = fields.One2Many(
 		'akademy.historic-grades',  'studyplan_discipline', 
 		string=u'Discente nota')
@@ -866,9 +857,6 @@ class StudyPlanAvaliation(ModelSQL, ModelView):
     studyplan_discipline = fields.Many2One(
         model_name='akademy.studyplan-discipline', 
         string=u'Disciplina do plano de estudo') 
-    #stundent_grades = fields.One2Many(
-	#	'akademy.classe_student-grades', 'studyplan_avaliation', 
-	#	string=u'Discente nota')
 
     @classmethod
     def default_perct_arithmetic(cls):

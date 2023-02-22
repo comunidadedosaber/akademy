@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="6">    
+    <group id="course" colspan="4" col="6">    
         <label name="name"/>
         <field name="name"/>  
         <label name="duration"/>
@@ -10,10 +9,10 @@
         <field name="code"/> 
     </group>
     <notebook colspan="4">
-        <page string="Descrição" id="description">
+        <page string="DESCRIÇÃO" id="description">
             <field name="description" colspan="4"/>
         </page>
-        <page string="Classe" id="course_classe">
+        <page string="CLASSE" id="course_classe">
             <field name="course_classe" mode="tree,form" colspan="4"
                 view_ids="akademy.course_classe_view_list,akademy.course_classe_view_form"/>
         </page>

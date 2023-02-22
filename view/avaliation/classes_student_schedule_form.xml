@@ -1,22 +1,19 @@
 <?xml version="1.0"?>
-<form>  
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">        
-        <label name="classes_student"/>
-        <field name="classes_student"/>
-        <label name="classes_schedule"/>
-        <field name="classes_schedule"/>
-        <label name="first_quarter"/>
-        <field name="first_quarter"/>
-        <label name="second_quarter"/>
-        <field name="second_quarter"/>
-        <label name="third_quarter"/>
-        <field name="third_quarter"/>
-        <label name="final_grade"/>
-        <field name="final_grade"/>        
-        <label name="average"/>
-        <field name="average"/>        
-        <label name="obs"/>
-        <field name="obs"/> 
-    </group>    
+<form>        
+    <label name="classes_student"/>
+    <field name="classes_student"/>
+    <label name="classes_schedule"/>
+    <field name="classes_schedule"/>
+    <label name="first_quarter"/>
+    <field name="first_quarter"/>
+    <label name="second_quarter"/>
+    <field name="second_quarter"/>
+    <label name="third_quarter"/>
+    <field name="third_quarter"/>
+    <label name="final_grade"/>
+    <field name="final_grade"/>        
+    <label name="average"/>
+    <field name="average"/>        
+    <label name="obs"/>
+    <field name="obs"/>   
 </form>

@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="6">    
+    <group id="application_criteria" colspan="4" col="6">    
         <label name="name"/>
         <field name="name"/>  
         <label name="code"/>
@@ -15,8 +14,7 @@
         <label name="course"/>
         <field name="course"/>  
     </group>  
-    <label id="labr2" colspan="4" xalign="0.0" string="CRITÉRIO"/>
-    <group id="grpday2" colspan="4" col="6">                      
+    <group id="criteria_info" colspan="4" col="6">                      
         <label name="course_classe"/>
         <field name="course_classe"/>
         <label name="student_limit"/>
@@ -28,12 +26,11 @@
         <label name="age"/>
         <field name="age"/>
     </group>        
-    <label id="labr3" colspan="4" xalign="0.0" string="DESCRIÇÃO"/>
-    <group id="grpday3" colspan="4" col="4">            
+    <group id="description" colspan="4" col="4">            
         <field name="description" colspan="4"/> 
     </group>
     <notebook colspan="4">
-        <page string="Lista de Candidatos" id="application_result">
+        <page string="LISTA DE CANDIDATOS" id="application_result">
             <field name="application_result" mode="tree" colspan="4"
                 view_ids="akademy.applications_result_view_tree"/>
         </page>

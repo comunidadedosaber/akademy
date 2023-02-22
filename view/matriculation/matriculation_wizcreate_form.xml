@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>
-	<label id="labr1" colspan="4" xalign="0.0" string="TIPO DE MATRÍCULA"/>
-    <group id="grpday1" colspan="4" col="6"> 
+    <group id="type_enroll" colspan="4" col="6"> 
 		<label name="is_candidate"/>
 		<field name="is_candidate"/>
 		<label name="is_transferred"/>

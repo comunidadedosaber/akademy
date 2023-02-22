@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form>
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">   
+    <group id="candidate" colspan="4" col="4">   
         <label name="party"/>
         <field name="party"/>  
         <label name="code"/>
@@ -15,8 +14,7 @@
         <label name="course"/>
         <field name="course"/>
     </group>            
-    <label id="labr2" colspan="4" xalign="0.0" string="FORMAÇÃO"/>
-    <group id="grpday2" colspan="1" col="6">  
+    <group id="education" colspan="1" col="6">  
         <label name="date_start"/>
         <field name="date_start"/>
         <label name="date_end"/>
@@ -25,7 +23,7 @@
         <field name="average"/>
     </group>
     <notebook colspan="4">
-        <page string="Candidaturas" id="applications_candidate">
+        <page string="CANDIDATURAS" id="applications_candidate">
             <field name="applications" mode="tree,form" colspan="4"
                 view_ids="akademy.candidate_applications_view_tree,akademy.candidate_applications_view_form"/>
         </page>

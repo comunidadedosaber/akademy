@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <form> 
-    <label id="labr1" colspan="4" xalign="0.0" string="IDENTIFICAÇÃO"/>
-    <group id="grpday1" colspan="4" col="4">    
+    <group id="time-course" colspan="4" col="4">    
         <label name="name"/>
         <field name="name"/>  
         <label name="code"/>
@@ -11,8 +10,7 @@
         <label name="end_time"/>
         <field name="end_time"/>
     </group>    
-    <label id="labr2" colspan="4" xalign="0.0" string="DESCRIÇÃO"/>
-    <group id="grpday2" colspan="8">            
+    <group id="description" colspan="8">            
         <field name="description" colspan="8"/> 
     </group>
 </form>
