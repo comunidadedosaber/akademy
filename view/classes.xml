@@ -32,7 +32,7 @@
                 <record model="ir.model.button" id="matriculation_state_button">
                         <field name="name">matriculation_state</field>
                         <field name="string">Avaliar matrícula</field>
-                        <field name="help">Avaliar matrícula para fecho do ano lectivo</field>
+                        <field name="help">Avaliar matrícula para fecho do ano lectivo.</field>
                         <field name="model" search="[('model', '=', 'akademy.classes')]"/>
                 </record>
         <!-- end TURMAS -->
@@ -64,6 +64,13 @@
                 </record>
                 <menuitem name="Discentes" parent="akademy.akademy_classes" id="akademy_classe_student" 
                         sequence="16" action="act_classe_student"/>        
+
+                <record model="ir.model.button" id="change_matriculation_state_button">
+                        <field name="name">change_matriculation_state</field>
+                        <field name="string">Avaliar</field>
+                        <field name="help">Avaliar o desempenho dos discentes.</field>
+                        <field name="model" search="[('model', '=', 'akademy.classe-student')]"/>
+                </record>
         <!-- end DISCENTES -->
 
         <!-- start DISCENTES DISCIPLINA -->

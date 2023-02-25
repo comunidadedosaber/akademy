@@ -320,7 +320,7 @@ class ClasseTeacher(ModelSQL, ModelView):
 class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	'TeacherDiscipline'
 	__name__ = 'akademy.classe_teacher-discipline'
-	_rec_name = 'classe_teacher'
+	#_rec_name = 'classe_teacher'
 		
 	state = fields.Selection(
 		selection=sel_state_teacher, string=u'Estado', 
@@ -368,7 +368,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	
 	def get_rec_name(self, name):
 		t1 = '%s' % \
-			(self.studyplan_discipline.rec_name)
+			(self.classe_teacher.rec_name)
 		return t1
 
 	@classmethod
@@ -385,7 +385,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 class ClasseTimeRule(ModelSQL, ModelView):
 	'Classe TimeRule'
 	__name__ = 'akademy.classe-timerule'
-	_rec_name = 'lesson_time'
+	#_rec_name = 'lesson_time'
 
 	lesson_time = fields.Selection(selection=sel_classes_time, string=u'Tempo', required=True)
 	start_lesson = fields.Time(string=u'Entrada', format='%H:%M', required=True)
