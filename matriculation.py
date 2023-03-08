@@ -321,36 +321,31 @@ class StudentTransfer(ModelSQL, ModelView):
     lective_year = fields.Many2One(
 		model_name='akademy.lective-year', string=u'Ano lectivo', 
         states={
-            'required': Bool(Eval('external')), 
-            'invisible': Not(Bool(Eval('external'))), 
+            'required': Bool(Eval('external'))
         }, help="Nome do ano lectivo.")
     academic_level = fields.Many2One(
 		model_name='akademy.academic-level', string=u'Nível académico', 
         states={
-            'required': Bool(Eval('external')), 
-            'invisible': Not(Bool(Eval('external'))), 
+            'required': Bool(Eval('external'))
         }, help="Nome da nível académico.")
     area = fields.Many2One(
 		model_name='akademy.area', string=u'Área', 
         states={
-            'required': Bool(Eval('external')), 
-            'invisible': Not(Bool(Eval('external'))), 
+            'required': Bool(Eval('external'))
         },
 		domain=[('academic_level', '=', Eval('academic_level', -1))], 
 		depends=['academic_level'], help="Nome da área.")
     course = fields.Many2One(
 		model_name='akademy.course', string=u'Curso', 
         states={
-            'required': Bool(Eval('external')), 
-            'invisible': Not(Bool(Eval('external'))), 
+            'required': Bool(Eval('external')) 
         },
 		domain=[('area', '=', Eval('area', -1))],
 		depends=['area'], help="Nome da curso.")
     course_classe = fields.Many2One(
 		model_name='akademy.course-classe', string=u'Classe', 
         states={
-            'required': Bool(Eval('external')), 
-            'invisible': Not(Bool(Eval('external'))), 
+            'required': Bool(Eval('external'))
         },
         domain=[('course', '=', Eval('course', -1))],
 		depends=['course'], help="Nome da classe.")
@@ -401,7 +396,14 @@ class StudentTransfer(ModelSQL, ModelView):
                     ]
                 )
         
-            StudentTransferDiscipline.save_student_transfer_discipline(student_discipline_list)                    
+            StudentTransferDiscipline.save_student_transfer_discipline(student_discipline_list) 
+            
+            # student_transfer[0].lective_year = student.classes.lective_year, 
+            # student_transfer[0].academic_level = student.student.academiclevel,
+            # student_transfer[0].area = student.student.area,
+            # student_transfer[0].course = student.student.course,
+            # student_transfer[0].course_classe = student.classes.studyplan.classe,
+            # student_transfer[0].save()
         
         #cls.raise_user_error("O candidato já foi matrículado."+student_transfer[0].student.party.name)
     
@@ -443,25 +445,33 @@ class StudentTransferDiscipline(ModelSQL, ModelView):
 
     @fields.depends('student_transfer')
     def on_change_with_course(self, name=None):  
-        if self.student_transfer.external == True:
-            return self.student_transfer.course.id
-        else:
+        if self.student_transfer:
             return self.student_transfer.student.course.id
+        else:
+            return None
 
     @classmethod
     def save_student_transfer_discipline(cls, internal_student):
         StudentTransfer = Pool().get('akademy.student_transfer-discipline')
 
         for student in internal_student:
-            save_discipline = StudentTransfer(
-                student_transfer = student[0],
-                discipline = student[1].studyplan_discipline.discipline,
-                course = student[1].studyplan_discipline.studyplan.course.id,
-                course_classe = student[1].studyplan_discipline.studyplan.classe,
-                average = student[2],
-            )
-            
-            save_discipline.save()
+            discipline_exist = StudentTransferDiscipline.search([
+                ('student_transfer', '=', student[0]),
+                ('course_classe', '=', student[1].studyplan_discipline.studyplan.classe),
+                ('discipline', '=', student[1].studyplan_discipline.discipline)
+            ])
+
+            #Verifica se o discente já está a frequentar esta disciplina
+            if len(discipline_exist) < 1:
+                save_discipline = StudentTransfer(
+                    student_transfer = student[0],
+                    discipline = student[1].studyplan_discipline.discipline,
+                    course = student[1].studyplan_discipline.studyplan.course.id,
+                    course_classe = student[1].studyplan_discipline.studyplan.classe,
+                    average = student[2],
+                )
+                
+                save_discipline.save()
 
             #Muda o estado das matrículas
             student[1].state = "Transfêrido(a)"
@@ -479,7 +489,7 @@ class StudentTransferDiscipline(ModelSQL, ModelView):
         table = cls.__table__()
         cls._sql_constraints = [
             ('uniq_classes',
-            Unique(table, table.student_transfer, table.discipline),
+            Unique(table, table.student_transfer, table.discipline, table.course_classe),
             u'Não foi possível associar está disciplina ao discente, por favor verifique se o mesmo já têm esta disciplina associada.')            
         ]
 
@@ -632,7 +642,7 @@ class MatriculationCreateWzard(Wizard):
                                 
                 #VERIFICA SE O DISCENTE JÁ ESTA MATRÍCULADO
                 if len(student.student.student) > 0:
-                    cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque o discente já está matriculado.")
+                    cls.raise_user_error("Infelismente não é possível matrícular o discente, porque o discente já está matriculado.")
                     pass
                 else:
                     #Verifica se há compatibilidade de planos de estuods
@@ -643,6 +653,7 @@ class MatriculationCreateWzard(Wizard):
                                 ('classes', '=', get_classes[0])
                             ]
                         ) 
+                        
                         #Verifica se o discente já é matrículado
                         if len(get_class_student) > 0:
                             cls.raise_user_error("O discente "+student.student.party.name+" já existe na instituição, por favor verifique a matrícula na "+get_class_student[0].classes.name+".")
@@ -667,9 +678,9 @@ class MatriculationCreateWzard(Wizard):
                                 #Procurar pelas disciplinas no percurso académico
                                 MatriculationCreateWzard.student_transferred_discipline(student.student.student, get_student_transferred_discipline, get_classes[0].studyplan)
                             else:
-                                cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque ja excedeu o limite de vagas disponiveis.")
+                                cls.raise_user_error("Infelismente não é possível matrícular o discente, porque ja excedeu o limite de vagas disponiveis.")
                     else:
-                        cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque não foi encontrato um encontrado uma turma disponivel para ele(a).")           
+                        cls.raise_user_error("Infelismente não é possível matrícular o discente, porque não foi encontrato um encontrado uma turma disponivel.")           
 
     @classmethod
     def student_transferred_discipline(cls, student, discipline_negative, studyplan):
@@ -679,9 +690,9 @@ class MatriculationCreateWzard(Wizard):
             if len(discipline_negative) > 0:
                 MatriculationCreateWzard.association_discipline(student, discipline_negative)
             else:
-                cls.raise_user_error("Infelismente não é possivel associar disciplinas ao discente, porque não há negativas.")        
+                cls.raise_user_error("Infelismente não é possível associar disciplinas ao discente, porque não há negativas.")        
         else:
-            cls.raise_user_error("Infelismente não é possivel associar disciplinas ao discente, porque não foi encontrado um plano de estudo compatível com o seu percurso académico.")
+            cls.raise_user_error("Infelismente não é possível associar disciplinas ao discente, porque não foi encontrado um plano de estudo compatível com o seu percurso académico.")
         
     @classmethod
     def association_discipline(cls, student, studyplan_discipline):
@@ -702,7 +713,7 @@ class MatriculationCreateWzard(Wizard):
                     MatriculationCreateWzard.save_student_discipline(StudentClasseDiscipline, student[0], 0, discipline, False, 'Matrículado(a)', 'Presencial')
                     
         else:
-            cls.raise_user_error("Infelismente não é possivel associar disciplinas ao discente, porque o discente não reprovou a nenhuma discplina, frequentada na turma "+student[0].classes.name+" no ano lectivo de "+student[0].classes.lective_year.name+".\nOu já esta frequentar as disciplinas nesta turma.")
+            cls.raise_user_error("Infelismente não é possível associar disciplinas ao discente, porque o discente não reprovou a nenhuma discplina, frequentada na turma "+student[0].classes.name+" no ano lectivo de "+student[0].classes.lective_year.name+".\nOu já esta frequentar as disciplinas nesta turma.")
 
     #Quando se tratar de matrícula por candidatura
     @classmethod
@@ -764,7 +775,7 @@ class MatriculationCreateWzard(Wizard):
                 
                 MatriculationCreateWzard.discipline_matriculation(MatriculationStudent, student.area.studyplan[0].studyplan_discipline)  
             else:
-                cls.raise_user_error("Infelismente não é possivel matrícular o discente, porque ja excedeu o limite de vagas disponiveis.")
+                cls.raise_user_error("Infelismente não é possível matrícular o discente, porque ja excedeu o limite de vagas disponiveis.")
         else:
             cls.raise_user_error("Não foi possivél efectuar a matrícula do estudante ou candidato, porque ainda não existe uma turma criada.")              
 
@@ -786,7 +797,7 @@ class MatriculationCreateWzard(Wizard):
                 else:
                     MatriculationCreateWzard.save_student_discipline(StudentClasseDiscipline, student, 0, discipline, True, "Matrículado(a)", "Presencial")                    
         else:
-            cls.raise_user_error("Infelismente não é possivel associar disciplinas ao discente, porque o discente não reprovou a nenhuma discplina, frequentada na turma "+student[0].classes.name+" no ano lectivo de "+student[0].classes.lective_year.name+".\nOu já esta frequentar as disciplinas nesta turma.")
+            cls.raise_user_error("Infelismente não é possível associar disciplinas ao discente, porque o discente não reprovou a nenhuma discplina, frequentada na turma "+student[0].classes.name+" no ano lectivo de "+student[0].classes.lective_year.name+".\nOu já esta frequentar as disciplinas nesta turma.")
 
     #Confirmação de matrícula
     @classmethod
@@ -799,37 +810,53 @@ class MatriculationCreateWzard(Wizard):
         student_has_matriculation = ClasseStudent.search([('student', '=', company_student)])
         classes_classe_year = CourseYear.search([('classe', '=', classes.classe), ('course', '=', classes.studyplan.course)])
         not_update = 0
+        erro = 0
 
-        #Verificar se têm matrícula
+        # Verificar se têm matrícula
         if len(student_has_matriculation) > 0:
-            #Pega a ultima matricula do discente
+            # Pega a ultima matricula do discente
             classe_student = student_has_matriculation[len(student_has_matriculation) -1]
             student_classe_year = CourseYear.search([('classe', '=', classe_student.classes.classe), ('course', '=', classe_student.classes.studyplan.course)])        
             verify_year = int(classes_classe_year[0].course_year) - int(student_classe_year[0].course_year)
-                        
+                                    
             for student in student_has_matriculation:
-                #Verifica se o discente já têm matrícula nesta turma
-                student_matriculation = ClasseStudent.search([('student', '=', student.student), ('classes', '=', classes)])
-                if len(student_matriculation) == 0:
-                    #Verificar se já têm matrícula neste ano curricular            
-                    if verify_year == 0:
-                        if student.state in ["Matrículado(a)", "Aprovado(a)"]:
-                            cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula nesta classe e turma.")
-                        #Efectua a matrícula
-                        if student.state == "Reprovado(a)":
-                            MatriculationCreateWzard.student_classe_matriculation(student, ClasseStudent, company_student, classes, Student_Discipline, not_update)                            
-                    #Verificar se é transição de ano curricular
-                    elif verify_year == 1:                
-                            #Efectua a matrícula do discente
+                student_state = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+                
+                if student.student.state not in student_state:  
+                    # Verifica se o discente já têm matrícula nesta turma
+                    student_matriculation = ClasseStudent.search([('student', '=', student.student), ('classes', '=', classes)])                
+                
+                    if len(student_matriculation) == 0:
+                        erro = 0
+                        # Verificar se já têm matrícula neste ano curricular            
+                        if verify_year == 0:
+                            if student.state in ["Matrículado(a)", "Aprovado(a)"]:
+                                cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula nesta classe e turma.")
+                            # Efectua a matrícula
+                            if student.state == "Reprovado(a)":
+                                MatriculationCreateWzard.student_classe_matriculation(student, ClasseStudent, company_student, classes, Student_Discipline, not_update)                            
+                        # Verificar se é transição de ano curricular
+                        elif verify_year == 1:                
+                            # Efectua a matrícula do discente
                             if student.state == "Aprovado(a)":
                                 MatriculationCreateWzard.student_classe_matriculation(student, ClasseStudent, company_student, classes, Student_Discipline, not_update)                                                        
-                            if student.state == ["Matrículado(a)", "Reprovado(a)"]:
-                                cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula na classe "+company_student.classe.name+" na turma "+classe_student.classes.name+".")
-                    #Verificar se o discente está a pular de ano            
-                    else:
-                        cls.raise_user_error("Não foi possivél matrícular o discente "+company_student.party.name+", na classe "+classes.classe.name+", porque o mesmo ainda não têm uma matrículado na classe anterior.")
-                else:                    
-                    pass
+                            if student.state == "Reprovado(a)":
+                                erro = 2
+                                #cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula na classe "+company_student.classe.name+" na turma "+classe_student.classes.name+".")
+                        #Verificar se o discente está a pular de ano            
+                        else:
+                            cls.raise_user_error("Não foi possivél matrícular o discente "+company_student.party.name+", na classe "+classes.classe.name+", porque o mesmo ainda não têm uma matrículado na classe anterior.")
+                    else:  
+                        erro = 1                  
+                        #pass
+                else:
+                    cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", por favor verifique a matrícula antérior.")
+
+            if erro == 1:
+                #cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula.")
+                pass
+            if erro == 2:
+                cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", pois o mesmo esta reprovado(a) na "+company_student.classe.name+".")
         else:
             course_frist_year = 1
             verify_year = course_frist_year - int(classes_classe_year[0].course_year)
@@ -863,22 +890,27 @@ class MatriculationCreateWzard(Wizard):
         
     @classmethod
     def save_student_matriculation(cls, classe_student, ClasseStudent, state, type, student, classes, classe, not_update):        
-        #Efectua a matrícula do discente
-        MatriculationStudent = ClasseStudent(
-            state = state,
-            type = type,
-            student = student,
-            classes = classes,
-        )
-        MatriculationStudent.save()
+        # Verifica se já execeu o limite de vagas disponiveís
+        max_student = classes.max_student + 1
+        if classes.max_student < max_student:
+            #Efectua a matrícula do discente
+            MatriculationStudent = ClasseStudent(
+                state = state,
+                type = type,
+                student = student,
+                classes = classes,
+            )
+            MatriculationStudent.save()
 
-        #Atualiza o ano curricular
-        MatriculationCreateWzard.update_student_classe(student, classe)        
-        if not_update == 0:
-            pass
+            #Atualiza o ano curricular
+            MatriculationCreateWzard.update_student_company_state(student, classe, state)        
+            if not_update == 0:
+                pass
+            else:
+                #Atualiza o estado da matrícula
+                MatriculationCreateWzard.update_student_state(classe_student)
         else:
-            #Atualiza o estado da matrícula
-            MatriculationCreateWzard.update_student_state(classe_student)
+            cls.raise_user_student("Já excedeu o limite de vagas disponiveís na turma.")
 
         return MatriculationStudent
        
@@ -896,8 +928,9 @@ class MatriculationCreateWzard(Wizard):
         matriculaton.save() 
 
     @classmethod
-    def update_student_classe(cls, company_student, classe):
+    def update_student_company_state(cls, company_student, classe, state):
         #Atualiza a classe do discente
+        company_student.state = state
         company_student.classe = classe
         company_student.save()
 

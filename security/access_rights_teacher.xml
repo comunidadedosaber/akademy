@@ -307,13 +307,11 @@
                 <field name="perm_delete" eval="False"/>
             </record>
             
-            <!--
             <record model="ir.rule" id="rule_group_model_classes_avaliation_line1">
                 <field name="domain" pyson="1" 
                     eval="[('classe_teacher_discipline.classe_teacher.employee', '=', Eval('user', {}).get('employee', None))]" />
                 <field name="rule_group" ref="rule_group_model_classes_avaliation"/>
             </record>
-            -->
             <record model="ir.rule.group-res.group" 
                     id="rule_group_model_classes_avaliation-group_teacher">
                 <field name="rule_group" ref="rule_group_model_classes_avaliation"/>

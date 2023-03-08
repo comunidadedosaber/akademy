@@ -4,6 +4,7 @@ from trytond.wizard import Button, Wizard, StateView, StateTransition
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from datetime import date
+from .avaliation import HistoricGrades
 from .variables import sel_modality, sel_state_teacher, sel_state_student, sel_registration_type, sel_classes_time, sel_lesson_type
 
 __all_ = ['Classes', 'ClasseStudent', 'ClasseStudentDiscipline', 'ClasseTeacher', 'ClasseTeacherDiscipline', 
@@ -62,6 +63,9 @@ class Classes(ModelSQL, ModelView):
 	@classmethod
 	@ModelView.button
 	def matriculation_state(cls, classes):
+		
+		Classes.classes_generate_student_historic_grades(classes)
+
 		discipline_required = []
 		student_discipline_possitive = []
 
@@ -82,6 +86,7 @@ class Classes(ModelSQL, ModelView):
 						for historic_grades in classes_student.historic_grades:
 							if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
 								if historic_grades.studyplan_discipline.state == "Obrigatório":
+									print(classes_student.student.party.name, historic_grades.average)
 									student_discipline_possitive.append(historic_grades.studyplan_discipline)							
 							count += 1
 
@@ -98,7 +103,7 @@ class Classes(ModelSQL, ModelView):
 	@classmethod
 	def matriculation_classes_state(cls, discipline_required, student_discipline, classes_student):
 		#MUDA O ESTADO DA MATRÍCULA DO DISCENTE NA TURMA
-		if len(discipline_required) >= len(student_discipline):
+		if len(discipline_required) <= len(student_discipline):
 			state = "Aprovado(a)"
 		else:
 			state = "Reprovado(a)"
@@ -112,7 +117,12 @@ class Classes(ModelSQL, ModelView):
 	def matriculation_student_state(cls, company_student, state):
 		#MUDA O ESTADO DA MATRÍCULA NO ANO LECTIVO
 		company_student.state = state
-		company_student.save()			
+		company_student.save()	
+
+	@classmethod
+	def classes_generate_student_historic_grades(cls, classes):
+		for classes_list in classes:
+			HistoricGrades.generate_historic_grades(classes_list)		
 	
 	@classmethod
 	def __setup__(cls):
@@ -248,7 +258,11 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 
 	@fields.depends('classe_student')
 	def on_change_with_studyplan(self, name=None):
-		return self.classe_student.classes.studyplan.id
+		if self.classe_student:
+			return self.classe_student.classes.studyplan.id
+		else:
+			return None
+		#return self.classe_student.classes.studyplan.id
 
 	@classmethod
 	def default_modality(cls):
@@ -356,7 +370,11 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 		
 	@fields.depends('classe_teacher')
 	def on_change_with_studyplan(self, name=None):
-		return self.classe_teacher.classes.studyplan.id
+		if self.classe_teacher:
+			return self.classe_teacher.classes.studyplan.id
+		else:
+			return None
+		#return self.classe_teacher.classes.studyplan.id
 
 	@classmethod
 	def default_state(cls):
@@ -443,7 +461,11 @@ class ClasseTimeRule(ModelSQL, ModelView):
 
 	@fields.depends('classes')
 	def on_change_with_studyplan(self, name=None):
-		return self.classes.studyplan.id
+		if self.classes:
+			return self.classes.studyplan.id
+		else:
+			return None
+		#return self.classes.studyplan.id
 
 	@classmethod
 	def __setup__(cls):
