@@ -16,16 +16,17 @@ class Employee(ModelSQL, ModelView):
     __name__ = 'company.employee'
    
     employee = fields.Boolean(
-        string=u'Funcionário', depends=['teacher'],
-        states={
-            'select': True, 
-            'required': Bool(Eval('teacher'))
-        }, help='A entidade será tratada como funcionário.')
+        string=u'Funcionário',      
+        states={ 
+            'required': Not(Bool(Eval('teacher')))
+        }, depends=['teacher'], 
+        help='A entidade será tratada como funcionário.')
     teacher = fields.Boolean(
-        string=u'Docente', 
-        states={
-            'select': True
-        }, help='A entidade será tratada como docente.')
+        string=u'Docente',         
+        states={ 
+            'required': Not(Bool(Eval('employee')))
+        }, depends=['employee'], 
+        help='A entidade será tratada como docente.')
     party = fields.Many2One(
         'party.party', 'Nome', 
         required=True, ondelete='CASCADE',
@@ -84,7 +85,7 @@ class CompanyStudent(ModelSQL, ModelView):
         'party.party', 'Nome', 
         required=True, ondelete='CASCADE',
         #domain=([('is_person', '=', True)]),
-        states={'is_person': True},
+        #states={'is_person': True},
         help="Nome do discente.")
     company = fields.Many2One(
         'company.company', 'Instituição',

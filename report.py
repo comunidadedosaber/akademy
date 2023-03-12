@@ -295,8 +295,8 @@ class StudentGradesReport(Report):
 			return context
 		
 		else:
-			context['erro'] = True
-			context['erro_message'] = "O discente "+classe_student.student.party.name+" ainda não possui avaliações."
+			context['erro'] = None
+			context['erro_message'] = "Não foi possivél exibir o boletim de notas do discente(s), porque ainda não existem avaliações publicadas."
 			context['student_grades'] = classe_student
 			context['create_date'] = date.today()
 

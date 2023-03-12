@@ -56,7 +56,7 @@
             <record model="ir.model.button" id="application_avaliation_button">
                 <field name="name">application_avaliation</field>
                 <field name="string">Avaliar</field>
-                <field name="help">Avaliar a candidaturas</field>
+                <field name="help">Avaliar a candidaturas.</field>
                 <field name="model" search="[('model', '=', 'akademy.applications')]"/>
             </record>        
         <!-- end CANDIDATURAS -->
@@ -87,7 +87,7 @@
             <record model="ir.model.button" id="application_matriculation_button">
                 <field name="name">application_matriculation</field>
                 <field name="string">Matrícular</field>
-                <field name="help">Matrícular candidato</field>
+                <field name="help">Matrícular candidato.</field>
                 <field name="model" search="[('model' , '=', 'akademy.applications-result')]"/>
             </record>
         <!-- end CANDIDATURAS RESULTADOS -->
@@ -123,6 +123,13 @@
             </record>
             <menuitem name="Transferências" parent="akademy.akademy_registrations_transfer" id="akademy_student_transfer" 
                 sequence="5" action="act_student_transfer"/>
+            
+            <record model="ir.model.button" id="student_internal_transfer_button">
+                <field name="name">student_internal_transfer</field>
+                <field name="string">Transfêrir</field>
+                <field name="help">Transfêrencia interna.</field>
+                <field name="model" search="[('model', '=', 'akademy.student-transfer')]"/>
+            </record>
         
         <!-- TRANSFÊRENCIA DISCENTE DISCIPLINA -->
             <record model="ir.ui.view" id="student_transfer_discipline_view_form">

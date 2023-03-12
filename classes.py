@@ -1,9 +1,10 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
-from trytond.pyson import Eval, Or, Equal, Not, Bool
+from trytond.pyson import Eval, Or, Equal, Not #Bool
 from trytond.wizard import Button, Wizard, StateView, StateTransition
 from trytond.pool import Pool
-from trytond.transaction import Transaction
+#from trytond.transaction import Transaction
 from datetime import date
+from .avaliation import HistoricGrades
 from .variables import sel_modality, sel_state_teacher, sel_state_student, sel_registration_type, sel_classes_time, sel_lesson_type
 
 __all_ = ['Classes', 'ClasseStudent', 'ClasseStudentDiscipline', 'ClasseTeacher', 'ClasseTeacherDiscipline', 
@@ -45,6 +46,7 @@ class Classes(ModelSQL, ModelView):
 	classes_avaliation = fields.One2Many('akademy.classes-avaliation', 'classes', string="Avaliações")
 	classes_schedule_quarter = fields.One2Many('akademy.classes_schedule-quarter', 'classes', string="Pauta trimestral")
 	classes_schedule = fields.One2Many('akademy.classes-schedule', 'classes', string="Pauta final")	
+	other_schedule = fields.One2Many('akademy.other-schedule', 'classes', string="Outras pauta")	
 		
 	@classmethod
 	def default_modality(cls):
@@ -62,10 +64,14 @@ class Classes(ModelSQL, ModelView):
 	@classmethod
 	@ModelView.button
 	def matriculation_state(cls, classes):
+		
+		#Antes de avaliar a turma primeira têm de se publicar ao percurso académico	
+		#Classes.classes_generate_student_historic_grades(classes)
+
 		discipline_required = []
 		student_discipline_possitive = []
 
-		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)']
 
 		for classes_list in classes:
 			if len(classes_list.historic_grades) > 0:
@@ -75,20 +81,23 @@ class Classes(ModelSQL, ModelView):
 						discipline_required.append(studyplan_discipline)
 
 				for classes_student in classes_list.classe_student:
-					#Caso a matrícula esteja em um dos estados
+					# Caso a matrícula esteja em um dos estados
 					if classes_student.state not in state_student:
 						count = 0
 						
 						for historic_grades in classes_student.historic_grades:
 							if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
-								if historic_grades.studyplan_discipline.state == "Obrigatório":
+								if historic_grades.studyplan_discipline.state == "Obrigatório":									
 									student_discipline_possitive.append(historic_grades.studyplan_discipline)							
 							count += 1
 
-						#Muda o estado da matrícula na turma
+						# Muda o estado da matrícula na turma
 						Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
 										
 						student_discipline_possitive.clear()
+
+						# Atualiza o estado das disciplinas
+						ClasseStudent.change_matriculation_state([classes_student])
 					
 				discipline_required.clear()
 		
@@ -98,7 +107,7 @@ class Classes(ModelSQL, ModelView):
 	@classmethod
 	def matriculation_classes_state(cls, discipline_required, student_discipline, classes_student):
 		#MUDA O ESTADO DA MATRÍCULA DO DISCENTE NA TURMA
-		if len(discipline_required) >= len(student_discipline):
+		if len(discipline_required) <= len(student_discipline):
 			state = "Aprovado(a)"
 		else:
 			state = "Reprovado(a)"
@@ -112,7 +121,12 @@ class Classes(ModelSQL, ModelView):
 	def matriculation_student_state(cls, company_student, state):
 		#MUDA O ESTADO DA MATRÍCULA NO ANO LECTIVO
 		company_student.state = state
-		company_student.save()			
+		company_student.save()	
+
+	@classmethod
+	def classes_generate_student_historic_grades(cls, classes):
+		for classes_list in classes:
+			HistoricGrades.generate_historic_grades(classes_list)		
 	
 	@classmethod
 	def __setup__(cls):
@@ -248,7 +262,11 @@ class ClasseStudentDiscipline(ModelSQL, ModelView):
 
 	@fields.depends('classe_student')
 	def on_change_with_studyplan(self, name=None):
-		return self.classe_student.classes.studyplan.id
+		if self.classe_student:
+			return self.classe_student.classes.studyplan.id
+		else:
+			return None
+		#return self.classe_student.classes.studyplan.id
 
 	@classmethod
 	def default_modality(cls):
@@ -320,7 +338,7 @@ class ClasseTeacher(ModelSQL, ModelView):
 class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	'TeacherDiscipline'
 	__name__ = 'akademy.classe_teacher-discipline'
-	_rec_name = 'classe_teacher'
+	#_rec_name = 'classe_teacher'
 		
 	state = fields.Selection(
 		selection=sel_state_teacher, string=u'Estado', 
@@ -356,7 +374,11 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 		
 	@fields.depends('classe_teacher')
 	def on_change_with_studyplan(self, name=None):
-		return self.classe_teacher.classes.studyplan.id
+		if self.classe_teacher:
+			return self.classe_teacher.classes.studyplan.id
+		else:
+			return None
+		#return self.classe_teacher.classes.studyplan.id
 
 	@classmethod
 	def default_state(cls):
@@ -368,7 +390,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 	
 	def get_rec_name(self, name):
 		t1 = '%s' % \
-			(self.studyplan_discipline.rec_name)
+			(self.classe_teacher.rec_name)
 		return t1
 
 	@classmethod
@@ -385,7 +407,7 @@ class ClasseTeacherDiscipline(ModelSQL, ModelView):
 class ClasseTimeRule(ModelSQL, ModelView):
 	'Classe TimeRule'
 	__name__ = 'akademy.classe-timerule'
-	_rec_name = 'lesson_time'
+	#_rec_name = 'lesson_time'
 
 	lesson_time = fields.Selection(selection=sel_classes_time, string=u'Tempo', required=True)
 	start_lesson = fields.Time(string=u'Entrada', format='%H:%M', required=True)
@@ -443,7 +465,11 @@ class ClasseTimeRule(ModelSQL, ModelView):
 
 	@fields.depends('classes')
 	def on_change_with_studyplan(self, name=None):
-		return self.classes.studyplan.id
+		if self.classes:
+			return self.classes.studyplan.id
+		else:
+			return None
+		#return self.classes.studyplan.id
 
 	@classmethod
 	def __setup__(cls):

@@ -49,6 +49,8 @@ def register():
         avaliation.ClassesAvaliation,
         avaliation.ClassesStudentAvaliation,
         avaliation.ClassesSchedule,
+        avaliation.OtherSchedule,
+        avaliation.StudentSchedule,
         avaliation.ClassesStudentSchedule,
         avaliation.ClassesScheduleQuarter,
         avaliation.ClassesStudentScheduleQuarter,

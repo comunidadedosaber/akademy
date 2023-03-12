@@ -1,0 +1,521 @@
+<?xml version="1.0"?>
+<!-- GRUPO DE PERMIÇÕES PARA USUÁRIOS DOCENTES -->
+<tryton>
+    <data>
+        <!-- Criar o grupo de usuários discente -->
+        <record model="res.group" id="group_teacher">
+            <field name="name">Akademy Docentes</field>
+        </record>
+
+        <!-- Cria o utilizador docente -->
+        <record model="res.user" id="user_teacher">
+            <field name="name">Docente</field>
+            <field name="login">docente</field>
+            <field name="password">01serve01</field>
+        </record> 
+
+        <!-- Atribui o usuário Docente Exemplo
+         ao grupo de usuários Docente Akademy -->
+        <record model="res.user-res.group" 
+            id="teacher_akademy">
+            <field name="user" ref="user_teacher"/>
+            <field name="group" ref="group_teacher"/>
+        </record>
+
+        <!-- Acesso ao MENU PRINCIPAL -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_teacher">
+            <field name="menu" ref="menu_akademy"/>
+            <field name="group" ref="group_teacher"/>
+        </record>
+        
+        <record model="ir.ui.menu-res.group" id="menu_ga_teacher">
+            <field name="menu" ref="akademy_ga"/>
+            <field name="group" ref="group_teacher"/>
+        </record> 
+
+        <!-- Acesso ao menu GA -->        
+        <record model="ir.ui.menu-res.group" 
+            id="menu_akademy_ga-group_teacher">
+            <field name="menu" ref="akademy_ga"/>
+            <field name="group" ref="group_teacher"/>
+        </record> 
+
+        <!-- Acesso ao menu TURMAS -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_classes-group_teacher">
+            <field name="menu" ref="akademy_classes"/>
+            <field name="group" ref="group_teacher"/>
+        </record>
+
+        <!-- start classes -->
+            <record model="ir.model.access" id="access_model_classes">
+                <field name="model" search="[('model', '=', 'akademy.classes')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes">
+                <field name="model" search="[('model', '=', 'akademy.classes')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes -->
+
+        <!-- start classe-student -->
+            <record model="ir.model.access" id="access_model_classe_student">
+                <field name="model" search="[('model', '=', 'akademy.classe-student')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_student">
+                <field name="model" search="[('model', '=', 'akademy.classe-student')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_student_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('student.company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_student"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_student-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_student"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe-student -->
+
+        <!-- start classe_student-discipline -->
+            <record model="ir.model.access" id="access_model_classe_student_discipline">
+                <field name="model" search="[('model', '=', 'akademy.classe_student-discipline')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_student_discipline">
+                <field name="model" search="[('model', '=', 'akademy.classe_student-discipline')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_student_discipline_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('classe_student.student.company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_student_discipline"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_student_discipline-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_student_discipline"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe_student-discipline -->
+
+        <!-- start classe-teacher -->
+            <record model="ir.model.access" id="access_model_classe_teacher">
+                <field name="model" search="[('model', '=', 'akademy.classe-teacher')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_teacher">
+                <field name="model" search="[('model', '=', 'akademy.classe-teacher')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_teacher_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('employee', '=', Eval('user', {}).get('employee', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_teacher"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_teacher-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_teacher"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe-teacher -->
+
+        <!-- start classe_teacher-discipline -->
+            <record model="ir.model.access" id="access_model_classe_teacher_discipline">
+                <field name="model" search="[('model', '=', 'akademy.classe_teacher-discipline')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_teacher_discipline">
+                <field name="model" search="[('model', '=', 'akademy.classe_teacher-discipline')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_teacher_discipline_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('classe_teacher.employee.company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_teacher_discipline"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_teacher_discipline-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_teacher_discipline"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe_teacher-discipline -->
+
+        <!-- start classe-timerule -->
+            <record model="ir.model.access" id="access_model_classe_timerule">
+                <field name="model" search="[('model', '=', 'akademy.classe-timerule')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_timerule">
+                <field name="model" search="[('model', '=', 'akademy.classe-timerule')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_timerule_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_timerule"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_timerule-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_timerule"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe-timerule -->
+
+        <!-- start classe_teacher-lesson -->
+            <record model="ir.model.access" id="access_model_classe_teacher_lesson">
+                <field name="model" search="[('model', '=', 'akademy.classe_teacher-lesson')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classe_teacher_lesson">
+                <field name="model" search="[('model', '=', 'akademy.classe_teacher-lesson')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classe_teacher_lesson_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classe_teacher_lesson"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classe_teacher_lesson-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classe_teacher_lesson"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classe_teacher-lesson -->
+
+
+        <!-- Acesso ao menu AVALIAÇÕES -->
+        <record model="ir.ui.menu-res.group" 
+            id="menu_avaliations-group_teacher">
+            <field name="menu" ref="akademy_avaliations"/>
+            <field name="group" ref="group_teacher"/>
+        </record>
+
+        <!-- start classes-avaliation -->
+            <record model="ir.model.access" id="access_model_classes_avaliation">
+                <field name="model" search="[('model', '=', 'akademy.classes-avaliation')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_avaliation">
+                <field name="model" search="[('model', '=', 'akademy.classes-avaliation')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            
+            <record model="ir.rule" id="rule_group_model_classes_avaliation_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('classe_teacher_discipline.classe_teacher.employee', '=', Eval('user', {}).get('employee', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_avaliation"/>
+            </record>
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_avaliation-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_avaliation"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes-avaliation -->
+
+        <!-- start classes_student-avaliation -->
+            <record model="ir.model.access" id="access_model_classes_student_avaliation">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-avaliation')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_student_avaliation">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-avaliation')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_student_avaliation_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_student_avaliation"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_student_avaliation-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_student_avaliation"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes_student-avaliation -->
+
+        <!-- start classes_schedule-quarter -->
+            <record model="ir.model.access" id="access_model_classes_schedule_quarter">
+                <field name="model" search="[('model', '=', 'akademy.classes_schedule-quarter')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_schedule_quarter">
+                <field name="model" search="[('model', '=', 'akademy.classes_schedule-quarter')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_schedule_quarter_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_schedule_quarter"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_schedule_quarter-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_schedule_quarter"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes_schedule-quarter -->
+
+        <!-- start classes_student-schedule_quarter -->
+            <record model="ir.model.access" id="access_model_classes_student_schedule_quarter">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-schedule_quarter')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_student_schedule_quarter">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-schedule_quarter')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_student_schedule_quarter_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_student_schedule_quarter"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_student_schedule_quarter-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_student_schedule_quarter"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes_student-schedule_quarter -->
+
+        <!-- start classes-schedule -->
+            <record model="ir.model.access" id="access_model_classes_schedule">
+                <field name="model" search="[('model', '=', 'akademy.classes-schedule')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_schedule">
+                <field name="model" search="[('model', '=', 'akademy.classes-schedule')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_schedule_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_schedule"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_schedule-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_schedule"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes-schedule -->
+
+        <!-- start classes_student-schedule -->
+            <record model="ir.model.access" id="access_model_classes_student_schedule">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-schedule')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_classes_student_schedule">
+                <field name="model" search="[('model', '=', 'akademy.classes_student-schedule')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_classes_student_schedule_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_classes_student_schedule"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_classes_student_schedule-group_teacher">
+                <field name="rule_group" ref="rule_group_model_classes_student_schedule"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes_student-schedule -->
+
+        <!-- start historic-grades -->
+            <record model="ir.model.access" id="access_model_historic_grades">
+                <field name="model" search="[('model', '=', 'akademy.historic-grades')]"/>
+                <field name="group" ref="group_teacher"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!-- access rule group -->
+            <record model="ir.rule.group" id="rule_group_model_historic_grades">
+                <field name="model" search="[('model', '=', 'akademy.historic-grades')]"/>
+                <field name="global_p" eval="False"/>
+                <field name="default_p" eval="False"/>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                <field name="perm_create" eval="False"/>
+                <field name="perm_delete" eval="False"/>
+            </record>
+            <!--
+            <record model="ir.rule" id="rule_group_model_historic_grades_line1">
+                <field name="domain" pyson="1" 
+                    eval="[('company', '=', Eval('user', {}).get('company', None))]" />
+                <field name="rule_group" ref="rule_group_model_historic_grades"/>
+            </record>
+            -->
+            <record model="ir.rule.group-res.group" 
+                    id="rule_group_model_historic_grades-group_teacher">
+                <field name="rule_group" ref="rule_group_model_historic_grades"/>
+                <field name="group" ref="group_teacher"/>
+            </record>
+        <!-- end classes_student-schedule -->
+        
+    </data>
+</tryton>

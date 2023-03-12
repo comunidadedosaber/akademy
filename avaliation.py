@@ -6,7 +6,7 @@ from datetime import date
 from .variables import sel_presence, sel_schedule
 
 __all__ = ['PublicGradesCreateWizard', 'PublicGradesCreateWizardStart', 'ScheduleCreateWizard', 'ScheduleCreateWizardStart', 'PublicHistoricCreateWizard', 'PublicHistoricCreateWizardStart',
-        'ClassesAvaliation', 'ClassesStudentAvaliation', 'ClassesSchedule', 'ClassesScheduleQuarter', 'ClassesStudentScheduleQuarter', 'ClassesStudentSchedule', 'HistoricGrades']
+        'ClassesAvaliation', 'ClassesStudentAvaliation', 'ClassesSchedule', 'ClassesScheduleQuarter', 'ClassesStudentScheduleQuarter', 'ClassesStudentSchedule', 'OtherSchedule', 'StudentSchedule', 'HistoricGrades']
 
 
 #Assistente Grades
@@ -82,25 +82,24 @@ class PublicGradesCreateWizard(Wizard):
                 if studyplan_avaliations == studyplan_avaliation:  
                     if studyplan_avaliations.metric_avaliation == self.start.metric_avaliation: 
 
-                        classes_avaliation = ClassesAvaliation.save_classes_avaliation(self.start, quarter, studyplan_avaliation)                        
-                        break            
+                        classes_avaliation = ClassesAvaliation.save_classes_avaliation(self.start, quarter, studyplan_avaliation)            
 
-        #ESTADO DA MATRÍCULA
-        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']        
+                        #ESTADO DA MATRÍCULA -> 'Reprovado(a)'
+                        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)']
+
+                        #VERIFICA O ESTADO DA MATRÍCULA                        
+                        for classe_student in StudentClasses:
+                            if classe_student.state not in state_student: 
+                                for classes_student_discipline in classe_student.classe_student_discipline:
+                                    #Verifica se a disciplina a ser lançada a nota e a mesma que foi selecionada
+                                    if classes_student_discipline.studyplan_discipline == self.start.studyplan_discipline:
+                                        
+                                        ClassesStudentAvaliation.save_classes_student_avaliation(classe_student, classes_avaliation)      
+
+
+                        break         
         
-        #Verifica se a discplina têm a avaliação
-        if classes_avaliation != 0:
-            for classe_student in StudentClasses:
-                #VERIFICA O ESTADO DA MATRÍCULA
-                if classe_student.state not in state_student: 
-                    for classes_student_discipline in classe_student.classe_student_discipline:
-                        #Verifica se a disciplina a ser lançada a nota e a mesma que foi selecionada
-                        if classes_student_discipline.studyplan_discipline == self.start.studyplan_discipline:
-                            
-                            ClassesStudentAvaliation.save_classes_student_avaliation(classe_student, classes_avaliation)
-        else:
-            self.raise_user_error("A disciplina "+self.start.studyplan_discipline.discipline.name+" não tẽm a avalicação "+self.start.metric_avaliation.name+".")                        
-
+        
         return 'end'
           
 
@@ -127,7 +126,11 @@ class ScheduleCreateWizardStart(ModelView):
 
     @fields.depends('classes')
     def on_change_with_studyplan(self, name=None):
-        return self.classes.studyplan.id
+        if self.classes:
+            return self.classes.studyplan.id
+        else:
+            return None
+        #return self.classes.studyplan.id
 
     
 class ScheduleCreateWizard(Wizard):
@@ -149,6 +152,7 @@ class ScheduleCreateWizard(Wizard):
         #Quarter = Pool().get('akademy.quarter') 
         schedule_t = "Pauta trimestral"
         schedule_f = "Pauta final"
+        schedule_p = ["Recurso", "Exame especial"]
         
         # Verifica se o tipo de pauta e o trimestre foram selecionados
         if self.start.schedule:            
@@ -219,6 +223,29 @@ class ScheduleCreateWizard(Wizard):
                             self.start.studyplan_discipline.average
                         )                                                 
 
+            if self.start.schedule in schedule_p:
+                student_state = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+                
+                if len(self.start.classes.classes_schedule_quarter) > 0:
+                    classes_schedule_special = OtherSchedule.save_other_schedule(self.start)
+                    
+                else:
+                    self.raise_user_error("Infelizmente não foi possivél criar a pauta, porque ainda não existem pautas trimestrais na turma "+self.start.classes.name+".")
+                    
+                # Pesquisa pelo discente
+                for classes_student in self.start.classes.classe_student:                    
+                    # Pesquisa pela prova final do discente
+                    discipline_final_grade = ScheduleCreateWizard.get_student_special_grade(classes_student, self.start.studyplan_discipline, schedule_p) 
+                    
+                    # Caso o discente não esteja associado a disciplina enquestão
+                    if discipline_final_grade is not None: 
+                        StudentSchedule.save_student_schedule(
+                            round(discipline_final_grade),
+                            classes_schedule_special,
+                            classes_student,
+                            self.start.studyplan_discipline.average
+                        ) 
+                
         return 'end'
 
     @classmethod
@@ -255,6 +282,20 @@ class ScheduleCreateWizard(Wizard):
                     if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Prova final":                                    
                         final_grade = round(classes_student_avaliation.grade)
 
+        return final_grade
+
+    @classmethod
+    def get_student_special_grade(cls, classes_student, studyplan_discipline, special_schedule):
+        # Caso o discente não esteja a frequentar a disciplina enquestão
+        final_grade = None
+        # Pesquisa pela prova final do discente
+        for student_discipline in classes_student.classe_student_discipline:
+            if student_discipline.studyplan_discipline == studyplan_discipline:
+                
+                for classes_student_avaliation in classes_student.classes_student_avaliation:
+                    if classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name in special_schedule: #== "Exame especial" or classes_student_avaliation.classes_avaliation.studyplan_avaliation.metric_avaliation.avaliation.name == "Recurso":
+                        final_grade = round(classes_student_avaliation.grade)    
+                 
         return final_grade
 
     @classmethod
@@ -444,7 +485,7 @@ class PublicHistoricCreateWizard(Wizard):
                             discipline.clear() 
             
             else:
-                self.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não bloqueada") 
+                self.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não está bloqueada") 
 
         else:
             self.raise_user_error("Infelizmente não foi possivél lançar as notas no percurso académico, por falta de alunos na turma, ", self.start.classes.name)                                       
@@ -490,20 +531,20 @@ class ClassesAvaliation(ModelSQL, ModelView):
             ('lective_year', '=', fields.classes.lective_year),
             ('classes', '=', fields.classes),
             ('quarter', '=', quarter),
-            ('studyplan_discipline', '=', fields.studyplan_discipline),
+            ('studyplan_discipline', '=', studyplan_avaliation.studyplan_discipline),
             ('studyplan_avaliation', '=', studyplan_avaliation)
         ])        
 
         if len(classes_avaliation) <= 0:
-            for classe_teacher_discipline in fields.studyplan_discipline.classe_teacher_discipline:
-                if classe_teacher_discipline.studyplan_discipline == fields.studyplan_discipline:
+            for classe_teacher_discipline in studyplan_avaliation.studyplan_discipline.classe_teacher_discipline:
+                if classe_teacher_discipline.studyplan_discipline == studyplan_avaliation.studyplan_discipline:
 
                     avaliation = ClassesAvaliation(
                         lective_year = fields.classes.lective_year,
                         classes = fields.classes,
                         quarter = quarter,
                         classe_teacher_discipline = classe_teacher_discipline,
-                        studyplan_discipline = fields.studyplan_discipline,
+                        studyplan_discipline = studyplan_avaliation.studyplan_discipline,
                         studyplan_avaliation = studyplan_avaliation,
                     )
                     avaliation.save()
@@ -755,6 +796,9 @@ class ClassesSchedule(ModelSQL, ModelView):
     classes_student_schedule = fields.One2Many(
         'akademy.classes_student-schedule', 'classes_schedule', 
         string="Lista de discentes")
+    student_schedule = fields.One2Many(
+        'akademy.student-schedule', 'classes_schedule', 
+        string="Lista de discentes")
 
     @classmethod
     def default_state(cls):
@@ -821,7 +865,7 @@ class ClassesSchedule(ModelSQL, ModelView):
             return schedule
 
         else:
-            cls.raise_user_error("Infelizmente não foi possivél criar a pauta final de "+fields.studyplan_discipline.discipline.name+", porque a pauta trimestral ainda não foi bloqueada.")
+            cls.raise_user_error("Infelizmente não foi possivél criar a pauta final de "+fields.studyplan_discipline.discipline.name+", porque a pauta trimestral ainda não foi bloqueada.")  
 
 
 class ClassesStudentSchedule(ModelSQL, ModelView):
@@ -945,21 +989,21 @@ class HistoricGrades(ModelSQL, ModelView):
         schedule = [] 
         state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
 
-        #CASO TENHA ENCNTRADO UM DISCENTE
+        # CASO TENHA ENCNTRADO UM DISCENTE
         if len(state_matriculation) > 0:
-            #VERIFICA O ESTADO DA MATRÍCULA
+            # VERIFICA O ESTADO DA MATRÍCULA
             if state_matriculation[0].state not in state_student:                               
                 
                 student_historic_grades = HistoricGrade.search([('lective_year', '=',lective_year ), ('classes', '=', classes), ('student', '=', student), ('studyplan_discipline', '=', discipline)])
-                #ATUALIZA A NOTA
+                # ATUALIZA A NOTA
                 if len(student_historic_grades) > 0:
                     student_historic_grades[0].average = round(average)
                     student_historic_grades[0].save()                    
-                #LANÇA A NOTA
+                # LANÇA A NOTA
                 else:
                     HistoricGrades.save_historic_grades(schedule, HistoricGrade, lective_year, classes, student, discipline, average)
 
-                #Muda o estado da matrícula na disciplina
+                # Muda o estado da matrícula na disciplina
                 HistoricGrades.matriculation_discipline_state(average, discipline, state_matriculation[0])
                 
         else:
@@ -994,7 +1038,100 @@ class HistoricGrades(ModelSQL, ModelView):
             student_discipline.save()
         else:
             student_discipline.state = "Reprovado(a)"
-            student_discipline.save()               
+            student_discipline.save()
+
+    @classmethod
+    def generate_historic_grades(cls, classes):
+
+        Transfrer = Pool().get('akademy.student-transfer')
+        average = 0
+        count = 0
+        discipline = []
+        final_grade = 0
+        result = 0
+        Classes = classes
+        state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+
+        if len(Classes.classe_student) > 0:
+            schedule_block  = ClassesSchedule.search([
+                ('state', '=', False),
+                ('lective_year', '=', Classes.lective_year),
+                ('classes', '=', Classes)
+            ])
+            
+            if len(schedule_block) < 1:
+                for StudentClasses in Classes.classe_student:
+                    #VERIFICA O ESTADO DA MATRÍCULA
+                    if StudentClasses.state not in state_student:
+                        #Pesquisa pelo discente nas transfêrencias
+                        students_transfer = Transfrer.search([
+                                ('course_classe', '=', Classes.studyplan.classe), 
+                                ('student', '=', StudentClasses.student),
+                                ('external', '=', True)
+                            ])                    
+                                                                
+                        if len(StudentClasses.classe_student_discipline) > 0:
+                            for student_discipline in StudentClasses.classe_student_discipline:
+                                discipline.append(student_discipline)
+                                if len(StudentClasses.classes_student_schedule) > 0:
+                                    for classes_student_schedule in StudentClasses.classes_student_schedule:
+                                        #Verifica se as disciplinas constam no mesmo plano de estudo                            
+                                        if classes_student_schedule.classes_schedule.studyplan_discipline == student_discipline.studyplan_discipline:
+                                            average += classes_student_schedule.average                                        
+                                            count += 1   
+                                                                
+                                    if count > 0:
+                                        result = (average/count)
+                                    else:
+                                        result = 0
+                                                                        
+                                    HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, student_discipline.studyplan_discipline, result)                                 
+                                    average = 0
+                                    count = 0
+
+                                else:
+                                    cls.raise_user_error("Infelizmente ainda não existem pautas publicadas para o discente "+StudentClasses.student.party.name+", na disciplina de "+student_discipline.studyplan_discipline.discipline.name+", "+Classes.name)            
+                        
+                        # Quando se tratar de um discente transfêrido                        
+                        if len(students_transfer) > 0:
+                            # VALIDAR DE ACORDO A DISCIPLINA E CLASSE  
+                            studyplan_discipline_exit = []
+
+                            # Faz a equivalencia dos planos de estudo
+                            if len(students_transfer[0].student_transfer_discipline) > 0:
+                                for studyplan_discipline in Classes.studyplan.studyplan_discipline:          
+                                    for student_transfer_discipline in students_transfer[0].student_transfer_discipline:
+                                        if student_transfer_discipline.course_classe == Classes.studyplan.classe:
+                                            # Verifica se a disciplina do discente é a mesma do plano de estudo 
+                                            if (student_transfer_discipline.discipline ==  studyplan_discipline.discipline):
+                                                studyplan_discipline_exit.append(studyplan_discipline)                                               
+                                                
+                                                if (student_transfer_discipline.average >= studyplan_discipline.average):
+                                                    final_grade = student_transfer_discipline.average 
+                                                    HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
+                            
+                            # Caso tenha todas as displinas do plano de estudo
+                            if len(Classes.studyplan.studyplan_discipline) != len(discipline):                            
+                                for studyplan_discipline in Classes.studyplan.studyplan_discipline:                                                                
+                                    if StudentClasses.classe_student_discipline == studyplan_discipline.classe_student_discipline:
+                                        if studyplan_discipline not in studyplan_discipline_exit and studyplan_discipline not in discipline: 
+                                            for classes_schedule in studyplan_discipline.classes_schedule:
+                                                if classes_schedule.classes == Classes:
+                                                    for classes_student_schedule in classes_schedule.classes_student_schedule:
+                                                        if classes_student_schedule.classes_student == StudentClasses:
+
+                                                            final_grade = classes_student_schedule.average                                            
+                                                            HistoricGrades.public_grade(Classes.lective_year, Classes, StudentClasses, studyplan_discipline, final_grade)
+                                                            final_grade = 0
+                                                            count = 0
+
+                            discipline.clear() 
+            
+            else:
+                cls.raise_user_error("Infelizmente é possivél gerar o percurso académico porque a pauta final da turma "+Classes.name+", ainda não bloqueada") 
+
+        else:
+            cls.raise_user_error("Infelizmente não foi possivél lançar as notas no percurso académico, por falta de alunos na turma, ", self.start.classes.name)                                       
 
     @classmethod
     def __setup__(cls):
@@ -1010,4 +1147,173 @@ class HistoricGrades(ModelSQL, ModelView):
             u'Não foi possivél lançar a nota do discente, por favor se a média é inferior a 0 valores.')
         ]
         cls._order = [('classes', 'ASC')] 
+
+
+class StudentSchedule(ModelSQL, ModelView):
+    'Student Schedule'
+    __name__ = 'akademy.student-schedule'
+    _rac_name = 'other_schedule'
+
+    average = fields.Numeric(string=u'Média', digits=(2,1))
+    obs = fields.Char(string=u'Observação', size=25)
+    other_schedule = fields.Many2One(
+        model_name='akademy.other-schedule', string=u'Pauta', 
+        ondelete='CASCADE')
+    classes_student = fields.Many2One(
+		model_name='akademy.classe-student', string=u'Discente',
+        domain=[('classes.other_schedule', '=', Eval('other_schedule', -1))],
+        depends=['other_schedule'])
+
+    @classmethod
+    def save_student_schedule(cls, student_final_grade, schedule, classes_student, discipline_average):        
+        if schedule.state == False:
+            if student_final_grade >= discipline_average:
+                result = "Aprovado(a)"
+            else:
+                result = "Reprovado(a)"
+
+            student_schedule_update = StudentSchedule.search([
+                    ('other_schedule', '=', schedule),
+                    ('classes_student', '=', classes_student)
+                ])
+
+            if len(student_schedule_update) <= 0:
+            
+                student_schedule = StudentSchedule(
+                    average = student_final_grade,
+                    obs = result,
+                    other_schedule = schedule,
+                    classes_student = classes_student,
+                )
+                student_schedule.save()
+            
+            else:
+                student_schedule_update[0].average = student_final_grade
+                student_schedule_update[0].obs = result
+                student_schedule_update[0].write_date = date.today()
+                student_schedule_update[0].save()   
+
+        else:
+            cls.raise_user_error("A pauta está bloqueado para edição.")
+
+    @classmethod
+    def __setup__(cls):
+        super(StudentSchedule, cls).__setup__()
+        table = cls.__table__()
+        cls._sql_constraints = [            
+            ('average_grade_max', Check(table, table.average <= 20),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é superior a 20 valores.'),
+            ('average_grade_min', Check(table, table.average >= 0),
+            u'Não foi possível atribuir a nota ao discente, por favor se a nota é inferior a 0 valores.')
+        ]    
+
+
+class OtherSchedule(ModelSQL, ModelView):
+    'Other Schedule'
+    __name__ = 'akademy.other-schedule'
+
+    code = fields.Char(string=u'Código', size=20)
+    state =fields.Boolean(string=u"Bloqueada", help="Bloquear/Desbloquear para para a edição.")
+    lective_year = fields.Many2One(
+        model_name='akademy.lective-year', string=u'Ano lectivo', 
+        ondelete='CASCADE')
+    classes = fields.Many2One(
+        model_name='akademy.classes', string=u'Turma',
+        ondelete='CASCADE',
+        domain=[('lective_year', '=', Eval('lective_year', -1))],
+        depends=['lective_year'])    
+    quarter = fields.Many2One(
+		model_name="akademy.quarter",string=u'Trimestre', 
+		required=True, help="Escolha o trimestre da pauta.")
+    schedule = fields.Selection(selection=sel_schedule, string=u'Tipo de pauta')
+    classe_teacher_discipline = fields.Many2One(
+        model_name='akademy.classe_teacher-discipline', string=u'Docente', 
+        required=True, domain=[('classe_teacher.classes', '=', Eval('classes', -1))],
+        depends=['classes'])
+    studyplan_discipline = fields.Many2One(
+        model_name='akademy.studyplan-discipline', string=u'Disciplina', 
+        required=True, domain=[('classe_teacher_discipline', '=', Eval('classe_teacher_discipline', -1))],
+        depends=['classe_teacher_discipline'])
+    student_schedule = fields.One2Many(
+        'akademy.student-schedule', 'other_schedule', 
+        string="Lista de discentes")
+
+    @classmethod
+    def default_state(cls):
+        return False
+
+    def get_rec_name(self, name):
+        t1 = '%s' % \
+            (self.studyplan_discipline.rec_name)
+        return t1
+    
+
+    @classmethod
+    def save_other_schedule(cls, fields):
+
+        for classe_teacher in fields.classes.classe_teacher: 
+            for teacher_discipline in classe_teacher.classe_teacher_discipline:
+                if teacher_discipline.studyplan_discipline == fields.studyplan_discipline:      
+                    
+                    schedule_update = OtherSchedule.search([
+                        ('lective_year', '=', fields.classes.lective_year),
+                        ('classes', '=', fields.classes),
+                        ('quarter', '=', fields.studyplan_discipline.quarter),
+                        ('schedule', '=', fields.schedule),
+                        ('classe_teacher_discipline', '=', teacher_discipline),
+                        ('studyplan_discipline', '=', fields.studyplan_discipline)
+                    ])
+
+                    if len(schedule_update) <= 0: 
+
+                        schedule = OtherSchedule (
+                            lective_year = fields.classes.lective_year,
+                            classes = fields.classes,
+                            quarter = fields.studyplan_discipline.quarter,
+                            schedule = fields.schedule,
+                            classe_teacher_discipline = teacher_discipline,
+                            studyplan_discipline = fields.studyplan_discipline
+                        )
+                        schedule.save()
+                                
+                        break
+
+                    else:
+                        schedule_update[0].write_date = date.today()
+                        schedule_update[0].save()
+                        schedule = schedule_update[0]
+
+        return schedule
+    
+    @classmethod
+    def update_student_historic(cls, classes_schedule):
+        #No caso de se ter outras provas, actualizam das notas
+        for shcedule in classes_schedule:
+            block_schedule = False
+
+            for student in shcedule.student_schedule:
+                update_grade = HistoricGrades.search([
+                    ('lective_year', '=', shcedule.lective_year),
+                    ('classes', '=', shcedule.classes),
+                    ('student', '=', student.classes_student),
+                    ('studyplan_discipline', '=', shcedule.studyplan_discipline)
+                ])
+                
+                if len(update_grade) > 0:
+                    block_schedule = True
+                    update_grade[0].average = student.average
+                    update_grade[0].save()                
+            
+            shcedule.state = block_schedule
+            shcedule.save()
+        
+    @classmethod
+    def __setup__(cls):
+        super(OtherSchedule , cls).__setup__()
+
+        cls._buttons. update({
+            'update_student_historic':{
+                'invisible': Eval('state')
+            }
+        })
 
