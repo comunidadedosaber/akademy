@@ -1,8 +1,8 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique, Check
-from trytond.pyson import Eval, Or, Equal, Not, Bool
+from trytond.pyson import Eval, Or, Equal, Not #Bool
 from trytond.wizard import Button, Wizard, StateView, StateTransition
 from trytond.pool import Pool
-from trytond.transaction import Transaction
+#from trytond.transaction import Transaction
 from datetime import date
 from .avaliation import HistoricGrades
 from .variables import sel_modality, sel_state_teacher, sel_state_student, sel_registration_type, sel_classes_time, sel_lesson_type
@@ -46,6 +46,7 @@ class Classes(ModelSQL, ModelView):
 	classes_avaliation = fields.One2Many('akademy.classes-avaliation', 'classes', string="Avaliações")
 	classes_schedule_quarter = fields.One2Many('akademy.classes_schedule-quarter', 'classes', string="Pauta trimestral")
 	classes_schedule = fields.One2Many('akademy.classes-schedule', 'classes', string="Pauta final")	
+	other_schedule = fields.One2Many('akademy.other-schedule', 'classes', string="Outras pauta")	
 		
 	@classmethod
 	def default_modality(cls):
@@ -64,12 +65,13 @@ class Classes(ModelSQL, ModelView):
 	@ModelView.button
 	def matriculation_state(cls, classes):
 		
-		Classes.classes_generate_student_historic_grades(classes)
+		#Antes de avaliar a turma primeira têm de se publicar ao percurso académico	
+		#Classes.classes_generate_student_historic_grades(classes)
 
 		discipline_required = []
 		student_discipline_possitive = []
 
-		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)', 'Reprovado(a)']
+		state_student = ['Aguardando', 'Suspenso(a)', 'Anulada', 'Transfêrido(a)']
 
 		for classes_list in classes:
 			if len(classes_list.historic_grades) > 0:
@@ -79,21 +81,23 @@ class Classes(ModelSQL, ModelView):
 						discipline_required.append(studyplan_discipline)
 
 				for classes_student in classes_list.classe_student:
-					#Caso a matrícula esteja em um dos estados
+					# Caso a matrícula esteja em um dos estados
 					if classes_student.state not in state_student:
 						count = 0
 						
 						for historic_grades in classes_student.historic_grades:
 							if (historic_grades.studyplan_discipline in discipline_required) and (historic_grades.average >= historic_grades.studyplan_discipline.average):
-								if historic_grades.studyplan_discipline.state == "Obrigatório":
-									print(classes_student.student.party.name, historic_grades.average)
+								if historic_grades.studyplan_discipline.state == "Obrigatório":									
 									student_discipline_possitive.append(historic_grades.studyplan_discipline)							
 							count += 1
 
-						#Muda o estado da matrícula na turma
+						# Muda o estado da matrícula na turma
 						Classes.matriculation_classes_state(discipline_required, student_discipline_possitive, classes_student)
 										
 						student_discipline_possitive.clear()
+
+						# Atualiza o estado das disciplinas
+						ClasseStudent.change_matriculation_state([classes_student])
 					
 				discipline_required.clear()
 		

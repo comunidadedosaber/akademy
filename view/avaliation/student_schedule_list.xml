@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tree>  
+    <field name="classes_student"/>
+    <field name="average"/>
+    <field name="create_date" widget="date"/> 
+    <field name="write_date" widget="date"/>
+</tree>

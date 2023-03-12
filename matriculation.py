@@ -824,10 +824,10 @@ class MatriculationCreateWzard(Wizard):
                 
                 if student.student.state not in student_state:  
                     # Verifica se o discente já têm matrícula nesta turma
-                    student_matriculation = ClasseStudent.search([('student', '=', student.student), ('classes', '=', classes)])                
+                    student_matriculation = ClasseStudent.search([('student', '=', student.student), ('classes', '=', classes)])  
+                    erro = 0                        
                 
                     if len(student_matriculation) == 0:
-                        erro = 0
                         # Verificar se já têm matrícula neste ano curricular            
                         if verify_year == 0:
                             if student.state in ["Matrículado(a)", "Aprovado(a)"]:
@@ -847,16 +847,23 @@ class MatriculationCreateWzard(Wizard):
                         else:
                             cls.raise_user_error("Não foi possivél matrícular o discente "+company_student.party.name+", na classe "+classes.classe.name+", porque o mesmo ainda não têm uma matrículado na classe anterior.")
                     else:  
-                        erro = 1                  
+                        if classes == student.classes:
+                            erro = 3
+                        else:
+                            erro = 1
                         #pass
                 else:
                     cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", por favor verifique a matrícula antérior.")
 
             if erro == 1:
-                #cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula.")
-                pass
+                cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", na turma "+classes.name+", pois o mesmo já têm matrícula.")
+                #pass
             if erro == 2:
                 cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", pois o mesmo esta reprovado(a) na "+company_student.classe.name+".")
+
+            if erro == 3:
+                cls.raise_user_error("O discente "+company_student.party.name+", não pode frequentar a classe "+classes.classe.name+", pois o mesmo já têm uma matrícula nesta classe.")
+        
         else:
             course_frist_year = 1
             verify_year = course_frist_year - int(classes_classe_year[0].course_year)

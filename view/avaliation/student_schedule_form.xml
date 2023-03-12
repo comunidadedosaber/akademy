@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<form>        
+    <label name="classes_student"/>
+    <field name="classes_student"/>
+    <label name="other_schedule"/>
+    <field name="other_schedule"/>        
+    <label name="average"/>
+    <field name="average"/>        
+    <label name="obs"/>
+    <field name="obs"/>   
+</form>
